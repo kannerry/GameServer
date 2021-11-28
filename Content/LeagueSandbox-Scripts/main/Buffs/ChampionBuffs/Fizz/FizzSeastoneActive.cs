@@ -26,7 +26,7 @@ namespace Buffs
         {
             Owner = ownerSpell.CastInfo.Owner;
             var ap = ownerSpell.CastInfo.Owner.Stats.AbilityPower.Total * 0.30f;
-            damage = 5f +( ownerSpell.CastInfo.SpellLevel * 5 ) + ap;
+            damage = 5f + (ownerSpell.CastInfo.SpellLevel * 5) + ap;
             AddParticleTarget(Owner, Owner, "Fizz_SeastoneTrident.troy", Owner, 5f, bone: "BUFFBONE_GLB_WEAPON_1");
             AddParticleTarget(Owner, Owner, "Fizz_SeastonePassive_Weapon.troy", Owner, bone: "BUFFBONE_GLB_WEAPON_1");
 

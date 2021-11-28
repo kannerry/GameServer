@@ -9,7 +9,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 namespace Buffs
 
 {
-    internal class CassiopeiaPoisonTicker: IBuffGameScript
+    internal class CassiopeiaPoisonTicker : IBuffGameScript
     {
         public BuffType BuffType => BuffType.POISON;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -25,10 +25,10 @@ namespace Buffs
         float timeSinceLastTick = 500f;
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-           owner = ownerSpell.CastInfo.Owner;
+            owner = ownerSpell.CastInfo.Owner;
             Unit = unit;
             float APratio = owner.Stats.AbilityPower.Total * 0.15f;
-            damage = 11.67f + (13.33f * ownerSpell.CastInfo.SpellLevel ) + APratio;
+            damage = 11.67f + (13.33f * ownerSpell.CastInfo.SpellLevel) + APratio;
             p = AddParticleTarget(owner, unit, "Global_Poison.troy", unit, buff.Duration, bone: "BUFFBONE_GLB_CHANNEL_LOC");
         }
 

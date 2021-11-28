@@ -42,9 +42,9 @@ namespace Buffs
             {
                 return;
             }
-            
+
             var ad = thisSpell.CastInfo.Owner.Stats.AttackDamage.Total;
-            
+
             if (!(target is IBaseTurret))
             {
                 // BreakSpellShields(target);

@@ -50,7 +50,7 @@ namespace Buffs
             {
                 owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0.1f);
             }
-                unit.SetStatus(StatusFlags.Targetable, true);
+            unit.SetStatus(StatusFlags.Targetable, true);
         }
 
         public void OnPreAttack(ISpell spell)

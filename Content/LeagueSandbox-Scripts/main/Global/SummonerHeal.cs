@@ -85,7 +85,7 @@ namespace Spells
         }
 
         public void OnSpellChannel(ISpell spell)
-        { 
+        {
         }
 
         public void OnSpellChannelCancel(ISpell spell)

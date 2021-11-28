@@ -5492,11 +5492,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\Content\\LeagueSandbox-Scripts\\LeagueSandbox-Scripts.csproj",
+      "projectUniqueName": "D:\\CUSTOM\\GameServerBackup\\Content\\LeagueSandbox-Scripts\\LeagueSandbox-Scripts.csproj",
       "projectName": "LeagueSandbox-Scripts",
-      "projectPath": "D:\\CUSTOM\\GameServerGit\\Content\\LeagueSandbox-Scripts\\LeagueSandbox-Scripts.csproj",
+      "projectPath": "D:\\CUSTOM\\GameServerBackup\\Content\\LeagueSandbox-Scripts\\LeagueSandbox-Scripts.csproj",
       "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
-      "outputPath": "D:\\CUSTOM\\GameServerGit\\Content\\LeagueSandbox-Scripts\\obj\\",
+      "outputPath": "D:\\CUSTOM\\GameServerBackup\\Content\\LeagueSandbox-Scripts\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5516,11 +5516,11 @@
         "netcoreapp3.0": {
           "targetAlias": "netcoreapp3.0",
           "projectReferences": {
-            "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {
-              "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj"
+            "D:\\CUSTOM\\GameServerBackup\\GameServerCore\\GameServerCore.csproj": {
+              "projectPath": "D:\\CUSTOM\\GameServerBackup\\GameServerCore\\GameServerCore.csproj"
             },
-            "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj": {
-              "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj"
+            "D:\\CUSTOM\\GameServerBackup\\GameServerLib\\GameServerLib.csproj": {
+              "projectPath": "D:\\CUSTOM\\GameServerBackup\\GameServerLib\\GameServerLib.csproj"
             }
           }
         }

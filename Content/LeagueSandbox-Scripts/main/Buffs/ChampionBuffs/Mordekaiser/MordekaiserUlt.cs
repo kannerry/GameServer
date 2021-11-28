@@ -64,7 +64,7 @@ namespace Buffs
                     ticked = true;
                 }
             }
-            if(TimeTo10 <= 10000)
+            if (TimeTo10 <= 10000)
             {
                 if (timeSinceLastTick >= 1000.0f)
                 {

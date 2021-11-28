@@ -26,7 +26,7 @@ namespace ItemPassives
 
         private void TargetExecute(IDeathData obj)
         {
-            if(stacks != 30)
+            if (stacks != 30)
             {
                 StatsModifier.AbilityPower.FlatBonus = (float)0.5;
                 StatsModifier.Armor.FlatBonus = (float)0.5;

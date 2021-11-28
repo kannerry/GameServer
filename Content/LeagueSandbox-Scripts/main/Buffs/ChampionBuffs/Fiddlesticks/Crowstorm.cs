@@ -19,7 +19,7 @@ namespace Buffs
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
         public int MaxStacks => 1;
         public bool IsHidden => false;
-             IParticle red;
+        IParticle red;
         IParticle green;
         ISpell originSpell;
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
@@ -31,10 +31,10 @@ namespace Buffs
             Owner = ownerSpell.CastInfo.Owner;
             originSpell = ownerSpell;
             ApiEventManager.OnSpellHit.AddListener(this, ownerSpell, TargetExecute, false);
-               var spellPos = new Vector2(originSpell.CastInfo.TargetPositionEnd.X, originSpell.CastInfo.TargetPositionEnd.Z);
-             red = AddParticle(Owner, null, "Crowstorm_green_cas.troy", spellPos, lifetime: buff.Duration, reqVision: false);
-             green = AddParticle(Owner, null, "Crowstorm_red_cas", spellPos, lifetime: buff.Duration, reqVision: false);
-        
+            var spellPos = new Vector2(originSpell.CastInfo.TargetPositionEnd.X, originSpell.CastInfo.TargetPositionEnd.Z);
+            red = AddParticle(Owner, Owner, "Crowstorm_green_cas.troy", spellPos, lifetime: buff.Duration, reqVision: false);
+            green = AddParticle(Owner, Owner, "Crowstorm_red_cas", spellPos, lifetime: buff.Duration, reqVision: false);
+
 
             DRMundoWAOE = ownerSpell.CreateSpellSector(new SectorParameters
             {
@@ -51,12 +51,12 @@ namespace Buffs
             float AP = Owner.Stats.AbilityPower.Total * 0.45f;
             float damage = 25f + (100 * spell.CastInfo.SpellLevel) + AP;
 
-            target.TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL,DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+            target.TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
         }
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-             RemoveParticle(red);
-              RemoveParticle(green);
+            RemoveParticle(red);
+            RemoveParticle(green);
             ApiEventManager.OnSpellHit.RemoveListener(this);
             DRMundoWAOE.SetToRemove();
         }

@@ -67,7 +67,8 @@ namespace Buffs
             PlayAnimation(owner, "Spell3d", 0.9f);
             ForceMovement(owner, null, trueCoords, 1200, 0, 0, 0);
 
-            CreateTimer(0.5f , () =>{
+            CreateTimer(0.5f, () =>
+            {
                 AddParticle(owner, null, "Fizz_TrickSlamTwo.troy", trueCoords);
             });
 

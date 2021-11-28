@@ -50,7 +50,7 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             var APratio = owner.Stats.AbilityPower.Total * 0.4f;
             var damage = 150f + APratio;
-            
+
 
             AddParticleTarget(owner, owner, "hextech_gunBlade_tar.troy", target, 1f);
             AddBuff("HextechGunblade", 2f, 1, spell, target, owner);

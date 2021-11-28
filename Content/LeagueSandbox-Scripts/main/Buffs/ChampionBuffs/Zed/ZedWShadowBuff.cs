@@ -84,21 +84,21 @@ namespace Buffs
             switch (state)
             {
                 case 0:
-                {
-                    return "zed_shadowindicatorfar.troy";
-                }
+                    {
+                        return "zed_shadowindicatorfar.troy";
+                    }
                 case 1:
-                {
-                    return "zed_shadowindicatormed.troy";
-                }
+                    {
+                        return "zed_shadowindicatormed.troy";
+                    }
                 case 2:
-                {
-                    return "zed_shadowindicatornearbloop.troy";
-                }
+                    {
+                        return "zed_shadowindicatornearbloop.troy";
+                    }
                 default:
-                {
-                    return "zed_shadowindicatorfar.troy";
-                }
+                    {
+                        return "zed_shadowindicatorfar.troy";
+                    }
             }
         }
 

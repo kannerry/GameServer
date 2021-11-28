@@ -21,7 +21,7 @@ namespace ItemPassives
             StatsModifier.ManaRegeneration.BaseBonus += 0.6f;
             owner.AddStatModifier(StatsModifier);
         }
-        public void TargetExecute (IDeathData deathData)
+        public void TargetExecute(IDeathData deathData)
         {
             deathData.Killer.Stats.CurrentMana += 4;
         }

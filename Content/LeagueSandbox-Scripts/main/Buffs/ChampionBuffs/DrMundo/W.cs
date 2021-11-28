@@ -28,7 +28,7 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             Owner = ownerSpell.CastInfo.Owner;
-            ApiEventManager.OnSpellSectorHit.AddListener(this, new KeyValuePair <ISpell, IObjAiBase>(ownerSpell, Owner), TargetExecute, false);
+            ApiEventManager.OnSpellSectorHit.AddListener(this, new KeyValuePair<ISpell, IObjAiBase>(ownerSpell, Owner), TargetExecute, false);
 
             StatsModifier.Tenacity.FlatBonus += 5 + ownerSpell.CastInfo.SpellLevel;
             unit.AddStatModifier(StatsModifier);
@@ -51,7 +51,7 @@ namespace Buffs
             float AP = Owner.Stats.AbilityPower.Total * 0.2f;
             float damage = 20f + (15 * ownerSpell.CastInfo.SpellLevel) + AP;
 
-            target.TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL,DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+            target.TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
         }
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {

@@ -26,7 +26,7 @@ namespace Buffs
             StatsModifier.MoveSpeed.PercentBonus = -0.4f;
             unit.Stats.CurrentHealth -= unit.Stats.CurrentHealth * 0.5f;
             p = AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "Global_Slow.troy", unit, lifetime: buff.Duration);
-          //StatsModifier.CooldownReduction.FlatBonus = 10f;
+            //StatsModifier.CooldownReduction.FlatBonus = 10f;
 
             unit.AddStatModifier(StatsModifier);
             //TODO: CooldownReduction

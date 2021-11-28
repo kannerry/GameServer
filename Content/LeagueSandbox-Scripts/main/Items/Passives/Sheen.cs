@@ -35,7 +35,7 @@ namespace ItemPassives
 
         private void TargetExecute(IAttackableUnit unit, bool arg2)
         {
-            if(Casted == true)
+            if (Casted == true)
             {
                 unit.TakeDamage(baseOwner, baseOwner.Stats.AttackDamage.BaseValue, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_PROC, false);
                 Casted = false;

@@ -24,7 +24,7 @@ namespace Buffs
         {
             var owner = ownerSpell.CastInfo.Owner;
             StatsModifier.SpellVamp.FlatBonus = 0.2f;
-          //StatsModifier.CooldownReduction.FlatBonus = 10f;
+            //StatsModifier.CooldownReduction.FlatBonus = 10f;
 
             unit.AddStatModifier(StatsModifier);
             //TODO: CooldownReduction

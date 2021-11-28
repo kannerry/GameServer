@@ -21,13 +21,13 @@ namespace Buffs
         IParticle p;
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            StatsModifier.MoveSpeed.PercentBonus -= 0.6f ;
+            StatsModifier.MoveSpeed.PercentBonus -= 0.6f;
             unit.AddStatModifier(StatsModifier);
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-             
+
         }
 
         public void OnUpdate(float diff)

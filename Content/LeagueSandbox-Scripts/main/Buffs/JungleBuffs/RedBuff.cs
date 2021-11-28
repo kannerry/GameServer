@@ -50,7 +50,7 @@ namespace Buffs
                     AddBuff("RedBuff", 60f, 1, spell, killer, monster);
                 }
             }
-            if(_owner is IChampion champion)
+            if (_owner is IChampion champion)
             {
                 if (deathData.Killer is IChampion killer)
                 {

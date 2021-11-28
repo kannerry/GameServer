@@ -73,15 +73,15 @@ namespace Buffs
             switch (slot)
             {
                 case 0:
-                {
-                    PlayAnimation(Shadow, "Spell1");
-                    return;
-                }
+                    {
+                        PlayAnimation(Shadow, "Spell1");
+                        return;
+                    }
                 case 2:
-                {
-                    PlayAnimation(Shadow, "Spell3");
-                    return;
-                }
+                    {
+                        PlayAnimation(Shadow, "Spell3");
+                        return;
+                    }
             }
         }
 

@@ -9,7 +9,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 namespace Buffs
 
 {
-    internal class Tantrum: IBuffGameScript
+    internal class Tantrum : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -23,12 +23,12 @@ namespace Buffs
         float timeSinceLastTick = 500f;
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            
 
-           StatsModifier.MagicResist.FlatBonus +=  3.0f  ;
-           StatsModifier.Armor.FlatBonus +=  3.0f  ;
+
+            StatsModifier.MagicResist.FlatBonus += 3.0f;
+            StatsModifier.Armor.FlatBonus += 3.0f;
             unit.AddStatModifier(StatsModifier);
-          
+
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
@@ -38,7 +38,7 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-           
+
         }
     }
 }

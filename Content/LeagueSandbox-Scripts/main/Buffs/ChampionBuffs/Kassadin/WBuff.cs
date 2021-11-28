@@ -25,7 +25,7 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             thisBuff = buff;
-            if(unit is IObjAiBase ai)
+            if (unit is IObjAiBase ai)
             {
                 Unit = ai;
 

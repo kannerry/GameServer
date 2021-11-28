@@ -44,8 +44,8 @@ namespace Buffs
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
-        {            
-            string[] originalAbilities = new string[] {"SionQ", "SionW", "SionE", "SionR"};
+        {
+            string[] originalAbilities = new string[] { "SionQ", "SionW", "SionE", "SionR" };
             for (byte i = 0; i < 4; i++)
             {
                 if (champion != null)

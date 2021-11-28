@@ -9,7 +9,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 namespace Buffs
 
 {
-    internal class CursedTouch: IBuffGameScript
+    internal class CursedTouch : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -25,9 +25,9 @@ namespace Buffs
         {
             var spellLevel = owner.GetSpell("CurseoftheSadMummy").CastInfo.SpellLevel;
 
-           StatsModifier.MagicResist.FlatBonus -= 10.0f * 5.0f * spellLevel ;
+            StatsModifier.MagicResist.FlatBonus -= 10.0f * 5.0f * spellLevel;
             unit.AddStatModifier(StatsModifier);
-          
+
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
@@ -37,7 +37,7 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-           
+
         }
     }
 }

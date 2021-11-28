@@ -25,7 +25,7 @@ namespace Buffs
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            
+
             StatsModifier.MoveSpeed.PercentBonus += 0.4f;
             unit.AddStatModifier(StatsModifier);
 

@@ -20,7 +20,7 @@ namespace Buffs
         IParticle p;
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-           
+
             StatsModifier.MoveSpeed.PercentBonus -= 0.35f + 0.05f * ownerSpell.CastInfo.SpellLevel;
             unit.AddStatModifier(StatsModifier);
         }

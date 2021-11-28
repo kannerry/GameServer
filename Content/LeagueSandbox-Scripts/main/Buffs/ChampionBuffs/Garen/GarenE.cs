@@ -34,7 +34,7 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-            
+
         }
     }
 }

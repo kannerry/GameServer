@@ -34,7 +34,7 @@ namespace Buffs
             var PercentDamage = (3.5f + (ownerSpell.CastInfo.SpellLevel * 0.5f));
             var AfterDamage = (missinghealth * 0.01f) * PercentDamage;
             var AP = ownerSpell.CastInfo.Owner.Stats.AbilityPower.Total * 0.45f;
-            TickingDamage = (30f +  AP + AfterDamage) * 0.33f;
+            TickingDamage = (30f + AP + AfterDamage) * 0.33f;
             var damage = AP + AfterDamage;
             Unit = unit;
             Owner = owner;

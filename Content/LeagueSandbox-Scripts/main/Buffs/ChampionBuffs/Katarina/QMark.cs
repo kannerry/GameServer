@@ -19,13 +19,13 @@ namespace Buffs
         public bool IsHidden => false;
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
-        
+
         IParticle p;
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             p = AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "katarina_daggered.troy", unit, buff.Duration);
         }
-        
+
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             RemoveParticle(p);

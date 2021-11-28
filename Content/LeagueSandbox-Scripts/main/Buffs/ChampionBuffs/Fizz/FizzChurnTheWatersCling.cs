@@ -34,11 +34,10 @@ namespace Buffs
             Target = unit;
             Owner = ownerSpell.CastInfo.Owner;
             Spell = ownerSpell;
-            var APratio = Owner.Stats.AbilityPower.Total * 0.2f;
-            damage = 24f + (14f * (ownerSpell.CastInfo.SpellLevel - 1)) + APratio;
+            var APratio = Owner.Stats.AbilityPower.Total;
+            damage = 200f + (125f * (ownerSpell.CastInfo.SpellLevel - 1)) + APratio;
 
             StatsModifier.MoveSpeed.PercentBonus -= 0.1f + 0.1f * ownerSpell.CastInfo.SpellLevel;
-            StatsModifier.AttackSpeed.PercentBonus -= 0.25f;
             unit.AddStatModifier(StatsModifier);
 
             var units = GetUnitsInRange(Target.Position, 350f, true);
@@ -50,7 +49,7 @@ namespace Buffs
 
         }
 
-        
+
 
         public void OnPreAttack(ISpell spell)
         {
@@ -74,6 +73,8 @@ namespace Buffs
                         if (units[i].Team != Spell.CastInfo.Owner.Team && !(units[i] is IObjBuilding || units[i] is IBaseTurret) && units[i] is IObjAiBase ai)
                         {
                             units[i].TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+                            var randPoint1 = new Vector2(units[i].Position.X + (40.0f), units[i].Position.Y + 40.0f);
+                            ForceMovement(units[i], "", randPoint1, 90.0f, 80.0f, 20.0f, 0.0f, ForceMovementType.FURTHEST_WITHIN_RANGE, ForceMovementOrdersType.CANCEL_ORDER, ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
                             units.RemoveAt(i);
                         }
                     }
@@ -83,11 +84,13 @@ namespace Buffs
                     Fish.SetToRemove();
                     AddParticleTarget(Owner, Target, "Fizz_SharkSplash.troy", Target);
                     AddParticleTarget(Owner, Target, "Fizz_SharkSplash_Ground.troy", Target);
-                    true1 = 1; 
+                    var randPoint = new Vector2(Target.Position.X + (40.0f), Target.Position.Y + 40.0f);
+                    ForceMovement(Target, "", randPoint, 90.0f, 80.0f, 20.0f, 0.0f, ForceMovementType.FURTHEST_WITHIN_RANGE, ForceMovementOrdersType.CANCEL_ORDER, ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
+                    true1 = 1;
 
                 }
             }
-            
+
         }
     }
 }
