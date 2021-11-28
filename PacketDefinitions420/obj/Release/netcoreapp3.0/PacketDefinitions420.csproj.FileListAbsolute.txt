@@ -1,0 +1,5 @@
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Release\netcoreapp3.0\PacketDefinitions420.csproj.AssemblyReference.cache
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Release\netcoreapp3.0\PacketDefinitions420.GeneratedMSBuildEditorConfig.editorconfig
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Release\netcoreapp3.0\PacketDefinitions420.AssemblyInfoInputs.cache
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Release\netcoreapp3.0\PacketDefinitions420.AssemblyInfo.cs
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Release\netcoreapp3.0\PacketDefinitions420.csproj.CoreCompileInputs.cache

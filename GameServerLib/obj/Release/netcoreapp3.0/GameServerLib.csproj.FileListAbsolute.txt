@@ -1,0 +1,5 @@
+D:\CUSTOM\GameServer\GameServerLib\obj\Release\netcoreapp3.0\GameServerLib.csproj.AssemblyReference.cache
+D:\CUSTOM\GameServer\GameServerLib\obj\Release\netcoreapp3.0\GameServerLib.GeneratedMSBuildEditorConfig.editorconfig
+D:\CUSTOM\GameServer\GameServerLib\obj\Release\netcoreapp3.0\GameServerLib.AssemblyInfoInputs.cache
+D:\CUSTOM\GameServer\GameServerLib\obj\Release\netcoreapp3.0\GameServerLib.AssemblyInfo.cs
+D:\CUSTOM\GameServer\GameServerLib\obj\Release\netcoreapp3.0\GameServerLib.csproj.CoreCompileInputs.cache

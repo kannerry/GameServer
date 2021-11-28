@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="obj\Debug\netcoreapp3.0\.NETCoreApp,Version=v3.0.AssemblyAttributes.cs" />
+    <Compile Include="obj\Debug\netcoreapp3.0\GameServerLib.AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="obj\Debug\netcoreapp3.0\GameServerLib.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\GameServerLib.csproj.nuget.dgspec.json" />
+    <Content Include="obj\project.assets.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="GameServerLib.csproj" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.AssemblyInfoInputs.cache" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.assets.cache" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.csproj.AssemblyReference.cache" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.dll" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.GeneratedMSBuildEditorConfig.editorconfig" />
+    <None Include="obj\Debug\netcoreapp3.0\GameServerLib.pdb" />
+    <None Include="obj\GameServerLib.csproj.nuget.g.props" />
+    <None Include="obj\GameServerLib.csproj.nuget.g.targets" />
+    <None Include="obj\project.nuget.cache" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Crc32.NET" Version="1.2.0" />
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.3.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
+    <PackageReference Include="RoyT.AStar" Version="2.1.0" />
+    <PackageReference Include="UltimateQuadTree" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GameMaths\GameMaths.csproj" />
+    <ProjectReference Include="..\GameServerCore\GameServerCore.csproj" />
+    <ProjectReference Include="..\PacketDefinitions420\PacketDefinitions420.csproj" />
+  </ItemGroup>
+
+</Project>

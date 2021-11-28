@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "TLWpCHiclA2vAx6lqHeyLNY9mj84W+7fE/ZUUc4MN7fLs+5esLU4IZxIHM1RqKjtAw5i5O+xMy7OJIL2QHTCHA==",
+  "success": true,
+  "projectFilePath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.0.1\\microsoft.aspnetcore.app.ref.3.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

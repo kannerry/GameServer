@@ -1,0 +1,15 @@
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\PacketDefinitions420.deps.json
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\PacketDefinitions420.dll
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\PacketDefinitions420.pdb
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\GameServerCore.dll
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\LeaguePackets.dll
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\GameServerCore.pdb
+D:\CUSTOM\GameServer\PacketDefinitions420\bin\Debug\netcoreapp3.0\LeaguePackets.pdb
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.AssemblyInfoInputs.cache
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.AssemblyInfo.cs
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.csproj.CoreCompileInputs.cache
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.dll
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.pdb
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.csproj.AssemblyReference.cache
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.GeneratedMSBuildEditorConfig.editorconfig
+D:\CUSTOM\GameServer\PacketDefinitions420\obj\Debug\netcoreapp3.0\PacketDefinitions420.csproj.CopyComplete

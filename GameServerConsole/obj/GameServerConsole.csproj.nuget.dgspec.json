@@ -1,0 +1,475 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\CUSTOM\\GameServerGit\\GameServerConsole\\GameServerConsole.csproj": {}
+  },
+  "projects": {
+    "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj",
+        "projectName": "GameMaths",
+        "projectPath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj",
+        "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
+        "outputPath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KANNNORRRRRRRRRRRRRR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CUSTOM\\GameServerGit\\GameServerConsole\\GameServerConsole.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameServerConsole\\GameServerConsole.csproj",
+        "projectName": "GameServerConsole",
+        "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerConsole\\GameServerConsole.csproj",
+        "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
+        "outputPath": "D:\\CUSTOM\\GameServerGit\\GameServerConsole\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KANNNORRRRRRRRRRRRRR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
+            "projectReferences": {
+              "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj": {
+                "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
+          "dependencies": {
+            "CommandLineParser": {
+              "target": "Package",
+              "version": "[2.6.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x86",
+              "version": "[3.0.3, 3.0.3]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj",
+        "projectName": "GameServerCore",
+        "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj",
+        "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
+        "outputPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KANNNORRRRRRRRRRRRRR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
+          "dependencies": {
+            "Crc32.NET": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "System.Numerics.Vectors": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "UltimateQuadTree": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj",
+        "projectName": "GameServerLib",
+        "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj",
+        "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
+        "outputPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KANNNORRRRRRRRRRRRRR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
+            "projectReferences": {
+              "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj": {
+                "projectPath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj"
+              },
+              "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {
+                "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj"
+              },
+              "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj": {
+                "projectPath": "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
+          "dependencies": {
+            "Crc32.NET": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp": {
+              "target": "Package",
+              "version": "[3.3.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "OptimizedPriorityQueue": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
+            "RoyT.AStar": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "UltimateQuadTree": {
+              "target": "Package",
+              "version": "[1.0.3, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CUSTOM\\GameServerGit\\LeaguePackets\\LeaguePackets\\LeaguePackets.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\LeaguePackets\\LeaguePackets\\LeaguePackets.csproj",
+        "projectName": "LeaguePackets",
+        "projectPath": "D:\\CUSTOM\\GameServerGit\\LeaguePackets\\LeaguePackets\\LeaguePackets.csproj",
+        "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
+        "outputPath": "D:\\CUSTOM\\GameServerGit\\LeaguePackets\\LeaguePackets\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KANNNORRRRRRRRRRRRRR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj",
+        "projectName": "PacketDefinitions420",
+        "projectPath": "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj",
+        "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
+        "outputPath": "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\KANNNORRRRRRRRRRRRRR\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
+            "projectReferences": {
+              "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {
+                "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj"
+              },
+              "D:\\CUSTOM\\GameServerGit\\LeaguePackets\\LeaguePackets\\LeaguePackets.csproj": {
+                "projectPath": "D:\\CUSTOM\\GameServerGit\\LeaguePackets\\LeaguePackets\\LeaguePackets.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
+          "dependencies": {
+            "ENetSharpLeague": {
+              "target": "Package",
+              "version": "[1.2.1-beta, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.0.1, 3.0.1]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
