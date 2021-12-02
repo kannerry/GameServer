@@ -1,14 +1,14 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+
 namespace Spells
 {
     public class DarkBinding : ISpellScript
@@ -29,14 +29,12 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-
         }
 
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
             AddParticleTarget(owner, owner, "DarkBinding_mis.troy", owner, bone: "L_HAND");
-
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -45,9 +43,7 @@ namespace Spells
             var ownerSkinID = owner.SkinID;
             var targetPos = GetPointFromUnit(owner, 1150.0f);
 
-
             SpellCast(owner, 0, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -61,14 +57,16 @@ namespace Spells
         public void OnSpellPostChannel(ISpell spell)
         {
         }
+
         public void TargetExecute(IAttackableUnit unit, bool isCrit)
         {
-
         }
+
         public void OnUpdate(float diff)
         {
         }
     }
+
     public class DarkBindingMissile : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
@@ -104,8 +102,6 @@ namespace Spells
             var damage = 25 + spell.CastInfo.SpellLevel * 55 + ap;
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
 
-
-
             AddParticleTarget(owner, target, "DarkBinding_tar.troy", target);
             missile.SetToRemove();
             AddBuff("Stun", 3f, 1, spell, target, owner);
@@ -136,4 +132,3 @@ namespace Spells
         }
     }
 }
-

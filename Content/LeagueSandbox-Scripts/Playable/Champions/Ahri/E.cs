@@ -20,7 +20,6 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -125,5 +124,4 @@ namespace Spells
         {
         }
     }
-
 }

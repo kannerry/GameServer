@@ -1,10 +1,9 @@
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
-using GameServerCore.Enums;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -42,7 +41,6 @@ namespace Spells
             spell.CastInfo.Owner.SetTargetUnit(null);
             CreateTimer(0.01f, () => { ForceMovement(spell.CastInfo.Owner, "Spell3", trueCoords, 1350, 0, 0, 0); });
             AddParticleTarget(spell.CastInfo.Owner, spell.CastInfo.Owner, "Lucian_E_cas_trail.troy", spell.CastInfo.Owner, 1f);
-
         }
 
         public void OnSpellChannel(ISpell spell)

@@ -1,28 +1,25 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class NasusQ : ISpellScript
     {
-
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
             NotSingleTargetSpell = true
             // TODO
         };
-        IObjAiBase itemOwner;
+
+        private IObjAiBase itemOwner;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             itemOwner = owner;
@@ -41,7 +38,9 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-        int stack = 0;
+
+        private int stack = 0;
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             //var owner = spell.CastInfo.Owner as IChampion;
@@ -53,12 +52,10 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -87,9 +84,10 @@ namespace Spells
             // TODO
         };
 
-        ISpell originspell;
-        IObjAiBase ownermain;
-        static internal int Applied = 1;
+        private ISpell originspell;
+        private IObjAiBase ownermain;
+        internal static int Applied = 1;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             originspell = spell;
@@ -151,4 +149,3 @@ namespace Spells
         }
     }
 }
-

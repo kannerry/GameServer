@@ -1,17 +1,10 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.NetInfo;
-using System;
-using LeagueSandbox.GameServer.Content;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -90,7 +83,6 @@ namespace Spells
 
                 LPos1L = GetPointFromUnit(owner, 300, 37);
                 RPos1L = GetPointFromUnit(owner, 300, -37);
-
             }
             var Lmushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", LPos1);
             var Rmushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", RPos1);
@@ -133,7 +125,6 @@ namespace Spells
                 LRmushroom.SetHealthbarVisibility((int)player.GetPlayerId(), LRmushroom, false);
                 mushroom2.SetInvisible((int)player.GetPlayerId(), mushroom2, 0f, 0.0f);
                 mushroom2.SetHealthbarVisibility((int)player.GetPlayerId(), mushroom2, false);
-
             }
             CreateTimer(4.0f, () =>
         {

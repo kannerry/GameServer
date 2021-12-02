@@ -1,13 +1,9 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
@@ -52,7 +48,6 @@ namespace Spells
             //CreateTimer(15.36f, () => { owner.Stats.Size.BaseValue = 1.050f; });
             //CreateTimer(15.38f, () => { owner.Stats.Size.BaseValue = 1.025f; });
             //CreateTimer(15.40f, () => { owner.Stats.Size.BaseValue = 1.000f; });
-
         }
 
         public void OnSpellCast(ISpell spell)

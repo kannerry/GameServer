@@ -1,28 +1,26 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Collections.Generic;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class VeigarEventHorizon : ISpellScript
     {
-        Vector2 truecoords;
-        float timeSinceCast;
-        IObjAiBase Owner;
-        ISpell Spell;
-        List<uint> stunnedUnits;
+        private Vector2 truecoords;
+        private float timeSinceCast;
+        private IObjAiBase Owner;
+        private ISpell Spell;
+        private List<uint> stunnedUnits;
+
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
             IsDamagingSpell = true,
-
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -41,7 +39,6 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-
         }
 
         public void OnSpellCast(ISpell spell)
@@ -62,12 +59,15 @@ namespace Spells
                 case 8:
                     cage = "Veigar_Skin08_E_cage_green.troy";
                     break;
+
                 case 6:
                     cage = "Veigar_Skin06_E_cage_green.troy";
                     break;
+
                 case 4:
                     cage = "Veigar_Skin04_E_cage_green.troy";
                     break;
+
                 default:
                     cage = "Veigar_Base_E_cage_green.troy";
                     break;
@@ -93,7 +93,6 @@ namespace Spells
         public void OnSpellPostChannel(ISpell spell)
         {
         }
-
 
         public void OnUpdate(float diff)
         {

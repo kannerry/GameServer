@@ -1,14 +1,14 @@
-﻿using System.Numerics;
-using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -26,9 +26,10 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-        ISpellMissile v;
-        IMinion mushroom;
-        bool destroy = false;
+
+        private ISpellMissile v;
+        private IMinion mushroom;
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             ISpellScriptMetadata s = new SpellScriptMetadata()
@@ -37,7 +38,6 @@ namespace Spells
                 MissileParameters = new MissileParameters
                 {
                     Type = MissileType.Circle,
-
                 }
             };
 
@@ -135,4 +135,3 @@ namespace Spells
         }
     }
 }
-

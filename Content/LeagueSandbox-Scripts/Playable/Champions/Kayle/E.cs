@@ -1,17 +1,14 @@
-﻿using System;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class JudicatorRighteousFury : ISpellScript
     {
-        IAttackableUnit Target;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true
@@ -41,7 +38,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -61,4 +57,3 @@ namespace Spells
         }
     }
 }
-

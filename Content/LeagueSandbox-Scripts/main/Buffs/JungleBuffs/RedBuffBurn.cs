@@ -1,11 +1,7 @@
 ﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.API;
-using System;
-using GameServerCore.Domain;
 
 namespace Buffs
 
@@ -19,13 +15,12 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; }
 
-        IParticle p;
-        IParticle p2;
-        IObjAiBase _owner;
-        float counter = 100;
-        ISpell spell;
-        IBuff Buff;
-        IAttackableUnit Unit;
+        private IObjAiBase _owner;
+        private float counter = 100;
+        private ISpell spell;
+        private IBuff Buff;
+        private IAttackableUnit Unit;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             _owner = ownerSpell.CastInfo.Owner;
@@ -52,7 +47,6 @@ namespace Buffs
             }
             StatsModifier.MoveSpeed.PercentBonus -= slow;
             unit.AddStatModifier(StatsModifier);
-
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)

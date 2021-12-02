@@ -1,10 +1,10 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -19,10 +19,12 @@ namespace Spells
         {
             ApiEventManager.OnSpellCast.AddListener(this, spell, ExecuteSpell);
         }
+
         public void ExecuteSpell(ISpell spell)
         {
             AddBuff("AnnieStun", int.MaxValue, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }

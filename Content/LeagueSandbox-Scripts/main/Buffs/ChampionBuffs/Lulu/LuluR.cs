@@ -1,9 +1,9 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -21,8 +21,8 @@ namespace Buffs
         private float _healthNow;
         private float _healthBonus;
 
-        ISpell OwnerSpell;
-        IParticle cast;
+        private ISpell OwnerSpell;
+        private IParticle cast;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -53,8 +53,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }
-

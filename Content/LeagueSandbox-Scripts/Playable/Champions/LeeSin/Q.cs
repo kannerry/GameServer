@@ -1,13 +1,13 @@
-﻿using System.Numerics;
-using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -43,9 +43,11 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
         }
-        static internal IAttackableUnit targ;
-        static internal IParticle partic;
-        static internal bool procced = false;
+
+        internal static IAttackableUnit targ;
+        internal static IParticle partic;
+        internal static bool procced = false;
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             targ = target;
@@ -92,6 +94,7 @@ namespace Spells
         {
         }
     }
+
     public class BlindMonkQTwo : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
@@ -146,4 +149,3 @@ namespace Spells
         }
     }
 }
-

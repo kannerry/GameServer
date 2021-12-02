@@ -1,17 +1,17 @@
-using System;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class JudicatorDivineBlessing : ISpellScript
     {
-        IAttackableUnit Target;
+        private IAttackableUnit Target;
+
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true
@@ -39,17 +39,14 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner;
 
-
             AddParticle(owner, spell.CastInfo.Targets[0].Unit, "Intervention_tar.troy", Vector2.Zero);
 
             AddBuff("JudicatorDivineBlessing", 3f, 1, spell, Target, owner);
             PerformHeal(owner, spell, Target);
-
-
         }
+
         private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
         {
-
             var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
             float healthGain = 15 + (spell.CastInfo.SpellLevel * 45) + ap;
             if (target.HasBuff("HealCheck"))
@@ -58,8 +55,8 @@ namespace Spells
             }
             var newHealth = target.Stats.CurrentHealth + healthGain;
             target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
-
         }
+
         public void OnSpellChannel(ISpell spell)
         {
         }
@@ -77,4 +74,3 @@ namespace Spells
         }
     }
 }
-

@@ -1,13 +1,10 @@
-﻿using GameServerCore.Enums;
-using System;
-using System.Numerics;
-using GameServerCore.Domain.GameObjects;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.API;
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -17,10 +14,9 @@ namespace Buffs
         public BuffAddType BuffAddType => BuffAddType.STACKS_AND_RENEWS;
         public int MaxStacks => 1;
         public bool IsHidden => false;
-        IObjAiBase Owner;
-        float damage;
-        ISpell daspell;
-        IObjAiBase daowner;
+        private IObjAiBase Owner;
+        private ISpell daspell;
+        private IObjAiBase daowner;
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
@@ -40,7 +36,6 @@ namespace Buffs
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-
         }
 
         public void OnUpdate(float diff)
@@ -48,4 +43,3 @@ namespace Buffs
         }
     }
 }
-

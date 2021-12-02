@@ -1,15 +1,13 @@
-﻿using System;
-using System.Numerics;
-using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -70,7 +68,6 @@ namespace Spells
             CreateTimer(2.9f, () => { SpellCast(owner, 1, SpellSlotType.ExtraSlots, spellPos, spellPos, true, Vector2.Zero); });
             CreateTimer(3.0f, () => { SpellCast(owner, 1, SpellSlotType.ExtraSlots, spellPos, spellPos, true, Vector2.Zero); });
             owner.StopMovement();
-
         }
 
         public void OnSpellCast(ISpell spell)
@@ -97,6 +94,7 @@ namespace Spells
         {
         }
     }
+
     public class LucianRMissile : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()

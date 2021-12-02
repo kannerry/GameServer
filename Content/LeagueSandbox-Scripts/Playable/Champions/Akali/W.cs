@@ -1,14 +1,13 @@
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using GameServerCore.Scripting.CSharp;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -36,6 +35,7 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
+
         public void OnSpellPostCast(ISpell spell)
         {
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
@@ -53,6 +53,7 @@ namespace Spells
             });
             CreateTimer(8.0f, () => { SwagSector.SetToRemove(); });
         }
+
         public void SwagExecute(ISpell ownerSpell, IAttackableUnit target, ISpellMissile swag, ISpellSector sector)
         {
             if (target.Equals(ownerSpell.CastInfo.Owner))
@@ -60,6 +61,7 @@ namespace Spells
                 AddBuff("AkaliShroudBuff", 0.2f, 1, ownerSpell, ownerSpell.CastInfo.Owner, ownerSpell.CastInfo.Owner);
             }
         }
+
         public void OnSpellChannel(ISpell spell)
         {
         }

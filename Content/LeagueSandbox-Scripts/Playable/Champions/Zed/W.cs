@@ -1,15 +1,12 @@
-﻿using System.Numerics;
-using GameServerCore;
-using GameServerCore.Domain;
-using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -71,8 +68,8 @@ namespace Spells
             // TODO
         };
 
-        IBuff HandlerBuff;
-        IMinion Shadow;
+        private IBuff HandlerBuff;
+        private IMinion Shadow;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {

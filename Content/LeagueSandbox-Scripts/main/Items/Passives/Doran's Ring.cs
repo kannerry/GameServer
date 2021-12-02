@@ -1,13 +1,8 @@
-﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
+﻿using GameServerCore.Domain;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.GameObjects.Stats;
 using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace ItemPassives
 {
@@ -21,14 +16,17 @@ namespace ItemPassives
             StatsModifier.ManaRegeneration.BaseBonus += 0.6f;
             owner.AddStatModifier(StatsModifier);
         }
+
         public void TargetExecute(IDeathData deathData)
         {
             deathData.Killer.Stats.CurrentMana += 4;
         }
+
         public void OnDeactivate(IObjAiBase owner)
         {
             ApiEventManager.OnKillUnit.RemoveListener(this);
         }
+
         public void OnUpdate(float diff)
         {
         }

@@ -1,10 +1,9 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -19,7 +18,6 @@ namespace Spells
             NotSingleTargetSpell = true
             // TODO
         };
-        float ticks = 0;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -56,7 +54,6 @@ namespace Spells
                 AddParticleTarget(owner, owner, "Fizz_Jump_WeaponGlow.troy", owner, bone: "BUFFBONE_GLB_WEAPON_1");
                 AddBuff("FizzBuffer", 0.75f, 1, spell, owner, owner);
                 AddBuff("FizzTrickSlam", 1.1f, 1, spell, owner, owner);
-
             }
         }
 
@@ -76,10 +73,6 @@ namespace Spells
         {
         }
     }
-
-
-
-
 
     public class FizzJumpTwo : ISpellScript
     {
@@ -123,7 +116,6 @@ namespace Spells
             ForceMovement(owner, "Spell1", trueCoords, 1200, 0, 0, 0);
             AddParticleTarget(owner, owner, "Fizz_Jump_cas.troy", owner);
             AddParticleTarget(owner, owner, "Fizz_Jump_WeaponGlow.troy", owner, bone: "BUFFBONE_GLB_WEAPON_1");
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -142,10 +134,6 @@ namespace Spells
         {
         }
     }
-
-
-
-
 
     public class FizzTrickSlam : ISpellScript
     {
@@ -189,7 +177,6 @@ namespace Spells
             ForceMovement(owner, "Spell3a", trueCoords, 1200, 0, 0, 0);
             AddParticleTarget(owner, owner, "Fizz_Jump_cas.troy", owner);
             AddParticleTarget(owner, owner, "Fizz_Jump_WeaponGlow.troy", owner, bone: "BUFFBONE_GLB_WEAPON_1");
-
         }
 
         public void OnSpellChannel(ISpell spell)

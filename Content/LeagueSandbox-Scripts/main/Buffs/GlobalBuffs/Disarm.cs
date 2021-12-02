@@ -1,6 +1,6 @@
 using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 
 namespace Buffs
@@ -24,8 +24,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }
-

@@ -1,10 +1,11 @@
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System;
 using System.Numerics;
-using GameServerCore.Enums;
+
 namespace Spells
 {
     public class RemoveScurvy : ISpellScript
@@ -43,7 +44,6 @@ namespace Spells
 
             owner.SetStatus(StatusFlags.CanMove, true);
             owner.SetStatus(StatusFlags.Rooted, false);
-
         }
 
         public void OnSpellCast(ISpell spell)

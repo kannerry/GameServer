@@ -1,13 +1,10 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
-using LeagueSandbox.GameServer;
-using System.Linq;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -17,6 +14,7 @@ namespace Spells
         {
             // TODO
         };
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -24,6 +22,7 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             AddBuff("TalonDisappear", 2f, 1, spell, owner, owner);
@@ -51,6 +50,7 @@ namespace Spells
                 }
             }
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }

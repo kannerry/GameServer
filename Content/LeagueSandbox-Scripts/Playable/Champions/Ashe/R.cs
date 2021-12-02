@@ -1,15 +1,13 @@
-using System;
-using System.Numerics;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -40,12 +38,12 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -59,7 +57,6 @@ namespace Spells
             AddParticleTarget(owner, target, "Ashe_Base_R_tar.troy", target, lifetime: 1f);
             AddBuff("Stun", 1.5f, 1, spell, target, owner);
         }
-
 
         public void OnSpellChannel(ISpell spell)
         {

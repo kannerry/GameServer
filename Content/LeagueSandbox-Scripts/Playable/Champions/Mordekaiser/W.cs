@@ -1,14 +1,10 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using GameServerCore.Scripting.CSharp;
-
 
 namespace Spells
 {
@@ -18,7 +14,6 @@ namespace Spells
         {
             TriggersSpellCasts = true,
             IsDamagingSpell = true,
-
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)

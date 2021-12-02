@@ -1,15 +1,11 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using System;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -25,7 +21,7 @@ namespace Spells
             SpellToggleSlot = 4
         };
 
-        IBuff thisBuff;
+        private IBuff thisBuff;
         public ISpellSector DamageSector;
         public ISpellSector SlowSector;
 

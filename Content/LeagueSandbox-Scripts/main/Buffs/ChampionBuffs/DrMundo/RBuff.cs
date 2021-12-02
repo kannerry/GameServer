@@ -1,10 +1,8 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
-using LeagueSandbox.GameServer.GameObjects.Stats;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace Sadism
 {
@@ -27,6 +25,7 @@ namespace Sadism
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
         }
+
         public void OnUpdate(float diff)
         {
         }

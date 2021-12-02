@@ -1,12 +1,10 @@
 using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -19,8 +17,9 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IBuff thisBuff;
-        IParticle p;
+        private IBuff thisBuff;
+        private IParticle p;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             thisBuff = buff;
@@ -33,6 +32,7 @@ namespace Buffs
             StatsModifier.CriticalDamage.FlatBonus += -0.6f + (0.2f * (ownerSpell.CastInfo.SpellLevel - 1)); //Figure out later why this won't work
             unit.AddStatModifier(StatsModifier);
         }
+
         public void OnPreAttack(ISpell spell)
         {
             if (thisBuff != null)
@@ -54,4 +54,3 @@ namespace Buffs
         }
     }
 }
-

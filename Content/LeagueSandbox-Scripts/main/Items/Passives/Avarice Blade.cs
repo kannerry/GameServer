@@ -1,23 +1,16 @@
-﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
+﻿using GameServerCore.Domain;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.GameObjects.Stats;
 using LeagueSandbox.GameServer.API;
-using Buffs;
-using GameServerCore.Enums;
-using GameServerCore.Domain;
-using System;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace ItemPassives
 {
     public class ItemID_3093 : IItemScript
     {
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
-        IObjAiBase itemOwner;
+        private IObjAiBase itemOwner;
+
         public void OnActivate(IObjAiBase owner)
         {
             itemOwner = owner;
@@ -33,6 +26,7 @@ namespace ItemPassives
         {
             ApiEventManager.OnKillUnit.RemoveListener(this);
         }
+
         public void OnUpdate(float diff)
         {
         }

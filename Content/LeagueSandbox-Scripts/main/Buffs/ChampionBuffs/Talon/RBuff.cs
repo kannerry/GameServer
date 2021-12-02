@@ -1,16 +1,12 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class TalonDisappear : IBuffGameScript
+    internal class TalonDisappear : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -19,28 +15,20 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle pbuff;
-        IParticle pbuff2;
-        IBuff thisBuff;
-
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-
             StatsModifier.MoveSpeed.PercentBonus += 0.4f;
             unit.AddStatModifier(StatsModifier);
-
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             //RemoveParticle(pbuff);
             //RemoveParticle(pbuff2);
-
         }
 
         public void OnPreAttack(ISpell spell)
         {
-
         }
 
         public void OnUpdate(float diff)

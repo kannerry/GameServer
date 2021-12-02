@@ -6,7 +6,7 @@ using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace Buffs
 {
-    class EzrealWBuff : IBuffGameScript
+    internal class EzrealWBuff : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -28,7 +28,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

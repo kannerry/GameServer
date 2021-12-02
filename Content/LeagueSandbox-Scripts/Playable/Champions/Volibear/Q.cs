@@ -1,25 +1,23 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class VolibearQ : ISpellScript
     {
-
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
             NotSingleTargetSpell = true
             // TODO
         };
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             ApiEventManager.OnPreAttack.AddListener(this, owner, ChangeAnim, false);
@@ -47,7 +45,6 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -69,8 +66,8 @@ namespace Spells
         public void OnUpdate(float diff)
         {
         }
-
     }
+
     public class VolibearQAttack : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
@@ -80,9 +77,10 @@ namespace Spells
             // TODO
         };
 
-        ISpell originspell;
-        IObjAiBase ownermain;
-        static internal int Applied = 1;
+        private ISpell originspell;
+        private IObjAiBase ownermain;
+        internal static int Applied = 1;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             originspell = spell;
@@ -140,4 +138,3 @@ namespace Spells
         }
     }
 }
-

@@ -1,16 +1,13 @@
-using System.Linq;
-using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -18,7 +15,6 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
-
             NotSingleTargetSpell = true,
             IsDamagingSpell = true,
             TriggersSpellCasts = true
@@ -56,6 +52,7 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile swag, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -74,7 +71,6 @@ namespace Spells
             AddParticleTarget(owner, target, "katarina_w_tar.troy", target, 1f);
             AddBuff("KatarinaWHaste", 1f, 1, spell, owner, owner);
         }
-
 
         public void OnSpellChannel(ISpell spell)
         {

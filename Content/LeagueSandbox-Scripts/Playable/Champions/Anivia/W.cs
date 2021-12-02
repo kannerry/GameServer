@@ -1,14 +1,10 @@
-﻿using GameServerCore;
-using GameServerCore.Domain;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Enums;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -23,9 +19,11 @@ namespace Spells
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
         }
+
         public void ExecuteSpell(ISpell spell)
         {
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -71,7 +69,6 @@ namespace Spells
 
             IMinion L3 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L3Pos);
             IMinion R3 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R3Pos);
-
 
             m.SetCollisionRadius(1.0f);
             L.SetCollisionRadius(1.0f);

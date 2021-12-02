@@ -1,15 +1,13 @@
-using System;
-using System.Numerics;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -36,17 +34,16 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-
         }
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -57,13 +54,11 @@ namespace Spells
 
             var damage = ((100 + spell.CastInfo.SpellLevel * 150 + bonusAd) * disttotal) + 0.25f * (target.Stats.HealthPoints.Total - target.Stats.CurrentHealth);
 
-
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             missile.SetToRemove();
 
             AddParticleTarget(owner, target, "Jinx_R_Tar", target, lifetime: 1f);
         }
-
 
         public void OnSpellChannel(ISpell spell)
         {

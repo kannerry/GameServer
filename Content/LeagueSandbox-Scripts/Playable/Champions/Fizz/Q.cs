@@ -1,10 +1,9 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -32,7 +31,6 @@ namespace Spells
             _target = target;
             AddBuff("FizzQ1", 0.395f - spell.CastInfo.SpellLevel * 0.012f, 1, spell, owner, owner);
             PlayAnimation(owner, "SPELL1", 0.395f, 0f, -10f);
-
         }
 
         public void OnSpellCast(ISpell spell)
@@ -58,7 +56,6 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 
@@ -66,19 +63,16 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
-
         };
 
         public static IAttackableUnit _target = null;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
-
         }
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
@@ -87,7 +81,6 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -108,7 +101,6 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

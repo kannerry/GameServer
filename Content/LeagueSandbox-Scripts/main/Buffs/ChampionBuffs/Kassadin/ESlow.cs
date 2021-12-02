@@ -5,7 +5,6 @@ using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.GameObjects.Stats;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
-
 namespace Buffs
 {
     internal class ForcePulse : IBuffGameScript
@@ -31,8 +30,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }
-

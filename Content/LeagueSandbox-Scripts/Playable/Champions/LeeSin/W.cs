@@ -1,10 +1,10 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -42,7 +42,9 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
-        static internal bool procced = false;
+
+        internal static bool procced = false;
+
         public void OnSpellPostCast(ISpell spell)
         {
             CreateTimer(3.0f, () =>
@@ -124,5 +126,4 @@ namespace Spells
         {
         }
     }
-
 }

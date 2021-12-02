@@ -1,22 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class FizzMarinerDoom : ISpellScript
     {
-        IObjAiBase Owner;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             MissileParameters = new MissileParameters
@@ -34,6 +31,7 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
@@ -41,7 +39,6 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
-
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -70,11 +67,8 @@ namespace Spells
         }
     }
 
-
     public class FizzMarinerDoomMissile : ISpellScript
     {
-        IBuff HandlerBuff;
-        IMinion Fish;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             MissileParameters = new MissileParameters
@@ -84,7 +78,6 @@ namespace Spells
             IsDamagingSpell = true
             // TODO
         };
-        IAttackableUnit Target;
 
         //Vector2 direction;
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -103,9 +96,7 @@ namespace Spells
                 Type = MissileType.Circle,
                 OverrideEndPosition = end
             });
-
         }
-
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
@@ -120,8 +111,8 @@ namespace Spells
                 AddParticleTarget(owner, target, "Fizz_Ring_Green.troy", target, 1.5f);
                 AddBuff("FizzChurnTheWatersCling", 1.5f, 1, spell, target, owner);
             }
-
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }
@@ -145,7 +136,5 @@ namespace Spells
         public void OnUpdate(float diff)
         {
         }
-
     }
-
 }

@@ -1,15 +1,14 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
+using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class GlacialStormKarthus : IBuffGameScript
+    internal class GlacialStormKarthus : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -18,14 +17,13 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IAttackableUnit owner;
-        ISpell originSpell;
-        IBuff thisBuff;
-        IParticle red;
-        IParticle green;
-        float DamageManaTimer;
-        float SlowTimer;
-        float[] manaCost = { 30.0f, 50.0f, 60.0f };
+        private IAttackableUnit owner;
+        private ISpell originSpell;
+        private IBuff thisBuff;
+        private IParticle red;
+        private IParticle green;
+        private float DamageManaTimer;
+        private float[] manaCost = { 30.0f, 50.0f, 60.0f };
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {

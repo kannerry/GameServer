@@ -1,21 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class ZedShuriken : ISpellScript
     {
-        IObjAiBase Owner;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             MissileParameters = new MissileParameters
@@ -33,10 +30,11 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
-        IMinion Shadow;
+
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
@@ -62,7 +60,6 @@ namespace Spells
                     }
                 }
             }
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -122,6 +119,7 @@ namespace Spells
 
             AddParticleTarget(owner, target, "Zed_Q_tar.troy", target);
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }
@@ -187,6 +185,7 @@ namespace Spells
 
             AddParticleTarget(owner, target, "Zed_Q_tar.troy", target);
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }

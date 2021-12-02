@@ -1,18 +1,17 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
 using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 using System.Collections.Generic;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class BurningAgony : IBuffGameScript
+    internal class BurningAgony : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
@@ -21,10 +20,11 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IObjAiBase Owner;
-        IParticle p;
-        IParticle p2;
+        private IObjAiBase Owner;
+        private IParticle p;
+        private IParticle p2;
         public ISpellSector DRMundoWAOE;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             Owner = ownerSpell.CastInfo.Owner;
@@ -46,6 +46,7 @@ namespace Buffs
             p = AddParticleTarget(Owner, unit, "dr_mundo_burning_agony_cas_01.troy", unit, buff.Duration);
             p2 = AddParticleTarget(Owner, unit, "dr_mundo_burning_agony_cas_02.troy", unit, buff.Duration);
         }
+
         public void TargetExecute(ISpell ownerSpell, IAttackableUnit target, ISpellSector sector)
         {
             float AP = Owner.Stats.AbilityPower.Total * 0.2f;
@@ -53,6 +54,7 @@ namespace Buffs
 
             target.TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
         }
+
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             ApiEventManager.OnSpellSectorHit.RemoveListener(this);
@@ -61,9 +63,9 @@ namespace Buffs
             RemoveParticle(p);
             RemoveParticle(p2);
         }
+
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

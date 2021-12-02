@@ -1,16 +1,12 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class GangplankBleed : IBuffGameScript
+    internal class GangplankBleed : IBuffGameScript
     {
         public BuffType BuffType => BuffType.POISON;
         public BuffAddType BuffAddType => BuffAddType.STACKS_AND_RENEWS;
@@ -19,13 +15,12 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        float damage;
-        float timeSinceLastTick = 900f;
+        private float damage;
+        private float timeSinceLastTick = 900f;
 
-        IAttackableUnit Unit;
-        IObjAiBase owner;
-        IParticle p;
-        IParticle p2;
+        private IAttackableUnit Unit;
+        private IObjAiBase owner;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             owner = ownerSpell.CastInfo.Owner as IChampion;
@@ -42,7 +37,6 @@ namespace Buffs
 
         public void OnPreAttack(ISpell spell)
         {
-
         }
 
         public void OnUpdate(float diff)

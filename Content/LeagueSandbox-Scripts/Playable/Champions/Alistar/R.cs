@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -20,7 +16,6 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -29,18 +24,15 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            AddParticleTarget(owner, owner, "Malphite_Base_UnstoppableForce_cas.troy", owner, 1);
-
+            //AddParticleTarget(owner, owner, "Malphite_Base_UnstoppableForce_cas.troy", owner, 1);
         }
 
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
 
-
             AddBuff("FerociousHowl", 7f, 1, spell, owner, owner);
-            AddParticleTarget(owner, owner, "Malphite_Base_UnstoppableForce_tar.troy", owner, 1);
-
+            //AddParticleTarget(owner, owner, "Malphite_Base_UnstoppableForce_tar.troy", owner, 1);
         }
 
         public void OnSpellPostCast(ISpell spell)

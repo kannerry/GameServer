@@ -1,20 +1,13 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Scripting.CSharp;
-
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace MordekaiserChildrenOfTheGraveGhost
 {
     internal class MordekaiserChildrenOfTheGraveGhost : IBuffGameScript
     {
-
-
         public BuffType BuffType => BuffType.INTERNAL;
         public BuffAddType BuffAddType => BuffAddType.STACKS_AND_RENEWS;
         public int MaxStacks => 1;
@@ -22,11 +15,10 @@ namespace MordekaiserChildrenOfTheGraveGhost
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        float timeSinceLastTick;
-        IAttackableUnit Unit;
-        float TickingDamage;
-        IObjAiBase Owner;
-        int limiter;
+        private float timeSinceLastTick;
+        private IAttackableUnit Unit;
+        private IObjAiBase Owner;
+        private int limiter;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -39,7 +31,6 @@ namespace MordekaiserChildrenOfTheGraveGhost
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-
         }
 
         public void OnUpdate(float diff)
@@ -53,4 +44,5 @@ namespace MordekaiserChildrenOfTheGraveGhost
         }
     }
 }
+
 //TODO: Make healing for POST MITIGATION damage

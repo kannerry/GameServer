@@ -1,14 +1,14 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Collections.Generic;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -53,7 +53,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -86,6 +85,7 @@ namespace Spells
 
             // TODO
         };
+
         public List<IAttackableUnit> UnitsHit = new List<IAttackableUnit>();
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -110,6 +110,7 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
+
         public void OnMissileEnd(ISpellMissile missile)
         {
             var owner = missile.CastInfo.Owner;
@@ -120,6 +121,7 @@ namespace Spells
             }
             //SpellCast(owner, 2, SpellSlotType.ExtraSlots, owner.Position, owner.Position, true, missile.Position);
         }
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             var missile = spell.CreateSpellMissile(new MissileParameters

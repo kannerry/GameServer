@@ -1,18 +1,10 @@
-using System.Linq;
-using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
-using GameServerCore.Scripting.CSharp;
 using System;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -20,12 +12,10 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
-
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -69,21 +59,18 @@ namespace Spells
             }
 
             PerformHeal(owner, spell, owner);
-
         }
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
-
         }
+
         private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
         {
-
             var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
             float healthGain = 20 + (spell.CastInfo.SpellLevel * 40) + ap;
             if (target.HasBuff("HealCheck"))
@@ -92,9 +79,7 @@ namespace Spells
             }
             var newHealth = target.Stats.CurrentHealth + healthGain;
             target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
-
         }
-
 
         public void OnSpellChannel(ISpell spell)
         {

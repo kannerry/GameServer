@@ -1,14 +1,11 @@
-﻿using GameServerCore;
-using GameServerCore.Domain;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Enums;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -27,9 +24,11 @@ namespace Spells
             ApiEventManager.OnSpellCast.AddListener(this, spell, ExecuteSpell);
             LogDebug("haullucinate!");
         }
+
         public void ExecuteSpell(ISpell spell)
         {
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -67,11 +66,12 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
-        ISpell spellx;
-        static internal IMinion m;
-        bool makeminion = false;
+
+        private ISpell spellx;
+        internal static IMinion m;
+        private bool makeminion = false;
+
         public void OnSpellPostCast(ISpell spell)
         {
             //IMinion m = AddMinion((IChampion)spell.CastInfo.Owner, "Shaco", "Shaco", spell.CastInfo.Owner.Position);
@@ -87,7 +87,6 @@ namespace Spells
             });
 
             CreateTimer(1.5f, () => { spell.CastInfo.Owner.SetSpell("Hallucinate", 3, true); });
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -171,5 +170,4 @@ namespace Spells
         {
         }
     }
-
 }

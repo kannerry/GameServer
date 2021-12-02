@@ -1,15 +1,14 @@
-using System;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Collections.Generic;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -48,9 +47,11 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
+
         internal static int casted = 1;
         internal static bool popped = false;
         internal static ISpellMissile mis;
+
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
@@ -85,15 +86,16 @@ namespace Spells
         public void OnSpellChannelCancel(ISpell spell)
         {
         }
+
         public void OnSpellPostChannel(ISpell spell)
         {
-
         }
 
         public void OnUpdate(float diff)
         {
         }
     }
+
     public class FlashFrostSpell : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
@@ -106,6 +108,7 @@ namespace Spells
             IsDamagingSpell = true,
             // TODO
         };
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
@@ -119,7 +122,9 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
-        ISpellSector SwagSector;
+
+        private ISpellSector SwagSector;
+
         public void CastSpell(ISpell spell, ISpellMissile missile)
         {
             FlashFrost.mis = missile;
@@ -143,7 +148,6 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -164,7 +168,6 @@ namespace Spells
                 AddBuff("Stun", 1.0f, 1, spell, target, owner);
                 AddParticleTarget(owner, target, "cryo_ice_impact.troy", target, size: 0.5f);
             }
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -174,6 +177,7 @@ namespace Spells
         public void OnSpellChannelCancel(ISpell spell)
         {
         }
+
         public void OnSpellPostChannel(ISpell spell)
         {
         }

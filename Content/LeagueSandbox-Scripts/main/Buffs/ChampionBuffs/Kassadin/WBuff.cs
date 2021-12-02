@@ -6,7 +6,6 @@ using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
-
 namespace Buffs
 {
     internal class NetherBlade : IBuffGameScript
@@ -18,10 +17,11 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IBuff thisBuff;
-        IObjAiBase Unit;
-        IParticle p;
-        IParticle p2;
+        private IBuff thisBuff;
+        private IObjAiBase Unit;
+        private IParticle p;
+        private IParticle p2;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             thisBuff = buff;
@@ -46,6 +46,7 @@ namespace Buffs
             RemoveParticle(p);
             RemoveParticle(p2);
         }
+
         public void TargetExecute(IAttackableUnit target, bool Iscrit)
         {
             if (!thisBuff.Elapsed() && thisBuff != null && Unit != null)
@@ -62,10 +63,9 @@ namespace Buffs
                 thisBuff.DeactivateBuff();
             }
         }
+
         public void OnUpdate(float diff)
         {
-
         }
     }
 }
-

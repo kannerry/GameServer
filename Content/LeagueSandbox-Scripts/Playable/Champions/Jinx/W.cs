@@ -1,14 +1,13 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -22,7 +21,6 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -35,8 +33,6 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
-
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -51,7 +47,6 @@ namespace Spells
             // AddParticlePos(owner, "Jinx_W_Mis.troy", owner. );
             //  AddParticlePos(owner, "Jinx_W_Tar.troy", owner);
             //If skin is Pulsefire Ezreal
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -96,8 +91,6 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-
-
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)

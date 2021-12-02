@@ -1,15 +1,14 @@
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -30,9 +29,9 @@ namespace Spells
         {
         }
 
-        ISpellMissile v;
-        IMinion mushroom;
-        bool destroy = false;
+        private ISpellMissile v;
+        private IMinion mushroom;
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             ISpellScriptMetadata s = new SpellScriptMetadata()
@@ -41,7 +40,6 @@ namespace Spells
                 MissileParameters = new MissileParameters
                 {
                     Type = MissileType.Circle,
-
                 }
             };
             v = spell.CreateSpellMissile(s.MissileParameters);
@@ -68,6 +66,7 @@ namespace Spells
             mushroom.SetCollisionRadius(0.0f);
             mushroom.SetStatus(StatusFlags.Targetable, false);
         }
+
         public void OnSpellCast(ISpell spell)
         {
             //AddParticleTarget(spell.CastInfo.Owner, spell.CastInfo.Owner, "galio_windTunnel_mis.troy", spell.CastInfo.Owner, 1f, bone: "L_HAND");
@@ -101,7 +100,6 @@ namespace Spells
 
         public void ApplyEffects(IObjAiBase owner, IAttackableUnit target, ISpell spell, ISpellMissile missile)
         {
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -120,6 +118,7 @@ namespace Spells
         {
         }
     }
+
     public class GalioRighteousGustMissile : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
@@ -131,7 +130,6 @@ namespace Spells
             IsDamagingSpell = true
             // TODO
         };
-
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -159,7 +157,6 @@ namespace Spells
             if (champion.Team == owner.Team && champion != owner)
             {
                 AddBuff("GalioRighteousGustHaste", 5f, 1, spell, champion, owner);
-
             }
             else if (champion == owner) //TODO: Fix getting self proc at cast (you are supposed to have to E/Flash into it in order to get the buff i think)
             {
@@ -171,7 +168,6 @@ namespace Spells
                 var damage = 15 + (45 * spellLevel) + APratio;
 
                 champion.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-
             }
             AddParticleTarget(owner, champion, "galio_windTunnel_unit_tar.troy", champion, lifetime: 1f);
         }

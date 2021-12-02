@@ -1,24 +1,22 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
     public class VeigarBalefulStrike : ISpellScript
     {
-        int ticks;
-        IObjAiBase Owner;
-        IStatsModifier statsModifier = new StatsModifier();
-        ISpell Spell;
-        float stacks;
+        private IObjAiBase Owner;
+        private IStatsModifier statsModifier = new StatsModifier();
+
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
@@ -33,7 +31,6 @@ namespace Spells
         {
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
             Owner = owner;
-
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)

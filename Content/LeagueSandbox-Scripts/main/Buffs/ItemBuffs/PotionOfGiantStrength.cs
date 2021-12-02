@@ -1,9 +1,9 @@
 ﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -16,7 +16,7 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle potion;
+        private IParticle potion;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -26,57 +26,75 @@ namespace Buffs
                 case 1:
                     StatsModifier.HealthPoints.FlatBonus = 120f;
                     break;
+
                 case 2:
                     StatsModifier.HealthPoints.FlatBonus = 1126f;
                     break;
+
                 case 3:
                     StatsModifier.HealthPoints.FlatBonus = 133f;
                     break;
+
                 case 4:
                     StatsModifier.HealthPoints.FlatBonus = 140f;
                     break;
+
                 case 5:
                     StatsModifier.HealthPoints.FlatBonus = 147f;
                     break;
+
                 case 6:
                     StatsModifier.HealthPoints.FlatBonus = 153f;
                     break;
+
                 case 7:
                     StatsModifier.HealthPoints.FlatBonus = 160f;
                     break;
+
                 case 8:
                     StatsModifier.HealthPoints.FlatBonus = 167f;
                     break;
+
                 case 9:
                     StatsModifier.HealthPoints.FlatBonus = 174f;
                     break;
+
                 case 10:
                     StatsModifier.HealthPoints.FlatBonus = 180f;
                     break;
+
                 case 11:
                     StatsModifier.HealthPoints.FlatBonus = 187f;
                     break;
+
                 case 12:
                     StatsModifier.HealthPoints.FlatBonus = 194f;
                     break;
+
                 case 13:
                     StatsModifier.HealthPoints.FlatBonus = 201f;
                     break;
+
                 case 14:
                     StatsModifier.HealthPoints.FlatBonus = 207f;
                     break;
+
                 case 15:
                     StatsModifier.HealthPoints.FlatBonus = 214f;
                     break;
+
                 case 16:
                     StatsModifier.HealthPoints.FlatBonus = 221f;
                     break;
+
                 case 17:
                     StatsModifier.HealthPoints.FlatBonus = 228f;
                     break;
+
                 case 18:
                     StatsModifier.HealthPoints.FlatBonus = 235f;
                     break;
+
                 default:
                     StatsModifier.HealthPoints.FlatBonus = 120f;
                     break;
@@ -93,7 +111,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

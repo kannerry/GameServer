@@ -1,8 +1,8 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
@@ -14,6 +14,7 @@ namespace Buffs
         public int MaxStacks => 1;
         public bool IsHidden => false;
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "Ryze_DarkCrystal_Death.troy", unit, buff.Duration);
@@ -40,7 +41,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

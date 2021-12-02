@@ -1,25 +1,25 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+﻿using GameServerCore.Domain.GameObjects;
+using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using System.Linq;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class KatarinaR : ISpellScript
     {
-        bool cancelled;
+        private bool cancelled;
+
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             // TODO
         };
-        Vector2 basepos;
+
+        private Vector2 basepos;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -91,4 +91,3 @@ namespace Spells
         }
     }
 }
-

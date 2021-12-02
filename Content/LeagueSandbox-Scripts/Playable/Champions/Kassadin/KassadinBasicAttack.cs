@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
 using System;
+using System.Numerics;
 
 namespace Spells
 {
@@ -41,9 +36,11 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
         }
+
         public void TargetExecute(IAttackableUnit target, bool Iscrit)
         {
         }
+
         public void OnSpellChannel(ISpell spell)
         {
         }
@@ -60,5 +57,4 @@ namespace Spells
         {
         }
     }
-
 }

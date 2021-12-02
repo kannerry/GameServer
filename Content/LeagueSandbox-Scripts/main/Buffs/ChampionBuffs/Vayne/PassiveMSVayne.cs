@@ -1,9 +1,8 @@
-﻿using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace Buffs
 {
@@ -16,8 +15,6 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle highlander;
-
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             var owner = ownerSpell.CastInfo.Owner;
@@ -27,10 +24,6 @@ namespace Buffs
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
-        {
-        }
-
-        private void OnAutoAttack(IAttackableUnit target, bool isCrit)
         {
         }
 

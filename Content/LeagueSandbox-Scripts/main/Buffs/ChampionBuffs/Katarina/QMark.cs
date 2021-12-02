@@ -1,17 +1,13 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Scripting.CSharp;
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class KatarinaQMark : IBuffGameScript
+    internal class KatarinaQMark : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_DEHANCER;
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
@@ -20,7 +16,8 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle p;
+        private IParticle p;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             p = AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "katarina_daggered.troy", unit, buff.Duration);

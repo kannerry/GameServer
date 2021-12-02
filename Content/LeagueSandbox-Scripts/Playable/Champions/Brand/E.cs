@@ -1,24 +1,15 @@
-﻿using GameServerCore.Enums;
+﻿using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
-using System.Linq;
-using GameServerCore;
-using GameServerCore.Domain.GameObjects;
-using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
-
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Linq;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -47,16 +38,11 @@ namespace Spells
             AddParticleTarget(owner, target, "BrandConflagration_tar.troy", target, 1f);
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
 
-
-
-
-
             if (target.HasBuff("BrandWildfire"))
             {
                 foreach (var enemy in GetUnitsInRange(target.Position, 550, true)
                  .Where(x => x.Team == CustomConvert.GetEnemyTeam(owner.Team)))
                 {
-
                     if (enemy is IObjAiBase)
                     {
                         enemy.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
@@ -68,10 +54,8 @@ namespace Spells
             }
             else
             {
-
                 AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
-
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)

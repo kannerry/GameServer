@@ -1,25 +1,14 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Scripting.CSharp;
-
-
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class NasusW : ISpellScript
     {
-        IMinion minion;
-        IObjAiBase Owner;
-        IBuff Buff;
-        ISpell Spell;
-        IAttackableUnit Target;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
@@ -59,14 +48,13 @@ namespace Spells
         public void OnSpellPostChannel(ISpell spell)
         {
         }
+
         public void TargetExecute(IAttackableUnit unit, bool isCrit)
         {
         }
+
         public void OnUpdate(float diff)
         {
-
         }
-
-
     }
 }

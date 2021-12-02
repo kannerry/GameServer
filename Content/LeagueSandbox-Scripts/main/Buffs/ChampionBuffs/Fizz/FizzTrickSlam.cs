@@ -1,17 +1,13 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Scripting.CSharp;
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class FizzTrickSlam : IBuffGameScript
+    internal class FizzTrickSlam : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
@@ -21,14 +17,13 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IObjAiBase Owner;
-        ISpell Spell;
-        IAttackableUnit Target;
-        IMinion Fish;
-        float ticks;
-        float damage;
-        float true1 = 0;
-        float true2 = 1;
+        private IObjAiBase Owner;
+        private ISpell Spell;
+        private IAttackableUnit Target;
+        private float ticks;
+        private float damage;
+        private float true1 = 0;
+        private float true2 = 1;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -43,15 +38,10 @@ namespace Buffs
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-
-
-
         }
-
 
         public void OnPreAttack(ISpell spell)
         {
-
         }
 
         public void OnUpdate(float diff)
@@ -62,17 +52,11 @@ namespace Buffs
                 true1 = 1;
                 if (true1 == 1)
                 {
-
                     PlayAnimation(Owner, "Spell3c", 0.9f);
-
                 }
-
-
-
             }
             if (ticks > 1100.0f && ticks < 1150.0f)
             {
-
                 var units = GetUnitsInRange(Target.Position, 350f, true);
                 for (int i = units.Count - 1; i >= 0; i--)
                 {
@@ -89,7 +73,6 @@ namespace Buffs
                     true2 = 2;
                     AddParticleTarget(Owner, Owner, "Fizz_TrickSlam.troy", Owner);
                 }
-
             }
         }
     }

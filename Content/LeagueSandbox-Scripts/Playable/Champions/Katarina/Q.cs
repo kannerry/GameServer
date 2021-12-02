@@ -1,15 +1,13 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Scripting.CSharp;
-using System;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -91,7 +89,9 @@ namespace Spells
                 Type = MissileType.Target
             }
         };
-        IAttackableUnit firstTarget;
+
+        private IAttackableUnit firstTarget;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -105,15 +105,16 @@ namespace Spells
             firstTarget = target;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, true);
         }
-        int bounce = 1;
-        IAttackableUnit var1temp;
+
+        private int bounce = 1;
+
         //CAN CRASH!!! CARE
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
-           //if (firstTarget == target)
-           //{
-           //    return;
-           //}
+            //if (firstTarget == target)
+            //{
+            //    return;
+            //}
             var x = GetClosestUnitInRange(target, 600, true);
             if (x.IsDead == false)
             {
@@ -132,7 +133,6 @@ namespace Spells
                     bounce = 0;
                 }
             }
-
         }
 
         public void OnSpellCast(ISpell spell)
@@ -160,4 +160,3 @@ namespace Spells
         }
     }
 }
-

@@ -1,11 +1,10 @@
-﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
+﻿using GameServerCore.Domain;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.API;
-using System;
-using GameServerCore.Domain;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 
@@ -19,11 +18,12 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; }
 
-        IParticle p;
-        IParticle p2;
-        IObjAiBase _owner;
-        ISpell spell;
-        IBuff Buff;
+        private IParticle p;
+        private IParticle p2;
+        private IObjAiBase _owner;
+        private ISpell spell;
+        private IBuff Buff;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             _owner = ownerSpell.CastInfo.Owner;
@@ -40,6 +40,7 @@ namespace Buffs
 
             ApiEventManager.OnDeath.AddListener(this, unit, OnDeath, true);
         }
+
         public void OnDeath(IDeathData deathData)
         {
             if (_owner is IMonster monster)
@@ -59,6 +60,7 @@ namespace Buffs
                 }
             }
         }
+
         private void OnHit(IAttackableUnit unit, bool isCrit)
         {
             AddBuff("RedBuffBurn", 5f, 1, spell, unit, _owner);
@@ -74,7 +76,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

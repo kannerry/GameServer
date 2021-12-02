@@ -1,16 +1,15 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class TalonNoxianDiplomacyBuff : IBuffGameScript
+    internal class TalonNoxianDiplomacyBuff : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -19,9 +18,7 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle pbuff;
-        IParticle pbuff2;
-        IBuff thisBuff;
+        private IBuff thisBuff;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -40,7 +37,6 @@ namespace Buffs
 
         public void OnPreAttack(ISpell spell)
         {
-
             var owner = spell.CastInfo.Owner as IChampion;
             spell.CastInfo.Owner.SkipNextAutoAttack();
 
@@ -52,6 +48,7 @@ namespace Buffs
                 thisBuff.DeactivateBuff();
             }
         }
+
         public void OnUpdate(float diff)
         {
         }

@@ -1,11 +1,10 @@
-﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
+﻿using GameServerCore.Domain;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.API;
-using System;
-using GameServerCore.Domain;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 
@@ -16,15 +15,16 @@ namespace Buffs
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
         public int MaxStacks => 1;
         public bool IsHidden => false;
-        IObjAiBase _owner;
+        private IObjAiBase _owner;
 
         public IStatsModifier StatsModifier { get; private set; }
 
-        float _regenModifier = 0f;
-        IParticle p;
-        IParticle p2;
-        IBuff Buff;
-        ISpell spell;
+        private float _regenModifier = 0f;
+        private IParticle p;
+        private IParticle p2;
+        private IBuff Buff;
+        private ISpell spell;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             _owner = ownerSpell.CastInfo.Owner;
@@ -51,6 +51,7 @@ namespace Buffs
             //unit.AddStatModifier(StatsModifier);
             ApiEventManager.OnDeath.AddListener(this, unit, OnDeath, true);
         }
+
         public void OnDeath(IDeathData deathData)
         {
             if (_owner is IMonster monster)
@@ -70,6 +71,7 @@ namespace Buffs
                 }
             }
         }
+
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             ownerSpell.CastInfo.Owner.Stats.CooldownReduction.FlatBonus -= 0.1f;

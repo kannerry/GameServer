@@ -1,23 +1,18 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain;
-using System;
 using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace ItemPassives
 {
     public class ItemID_3057 : IItemScript
     {
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
-        IObjAiBase baseOwner;
-        bool Casted = false;
+        private IObjAiBase baseOwner;
+        private bool Casted = false;
+
         public void OnActivate(IObjAiBase owner)
         {
             baseOwner = owner;

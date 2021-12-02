@@ -1,19 +1,13 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Scripting.CSharp;
-
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace Buffs
 {
     internal class FizzSeastoneTrident : IBuffGameScript
     {
-
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.STACKS_AND_RENEWS;
         public int MaxStacks => 1;
@@ -21,12 +15,13 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        float timeSinceLastTick;
-        IAttackableUnit Unit;
-        float TickingDamage;
-        IObjAiBase Owner;
-        ISpell spell;
-        bool limiter = false;
+        private float timeSinceLastTick;
+        private IAttackableUnit Unit;
+        private float TickingDamage;
+        private IObjAiBase Owner;
+        private ISpell spell;
+        private bool limiter = false;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             var owner = ownerSpell.CastInfo.Owner;
@@ -40,11 +35,10 @@ namespace Buffs
             Owner = owner;
             spell = ownerSpell;
             limiter = true;
-
         }
+
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-
         }
 
         public void OnUpdate(float diff)

@@ -1,10 +1,8 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
-using LeagueSandbox.GameServer.GameObjects.Stats;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
 
 namespace Buffs
 {
@@ -17,7 +15,6 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle p;
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             StatsModifier.MoveSpeed.PercentBonus -= 0.1f + 0.1f * ownerSpell.CastInfo.SpellLevel;
@@ -34,4 +31,3 @@ namespace Buffs
         }
     }
 }
-

@@ -1,13 +1,13 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
@@ -35,7 +35,6 @@ namespace Spells
             var damage = 30 + spell.CastInfo.SpellLevel * 25 + APratio;
             //todo  amplifying her Poison ,  poison damage against the target by 20%, stacking up to two times.
 
-
             AddParticleTarget(owner, target, "Cassiopeia_Base_E_TwinFang_tar.troy", target, 1f);
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             if (target.HasBuff("CassiopeiaPoisonTicker"))
@@ -45,7 +44,6 @@ namespace Spells
                     owner.Spells[i].LowerCooldown(4);
                 }
                 //cassio ticker 3 buff
-
             }
             if (target.HasBuff("CassiopeiaPoisonTicker2"))
             {
@@ -54,7 +52,6 @@ namespace Spells
                     owner.Spells[i].LowerCooldown(4);
                 }
                 //cassio ticker 4 buff
-
             }
         }
 

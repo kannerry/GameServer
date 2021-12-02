@@ -1,16 +1,13 @@
+using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Linq;
-using GameServerCore;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -25,8 +22,9 @@ namespace Spells
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
         }
-        IBuff thisBuff;
+
         public ISpellSector DamageSector;
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -38,10 +36,6 @@ namespace Spells
 
             var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.8f;
             var damage = 45 + spellLevel * 15 + ap;
-
-            AddParticle(owner, null, "kennen_btl_beam.troy", ownerr.Position, lifetime: 0.5f, reqVision: false);
-            AddParticle(owner, null, "kennen_btl_tar.troy", ownerr.Position, lifetime: 0.5f, reqVision: false);
-
             DamageSector = spell.CreateSpellSector(new SectorParameters
             {
                 Length = 600f,
@@ -52,32 +46,27 @@ namespace Spells
                 Lifetime = 0.5f
             });
 
-
-
             foreach (var unit in GetUnitsInRange(ownerr.Position, 600, true)
                 .Where(x => x.Team == CustomConvert.GetEnemyTeam(ownerr.Team)))
             {
-
                 if (unit is IAttackableUnit)
                 {
                     if (unit.HasBuff("KennenMarkOfStorm"))
                     {
-
                         unit.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
                         AddBuff("KennenMarkOfStorm", 6f, 1, spell, unit, owner);
+
+                        AddParticle(owner, unit, "kennen_btl_beam.troy", ownerr.Position, lifetime: 0.5f, reqVision: false);
+                        AddParticle(owner, unit, "kennen_btl_tar.troy", ownerr.Position, lifetime: 0.5f, reqVision: false);
 
                         if (unit.GetBuffWithName("KennenMarkOfStorm").StackCount == 3) //remove mos if stacks reach 3
                         {
                             unit.RemoveBuffsWithName("KennenMarkOfStorm");
                             AddBuff("Stun", 1.5f, 1, spell, unit, owner); //stun target for 1 second after 3 stacks
-
                         }
-
                     }
-
                 }
             }
-
         }
 
         public void OnSpellCast(ISpell spell)

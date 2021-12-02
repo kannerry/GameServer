@@ -1,12 +1,10 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -43,6 +41,7 @@ namespace Spells
                 owner.SetInvisible((int)player.GetPlayerId(), owner, 0f, 0.05f);
             }
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }
@@ -67,5 +66,4 @@ namespace Spells
         {
         }
     }
-
 }

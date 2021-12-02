@@ -1,17 +1,15 @@
-﻿using System.Numerics;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
-using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
-
 
 namespace Buffs
 {
-    class FizzBuffer : IBuffGameScript
+    internal class FizzBuffer : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -20,16 +18,12 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IBuff ThisBuff;
-        IBuff buff;
-        ISpell spell;
-        ISpell Spelll;
-        IAttackableUnit unit;
-        IAttackableUnit Target;
-        IObjAiBase Owner;
-        float ticks = 0;
-        bool triggeredSpell = false;
-        float damage;
+        private IBuff ThisBuff;
+        private ISpell Spelll;
+        private IAttackableUnit Target;
+        private IObjAiBase Owner;
+        private float ticks = 0;
+        private float damage;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -45,10 +39,8 @@ namespace Buffs
 
             Target = unit;
 
-
             ApiEventManager.OnSpellPostCast.AddListener(this, ownerSpell.CastInfo.Owner.GetSpell("FizzJump"), EOnSpellPostCast);
         }
-
 
         public void EOnSpellPostCast(ISpell spell)
         {
@@ -74,27 +66,20 @@ namespace Buffs
 
             var buff = owner.GetBuffWithName("FizzTrickSlam");
             buff.DeactivateBuff();
-
-
         }
-
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-
             buff.SetStatusEffect(StatusFlags.Targetable, true);
             buff.SetStatusEffect(StatusFlags.Ghosted, false);
             ApiEventManager.OnSpellPostCast.RemoveListener(this);
-
         }
-
 
         public void OnUpdate(float diff)
         {
             ticks += diff;
             if (ticks >= 750.0f)
             {
-
                 if (!Owner.HasBuff("FizzTrickSlam"))
                 {
                     var trueCoords = new Vector2(Spelll.CastInfo.TargetPosition.X, Spelll.CastInfo.TargetPosition.Z);
@@ -114,7 +99,6 @@ namespace Buffs
                         }
                     }
                 }
-
             }
         }
     }

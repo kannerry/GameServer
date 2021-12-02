@@ -1,11 +1,11 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using GameServerCore.Enums;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -16,7 +16,7 @@ namespace Spells
             TriggersSpellCasts = true
         };
 
-        IObjAiBase own;
+        private IObjAiBase own;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -28,7 +28,9 @@ namespace Spells
         public void HideE(ISpell spell)
         {
         }
-        bool on = false;
+
+        private bool on = false;
+
         public void TargetExecute(IAttackableUnit unit, bool arg2)
         {
             if (on != false)

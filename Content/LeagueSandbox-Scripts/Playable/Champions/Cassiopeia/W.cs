@@ -1,15 +1,13 @@
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -22,8 +20,6 @@ namespace Spells
             DoesntBreakShields = true,
             IsDamagingSpell = true,
             NotSingleTargetSpell = true,
-
-
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -39,7 +35,6 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-
         }
 
         public void OnSpellCast(ISpell spell)
@@ -52,7 +47,6 @@ namespace Spells
             var targetPos = GetPointFromUnit(owner, 850.0f);
             SpellCast(owner, 1, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
             var spellpos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
-
 
             AddParticle(owner, null, "Cassiopeia_Base_W_Miasma_cas.troy", spellpos, lifetime: 7f, reqVision: false);
             AddParticle(owner, null, "Cassiopeia_Base_W_Miasma_mis.troy", spellpos, lifetime: 7f, reqVision: false);
@@ -67,23 +61,18 @@ namespace Spells
                 Type = SectorType.Area,
                 Lifetime = 7f
             });
-
         }
 
         public void OnSpellChannel(ISpell spell)
         {
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
             AddBuff("CassiopeiaPoisonTicker2", 2f, 1, spell, target, owner);
-
-
-
-
-
-
         }
+
         public void OnSpellChannelCancel(ISpell spell)
         {
         }

@@ -1,8 +1,8 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
@@ -14,7 +14,8 @@ namespace Buffs
         public int MaxStacks => 5;
         public bool IsHidden => false;
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
-        IParticle p;
+        private IParticle p;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             LogDebug(unit.GetBuffWithName("AnnieStun").StackCount.ToString());
@@ -27,7 +28,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

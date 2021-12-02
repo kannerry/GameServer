@@ -1,16 +1,13 @@
-﻿using System.Linq;
-using GameServerCore;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -37,7 +34,9 @@ namespace Spells
             AddParticleTarget(owner, owner, "blindMonk_E_cas.troy", owner, 2.0f, 1, "L_hand", "R_foot");
             CreateTimer(0.5f, () => { owner.SetSpell("BlindMonkETwo", 2, true); });
         }
-        static internal bool procced = false;
+
+        internal static bool procced = false;
+
         public void OnSpellCast(ISpell spell)
         {
         }
@@ -59,6 +58,7 @@ namespace Spells
                 Type = SectorType.Area
             });
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -66,7 +66,6 @@ namespace Spells
             target.TakeDamage(owner, AD, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_DEFAULT, false);
             AddParticleTarget(owner, target, "blindMonk_E_thunderCrash_tar.troy", target, 1f);
         }
-
 
         public void OnSpellChannel(ISpell spell)
         {
@@ -112,7 +111,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-
             spell.CastInfo.Owner.SetSpell("BlindMonkEOne", 2, true);
             spell.CastInfo.Owner.Spells[2].SetCooldown(spell.SpellData.Cooldown[2]);
             BlindMonkEOne.procced = true;
@@ -124,11 +122,11 @@ namespace Spells
                 Type = SectorType.Area
             });
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             AddBuff("LeeSinESlow", 4.0f, 1, spell, target, spell.CastInfo.Owner);
         }
-
 
         public void OnSpellChannel(ISpell spell)
         {
@@ -146,5 +144,4 @@ namespace Spells
         {
         }
     }
-
 }

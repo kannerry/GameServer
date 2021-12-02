@@ -1,10 +1,10 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -16,8 +16,9 @@ namespace Spells
             // TODO
         };
 
-        string pcastname;
-        string phitname;
+        private string pcastname;
+        private string phitname;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             if (owner is IChampion c)

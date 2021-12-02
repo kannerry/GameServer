@@ -1,9 +1,9 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -16,12 +16,12 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle ignite;
-        IObjAiBase Owner;
-        IAttackableUnit Target;
+        private IParticle ignite;
+        private IObjAiBase Owner;
+        private IAttackableUnit Target;
 
-        float timeSinceLastTick = 1000.0f;
-        float damage;
+        private float timeSinceLastTick = 1000.0f;
+        private float damage;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {

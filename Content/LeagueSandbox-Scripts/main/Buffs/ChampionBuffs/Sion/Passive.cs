@@ -1,11 +1,10 @@
-using GameServerCore.Enums;
+using GameServerCore.Domain;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain;
-using System.Collections.Generic;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -18,12 +17,11 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; }
 
-        float timer = 0f;
-        float tickCount = 0f;
-        IChampion champion;
-        IBuff thisBuff;
-        IParticle p;
-        IParticle p2;
+        private float timer = 0f;
+        private float tickCount = 0f;
+        private IChampion champion;
+        private IBuff thisBuff;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             ApiEventManager.OnDeath.AddListener(this, unit, OnDeath, true);
@@ -69,6 +67,7 @@ namespace Buffs
                 thisBuff.DeactivateBuff();
             }
         }
+
         public void OnUpdate(float diff)
         {
             timer += diff;

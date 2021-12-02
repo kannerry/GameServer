@@ -1,12 +1,11 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Scripting.CSharp;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 
 namespace Spells
 {
@@ -18,7 +17,9 @@ namespace Spells
             {
             }
         };
-        IObjAiBase ownerMain;
+
+        private IObjAiBase ownerMain;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             ownerMain = spell.CastInfo.Owner;

@@ -1,16 +1,13 @@
-﻿using GameServerCore;
-using GameServerCore.Domain;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -41,6 +38,7 @@ namespace Spells
             m1.TakeDamage(unit, 5000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
             m1 = null;
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -52,12 +50,13 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
+
         public IAttackableUnit unit;
-        IMinion m1;
-        ISpellSector sec;
+        private IMinion m1;
+        private ISpellSector sec;
+
         public void OnSpellPostCast(ISpell spell)
         {
-
             var spellLVL = spell.CastInfo.SpellLevel;
             var owner = spell.CastInfo.Owner;
             unit = owner;
@@ -97,7 +96,6 @@ namespace Spells
                     });
                 }
             }
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -111,7 +109,7 @@ namespace Spells
         public void OnSpellPostChannel(ISpell spell)
         {
         }
-        bool procced;
+
         public void OnUpdate(float diff)
         {
             //if (procced = true)

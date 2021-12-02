@@ -1,12 +1,12 @@
-﻿using System.Numerics;
-using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System;
-using GameServerCore.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -20,6 +20,7 @@ namespace Spells
 
         public float finaldamage;
         public Vector2 castcoords;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -91,4 +92,3 @@ namespace Spells
         }
     }
 }
-

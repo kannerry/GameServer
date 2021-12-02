@@ -1,12 +1,12 @@
-﻿using System.Numerics;
+﻿using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Linq;
-using GameServerCore;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -39,7 +39,7 @@ namespace Spells
             var current = new Vector2(spell.CastInfo.Owner.Position.X, spell.CastInfo.Owner.Position.Y);
             var trueCoords = GetPointFromUnit(spell.CastInfo.Owner, spell.SpellData.CastRangeDisplayOverride);
 
-            CreateTimer(0.5f, () =>
+            CreateTimer(0.3f, () =>
             {
                 var units = GetUnitsInRange(spell.CastInfo.Owner.Position, 500, true).Where(x => x.Team == CustomConvert.GetEnemyTeam(spell.CastInfo.Owner.Team));
                 var i = 0;
@@ -52,16 +52,13 @@ namespace Spells
                             SpellCast(spell.CastInfo.Owner, 3, SpellSlotType.ExtraSlots, true, allyTarget, Vector2.Zero);
                             i++;
                         }
-
                     }
                 }
             });
 
-
             FaceDirection(current, spell.CastInfo.Owner, true);
             spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "Spell4", trueCoords, 1500, 0, 0, 0);
-
         }
 
         public void OnSpellChannel(ISpell spell)

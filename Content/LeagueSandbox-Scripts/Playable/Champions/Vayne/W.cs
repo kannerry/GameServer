@@ -1,13 +1,11 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
@@ -16,8 +14,9 @@ namespace Spells
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
         };
-        IObjAiBase own;
-        ISpell spl;
+
+        private IObjAiBase own;
+        private ISpell spl;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -26,11 +25,12 @@ namespace Spells
             own = owner;
             spl = spell;
         }
-        IAttackableUnit AttackedUnit;
+
+        private IAttackableUnit AttackedUnit;
         private int _silverBoltsStacks;
 
-        IParticle x;
-        IParticle y;
+        private IParticle x;
+        private IParticle y;
 
         public void HideW(ISpell spell)
         {
@@ -39,7 +39,6 @@ namespace Spells
 
         public void TargetExecute(IAttackableUnit unit, bool arg2)
         {
-
             if (AttackedUnit == null)
             {
                 AttackedUnit = unit;
@@ -55,7 +54,6 @@ namespace Spells
 
             if (AttackedUnit == unit)
             {
-
                 _silverBoltsStacks += 1;
 
                 if (_silverBoltsStacks == 1)
@@ -76,7 +74,6 @@ namespace Spells
                     RemoveParticle(x);
                     RemoveParticle(y);
                     AttackedUnit = null;
-
                 }
             }
         }
@@ -111,8 +108,6 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
-
         }
-
     }
 }

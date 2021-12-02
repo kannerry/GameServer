@@ -1,14 +1,13 @@
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Collections.Generic;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -47,7 +46,6 @@ namespace Spells
 
         public void ApplyEffects(IObjAiBase owner, IAttackableUnit target, ISpell spell, ISpellMissile missile)
         {
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -66,6 +64,7 @@ namespace Spells
         {
         }
     }
+
     public class EzrealEssenceFluxMissile : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
@@ -77,7 +76,6 @@ namespace Spells
             IsDamagingSpell = true
             // TODO
         };
-
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -119,9 +117,6 @@ namespace Spells
                 AddBuff("EzrealRisingSpellForce", 6f, 1, spell, owner, owner);
             }
             AddParticleTarget(owner, champion, "Ezreal_essenceflux_tar.troy", champion, lifetime: 1f);
-
-
-
         }
 
         public void OnSpellCast(ISpell spell)

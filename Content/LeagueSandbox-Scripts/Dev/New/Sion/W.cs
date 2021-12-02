@@ -1,21 +1,18 @@
+using GameServerCore.Domain;
 using GameServerCore.Domain.GameObjects;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain;
-using GameServerLib.GameObjects.AttackableUnits;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.GameObjects.Stats;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
 
 namespace Spells
 {
     public class SionW : ISpellScript
     {
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
-        ISpell thisSpell;
+        private ISpell thisSpell;
 
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
@@ -29,6 +26,7 @@ namespace Spells
             ApiEventManager.OnKill.AddListener(this, owner, OnKillChampion, false);
             thisSpell = spell;
         }
+
         public void OnKillMinion(IDeathData deathData)
         {
             if (thisSpell.CastInfo.SpellLevel >= 1)
@@ -41,6 +39,7 @@ namespace Spells
                 owner.Stats.CurrentHealth += extraHealth;
             }
         }
+
         public void OnKillChampion(IDeathData deathData)
         {
             if (thisSpell.CastInfo.SpellLevel >= 1)
@@ -53,30 +52,37 @@ namespace Spells
                 owner.Stats.CurrentHealth += extraHealth;
             }
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }
+
         public void OnSpellPostCast(ISpell spell)
         {
         }
+
         public void OnSpellChannel(ISpell spell)
         {
         }
+
         public void OnSpellChannelCancel(ISpell spell)
         {
         }
+
         public void OnSpellPostChannel(ISpell spell)
         {
         }
+
         public void OnUpdate(float diff)
         {
         }
     }
 }
-

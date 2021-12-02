@@ -34,7 +34,7 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
-            var targetPos = GetPointFromUnit(owner, 700f, 0);
+            var targetPos = GetPointFromUnit(owner, 1200f, 0);
             SpellCast(owner, 0, SpellSlotType.ExtraSlots, targetPos, targetPos, true, Vector2.Zero);
         }
 
@@ -80,13 +80,15 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-        bool comeBack = false;
+
+        private bool comeBack = false;
+
         public void OnMissileEnd(ISpellMissile missile)
         {
             var owner = missile.CastInfo.Owner;
             if (comeBack == false)
             {
-                SpellCast(owner, 0, SpellSlotType.ExtraSlots, true, owner, missile.Position);
+                SpellCast(owner, 0, SpellSlotType.ExtraSlots, true, owner, GetPointFromUnit(owner, 800f, 0));
                 comeBack = true;
             }
             CreateTimer(2.0f, () => { comeBack = false; });
@@ -144,5 +146,4 @@ namespace Spells
         {
         }
     }
-
 }

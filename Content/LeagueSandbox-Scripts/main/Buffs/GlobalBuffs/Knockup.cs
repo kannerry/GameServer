@@ -1,8 +1,8 @@
 ﻿using GameServerCore.Domain.GameObjects;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -14,7 +14,8 @@ namespace Buffs
         public bool IsHidden => true;
 
         public IStatsModifier StatsModifier { get; private set; }
-        IParticle stun;
+        private IParticle stun;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             buff.SetStatusEffect(StatusFlags.Stunned, true);
@@ -28,8 +29,6 @@ namespace Buffs
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }
-

@@ -1,14 +1,12 @@
 ﻿using GameServerCore;
-using GameServerCore.Domain;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Enums;
-using System.Numerics;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -26,10 +24,12 @@ namespace Spells
         {
             ApiEventManager.OnSpellCast.AddListener(this, spell, ExecuteSpell);
         }
+
         public void ExecuteSpell(ISpell spell)
         {
             AddBuff("AnnieStun", int.MaxValue, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -72,13 +72,11 @@ namespace Spells
                                 if (!value.IsDead && !m.IsDead)
                                 {
                                     value.TakeDamage(owner, apbonus, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-
                                 }
                             }
                         }
                     }
                 }
-
             }
         }
 

@@ -7,7 +7,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class Recall : IBuffGameScript
+    internal class Recall : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_DEHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;

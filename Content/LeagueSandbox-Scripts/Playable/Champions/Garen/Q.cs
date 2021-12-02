@@ -1,19 +1,16 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class GarenQ : ISpellScript
     {
-
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
@@ -37,12 +34,10 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -71,9 +66,10 @@ namespace Spells
             // TODO
         };
 
-        ISpell originspell;
-        IObjAiBase ownermain;
-        int Applied = 1;
+        private ISpell originspell;
+        private IObjAiBase ownermain;
+        private int Applied = 1;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             originspell = spell;
@@ -98,6 +94,7 @@ namespace Spells
                 //spel.CastInfo.Owner.PlayAnimation("Spell1");
             }
         }
+
         public void TargetExecute(IAttackableUnit unit, bool arg2)
         {
             var owner = ownermain;
@@ -146,4 +143,3 @@ namespace Spells
         }
     }
 }
-

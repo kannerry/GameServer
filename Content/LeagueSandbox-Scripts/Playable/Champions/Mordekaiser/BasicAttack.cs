@@ -1,12 +1,9 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
 
 namespace Spells
 {
@@ -113,4 +110,3 @@ namespace Spells
         }
     }
 }
-

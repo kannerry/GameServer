@@ -1,30 +1,34 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class KennenShurikenStorm : ISpellScript
     {
-        IObjAiBase Owner;
-
-        ISpell Spell;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
+            CastingBreaksStealth = true,
+            DoesntBreakShields = true,
+            IsDamagingSpell = true,
+            NotSingleTargetSpell = true,
+            SpellToggleSlot = 4
         };
+
+        public ISpellSector DamageSector;
+        public ISpellSector SlowSector;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-            Owner = owner;
-            Spell = spell;
+            ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -41,10 +45,27 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+            var x = spell.CastInfo.Owner.GetSpell("KennenShurikenStorm").CastInfo.SpellLevel;
+            var owner = spell.CastInfo.Owner;
+            DamageSector = spell.CreateSpellSector(new SectorParameters
+            {
+                BindObject = owner,
+                Length = 550f,
+                Tickrate = 2 + x * 5,
+                CanHitSameTargetConsecutively = true,
+                OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
+                Type = SectorType.Area,
+                Lifetime = 3f,
+            });
+            AddParticle(owner, owner, "kennen_ss_aoe.troy", owner.Position, lifetime: 3.0f, reqVision: false);
+        }
 
-            AddBuff("KennenShurikenStorm", 3.0f, 1, spell, Owner, Owner, true);
-
-
+        public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
+        {
+            var x = spell.CastInfo.Owner.GetSpell("KennenShurikenStorm").CastInfo.SpellLevel;
+            var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.4f;
+            var damage = 65 + 170 * x;
+            target.TakeDamage(spell.CastInfo.Owner, 200, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -61,7 +82,6 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
-
         }
     }
 }

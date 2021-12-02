@@ -1,20 +1,20 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
     public class VeigarPrimordialBurst : ISpellScript
     {
-        IStatsModifier statsModifier = new StatsModifier();
+        private IStatsModifier statsModifier = new StatsModifier();
 
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
@@ -66,7 +66,6 @@ namespace Spells
                 if (ownerSkinID == 8)
                 {
                     AddParticle(owner, target, "Veigar_Skin08_R_tar.troy", target.Position, 1f);
-
                 }
                 else
                 {

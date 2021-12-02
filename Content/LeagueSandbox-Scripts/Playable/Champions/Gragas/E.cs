@@ -1,21 +1,14 @@
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects;
-using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Numerics;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+
 namespace Spells
 {
     public class GragasE : ISpellScript
@@ -46,7 +39,9 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
-        ISpellSector s;
+
+        private ISpellSector s;
+
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
@@ -71,6 +66,7 @@ namespace Spells
         public void OnSpellChannelCancel(ISpell spell)
         {
         }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -82,11 +78,8 @@ namespace Spells
             spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "run", spell.CastInfo.Owner.Position, 1000, 0, 0, 0);
             AddBuff("Stun", 1.0f, 1, spell, target, owner);
-
-
-
-
         }
+
         public void OnSpellPostChannel(ISpell spell)
         {
         }

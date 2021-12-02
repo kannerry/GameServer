@@ -1,13 +1,13 @@
-using System.Numerics;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -109,19 +109,17 @@ namespace Spells
             var dist = System.Math.Abs(Vector2.Distance(target.Position, owner.Position));
             var time = dist / 1350f;
 
-
             // Grab particle
-
 
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
 
             AddBuff("Stun", 1.0f, 1, spell, target, owner);
 
+            var to = Vector2.Normalize(target.Position - owner.Position);
+            ForceMovement(owner, "Spell1", new Vector2(target.Position.X - to.X * 100f, target.Position.Y - to.Y * 100f), spell.SpellData.MissileSpeed, 0, 0, 0);
 
-            ForceMovement(owner, "Spell4", target.Position, spell.SpellData.MissileSpeed, 0, 0, 0);
+            //ForceMovement(owner, "Spell1", target.Position, spell.SpellData.MissileSpeed, 0, 0, 0);
             missile.SetToRemove();
-
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -141,4 +139,3 @@ namespace Spells
         }
     }
 }
-

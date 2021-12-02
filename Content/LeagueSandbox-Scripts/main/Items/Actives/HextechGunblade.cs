@@ -1,21 +1,19 @@
-﻿using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
-using System.Numerics;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
 using GameServerCore.Scripting.CSharp;
-
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Collections.Generic;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-
     public class HextechGunblade : ISpellScript
     {
-        IBuff buff;
+        private IBuff buff;
 
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
@@ -25,9 +23,7 @@ namespace Spells
             },
             //IsDamagingSpell = true,
             //TriggersSpellCasts = true
-
         };
-
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -51,7 +47,6 @@ namespace Spells
             var APratio = owner.Stats.AbilityPower.Total * 0.4f;
             var damage = 150f + APratio;
 
-
             AddParticleTarget(owner, owner, "hextech_gunBlade_tar.troy", target, 1f);
             AddBuff("HextechGunblade", 2f, 1, spell, target, owner);
 
@@ -62,7 +57,6 @@ namespace Spells
                 AddParticle(owner, owner, "hextech_gunBlade_tar.troy", target.Position, lifetime: 1f);
             }
             missile.SetToRemove();
-
         }
 
         public void OnSpellCast(ISpell spell)

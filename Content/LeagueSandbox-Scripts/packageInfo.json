@@ -1,6 +1,5 @@
 {
-    "dependencies": 
-    [
-        "LeagueSandbox-Default"
-    ]
+  "dependencies": [
+    "LeagueSandbox-Default"
+  ]
 }

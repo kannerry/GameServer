@@ -1,10 +1,10 @@
-﻿using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using System.Numerics;
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+
 namespace Buffs
 {
     public class BlindMonkQOne : IBuffGameScript
@@ -15,7 +15,7 @@ namespace Buffs
         public bool IsHidden => false;
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        IParticle grab;
+        private IParticle grab;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
@@ -26,6 +26,7 @@ namespace Buffs
         {
             RemoveParticle(grab);
         }
+
         public void OnUpdate(float diff)
         {
         }

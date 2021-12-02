@@ -1,17 +1,14 @@
-﻿using System.Numerics;
-using GameServerCore;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.Stats;
+using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    class ZedWHandler : IBuffGameScript
+    internal class ZedWHandler : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -20,10 +17,10 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
-        ISpell ThisSpell;
-        IBuff ThisBuff;
-        IMinion Shadow;
-        IBuff ShadowBuff;
+        private ISpell ThisSpell;
+        private IBuff ThisBuff;
+        private IMinion Shadow;
+        private IBuff ShadowBuff;
         public bool QueueSwap;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)

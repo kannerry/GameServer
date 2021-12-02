@@ -1,13 +1,10 @@
-﻿using GameServerCore.Enums;
-using System;
-using System.Numerics;
-using GameServerCore.Domain.GameObjects;
-using LeagueSandbox.GameServer.GameObjects.Stats;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.API;
-
+using LeagueSandbox.GameServer.GameObjects.Stats;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -17,8 +14,8 @@ namespace Buffs
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
         public int MaxStacks => 1;
         public bool IsHidden => false;
-        IObjAiBase Owner;
-        float damage;
+        private IObjAiBase Owner;
+        private float damage;
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
@@ -31,7 +28,6 @@ namespace Buffs
             AddParticleTarget(Owner, Owner, "Fizz_SeastonePassive_Weapon.troy", Owner, bone: "BUFFBONE_GLB_WEAPON_1");
 
             ApiEventManager.OnHitUnit.AddListener(this, ownerSpell.CastInfo.Owner, TargetTakeDamage, false);
-
         }
 
         public void TargetTakeDamage(IAttackableUnit target, bool isCrit)
@@ -49,4 +45,3 @@ namespace Buffs
         }
     }
 }
-

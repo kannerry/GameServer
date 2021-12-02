@@ -1,16 +1,14 @@
-﻿using System.Numerics;
-using GameServerCore.Enums;
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
-using GameServerCore.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
-using System.Collections.Generic;
-using LeagueSandbox.GameServer;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -79,6 +77,7 @@ namespace Spells
             var Owner = ownerSpell.CastInfo.Owner;
             ApiEventManager.OnSpellHit.AddListener(this, ownerSpell, TargetExecute, false);
         }
+
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
@@ -86,6 +85,7 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
+
         public void OnSpellCast(ISpell spell)
         {
         }
@@ -96,7 +96,6 @@ namespace Spells
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
-
             var owner = spell.CastInfo.Owner;
             var ad = owner.Stats.AttackDamage.Total;
 
@@ -110,6 +109,7 @@ namespace Spells
             }
             //missile.SetToRemove();
         }
+
         public void OnSpellChannel(ISpell spell)
         {
         }
@@ -127,4 +127,3 @@ namespace Spells
         }
     }
 }
-
