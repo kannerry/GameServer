@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj",
+      "projectUniqueName": "D:\\GIT\\Main\\GameMaths\\GameMaths.csproj",
       "projectName": "GameMaths",
-      "projectPath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj",
+      "projectPath": "D:\\GIT\\Main\\GameMaths\\GameMaths.csproj",
       "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
-      "outputPath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\obj\\",
+      "outputPath": "D:\\GIT\\Main\\GameMaths\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

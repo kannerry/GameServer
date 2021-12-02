@@ -16,6 +16,7 @@ namespace Spells
         {
             MissileParameters = new MissileParameters
             {
+                Type = MissileType.Target
             }
         };
         IObjAiBase ownerMain;

@@ -99,14 +99,14 @@ namespace Spells
             target.TakeDamage(owner, (float)ad, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             missile.SetToRemove();
 
-            if (target.HasBuff("Blaze"))
+            if (target.HasBuff("BrandWildfire"))
             {
                 AddBuff("Stun", 2f, 1, spell, target, owner);
-                AddBuff("Blaze", 4f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
             else
             {
-                AddBuff("Blaze", 4f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
 
         }

@@ -4,6 +4,7 @@ using GameServerCore.Domain.GameObjects.Spell;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
+using GameServerCore.Enums;
 
 namespace Spells
 {
@@ -37,8 +38,8 @@ namespace Spells
             var trueCoords = GetPointFromUnit(spell.CastInfo.Owner, spell.SpellData.CastRangeDisplayOverride);
 
             AddBuff("LucianPassiveBuff", 3.5f, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
-
             FaceDirection(current, spell.CastInfo.Owner, true);
+            spell.CastInfo.Owner.SetTargetUnit(null);
             CreateTimer(0.01f, () => { ForceMovement(spell.CastInfo.Owner, "Spell3", trueCoords, 1350, 0, 0, 0); });
             AddParticleTarget(spell.CastInfo.Owner, spell.CastInfo.Owner, "Lucian_E_cas_trail.troy", spell.CastInfo.Owner, 1f);
 

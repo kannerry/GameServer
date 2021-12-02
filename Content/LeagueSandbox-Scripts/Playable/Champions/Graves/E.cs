@@ -45,7 +45,7 @@ namespace Spells
             var to = Vector2.Normalize(spellPos - current);
             var range = to * 425;
             var trueCoords = current + range;
-
+            spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell3", trueCoords, 1200, 0, 0, 0);
             AddBuff("Quickdraw", 4.0f, 1, spell, owner, owner);
         }

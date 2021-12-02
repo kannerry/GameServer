@@ -8,3 +8,13 @@ D:\CUSTOM\GameServer\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.dll
 D:\CUSTOM\GameServer\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.pdb
 D:\CUSTOM\GameServer\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.csproj.AssemblyReference.cache
 D:\CUSTOM\GameServer\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.GeneratedMSBuildEditorConfig.editorconfig
+D:\GIT\Main\GameMaths\bin\Debug\netcoreapp3.0\GameMaths.deps.json
+D:\GIT\Main\GameMaths\bin\Debug\netcoreapp3.0\GameMaths.dll
+D:\GIT\Main\GameMaths\bin\Debug\netcoreapp3.0\GameMaths.pdb
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.csproj.AssemblyReference.cache
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.GeneratedMSBuildEditorConfig.editorconfig
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.AssemblyInfoInputs.cache
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.AssemblyInfo.cs
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.csproj.CoreCompileInputs.cache
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.dll
+D:\GIT\Main\GameMaths\obj\Debug\netcoreapp3.0\GameMaths.pdb

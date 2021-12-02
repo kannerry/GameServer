@@ -11,7 +11,6 @@ using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
 using GameServerLib.GameObjects.AttackableUnits;
 using LeagueSandbox.GameServer.API;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 using LeagueSandbox.GameServer.Logging;
 using log4net;
 
@@ -102,7 +101,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
         /// Parameters of any forced movements (dashes) this unit is performing.
         /// </summary>
         public IForceMovementParameters MovementParameters { get; protected set; }
-
+        public ForceMovementState DashState { get; protected set; }
         public AttackableUnit(
             Game game,
             string model,
@@ -216,14 +215,14 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
             {
                 if (MovementParameters.FollowTravelTime <= 0)
                 {
-                    SetDashingState(false);
+                    SetDashingState(ForceMovementState.NOT_DASHING);
                     return;
                 }
 
                 MovementParameters.SetTimeElapsed(MovementParameters.ElapsedTime + diff);
                 if (MovementParameters.ElapsedTime >= MovementParameters.FollowTravelTime)
                 {
-                    SetDashingState(false);
+                    SetDashingState(ForceMovementState.NOT_DASHING);
                 }
             }
 
@@ -426,24 +425,6 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
                     throw new ArgumentOutOfRangeException(nameof(source), source, null);
             }
 
-            if (ObjAiBase.ApplyShieldAmount >= 0)
-            {
-                float amount = ObjAiBase.ApplyShieldAmount;
-                if (type == DamageType.DAMAGE_TYPE_MAGICAL && ObjAiBase.IsMagical)
-                {
-                    ObjAiBase.ApplyShieldAmount -= damage;
-                    _game.PacketNotifier.NotifyModifyShield(this, -damage, ObjAiBase.IsPhysical, ObjAiBase.IsMagical, false);
-                    damage -= amount;
-                }
-                if (type == DamageType.DAMAGE_TYPE_PHYSICAL && ObjAiBase.IsPhysical)
-                {
-                    ObjAiBase.ApplyShieldAmount -= damage;
-                    _game.PacketNotifier.NotifyModifyShield(this, -damage, ObjAiBase.IsPhysical, ObjAiBase.IsMagical, false);
-                    damage -= amount;
-                }
-
-            }
-
             if (damage < 0f)
             {
                 damage = 0f;
@@ -473,7 +454,6 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
                     DamageSource = source,
                     DeathDuration = 0 // TODO: Unhardcode
                 };
-                _game.PacketNotifier.NotifyModifyShield(this, -ObjAiBase.ApplyShieldAmount, ObjAiBase.IsPhysical, ObjAiBase.IsMagical, false);
             }
 
             int attackerId = 0, targetId = 0;
@@ -697,17 +677,6 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
                     }
 
                     ParentBuffs[b.Name].IncrementStackCount();
-
-                    if (!b.IsHidden)
-                    {
-                        _game.PacketNotifier.NotifyNPC_BuffUpdateCount(ParentBuffs[b.Name], ParentBuffs[b.Name].Duration - ParentBuffs[b.Name].TimeElapsed, ParentBuffs[b.Name].TimeElapsed);
-                    }
-                }
-                //If the buff stacks and resets the timer, but doesn't trigger OnActivate again
-                else if (b.BuffAddType == BuffAddType.STACKS_AND_CONTINUE_AND_RENEWS)
-                {
-                    ParentBuffs[b.Name].IncrementStackCount();
-                    ParentBuffs[b.Name].ResetTimeElapsed();
 
                     if (!b.IsHidden)
                     {
@@ -1201,7 +1170,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
 
                     if (MovementParameters != null)
                     {
-                        SetDashingState(false);
+                        SetDashingState(ForceMovementState.NOT_DASHING);
                         return true;
                     }
 
@@ -1278,7 +1247,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
 
             if (MovementParameters != null)
             {
-                SetDashingState(false);
+                SetDashingState(ForceMovementState.DASH_CANCELLED);
                 return;
             }
 
@@ -1323,95 +1292,95 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
             {
                 // CallForHelpSuppressor
                 case StatusFlags.CanAttack:
-                {
-                    Stats.SetActionState(ActionState.CAN_ATTACK, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.CAN_ATTACK, enabled);
+                        return;
+                    }
                 case StatusFlags.CanCast:
-                {
-                    Stats.SetActionState(ActionState.CAN_CAST, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.CAN_CAST, enabled);
+                        return;
+                    }
                 case StatusFlags.CanMove:
-                {
-                    Stats.SetActionState(ActionState.CAN_MOVE, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.CAN_MOVE, enabled);
+                        return;
+                    }
                 case StatusFlags.CanMoveEver:
-                {
-                    Stats.SetActionState(ActionState.CAN_NOT_MOVE, !enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.CAN_NOT_MOVE, !enabled);
+                        return;
+                    }
                 case StatusFlags.Charmed:
-                {
-                    Stats.SetActionState(ActionState.CHARMED, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.CHARMED, enabled);
+                        return;
+                    }
                 // DisableAmbientGold
                 case StatusFlags.Feared:
-                {
-                    Stats.SetActionState(ActionState.FEARED, enabled);
-                    // TODO: Verify
-                    Stats.SetActionState(ActionState.IS_FLEEING, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.FEARED, enabled);
+                        // TODO: Verify
+                        Stats.SetActionState(ActionState.IS_FLEEING, enabled);
+                        return;
+                    }
                 case StatusFlags.ForceRenderParticles:
-                {
-                    Stats.SetActionState(ActionState.FORCE_RENDER_PARTICLES, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.FORCE_RENDER_PARTICLES, enabled);
+                        return;
+                    }
                 // GhostProof
                 case StatusFlags.Ghosted:
-                {
-                    Stats.SetActionState(ActionState.IS_GHOSTED, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.IS_GHOSTED, enabled);
+                        return;
+                    }
                 // IgnoreCallForHelp
                 // Immovable
                 // Invulnerable
                 // MagicImmune
                 case StatusFlags.NearSighted:
-                {
-                    Stats.SetActionState(ActionState.IS_NEAR_SIGHTED, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.IS_NEAR_SIGHTED, enabled);
+                        return;
+                    }
                 // Netted
                 case StatusFlags.NoRender:
-                {
-                    Stats.SetActionState(ActionState.NO_RENDER, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.NO_RENDER, enabled);
+                        return;
+                    }
                 // PhysicalImmune
                 case StatusFlags.RevealSpecificUnit:
-                {
-                    Stats.SetActionState(ActionState.REVEAL_SPECIFIC_UNIT, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.REVEAL_SPECIFIC_UNIT, enabled);
+                        return;
+                    }
                 // Rooted
                 // Silenced
                 case StatusFlags.Sleep:
-                {
-                    Stats.SetActionState(ActionState.IS_ASLEEP, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.IS_ASLEEP, enabled);
+                        return;
+                    }
                 case StatusFlags.Stealthed:
-                {
-                    Stats.SetActionState(ActionState.STEALTHED, enabled);
-                    return;
-                }
+                    {
+                        Stats.SetActionState(ActionState.STEALTHED, enabled);
+                        return;
+                    }
                 // SuppressCallForHelp
                 case StatusFlags.Targetable:
-                {
-                    Stats.IsTargetable = enabled;
-                    // TODO: Verify.
-                    Stats.SetActionState(ActionState.TARGETABLE, enabled);
-                    return;
-                }
+                    {
+                        Stats.IsTargetable = enabled;
+                        // TODO: Verify.
+                        Stats.SetActionState(ActionState.TARGETABLE, enabled);
+                        return;
+                    }
                 case StatusFlags.Taunted:
-                {
-                    Stats.SetActionState(ActionState.TAUNTED, enabled);
-                    return;
-                }   
+                    {
+                        Stats.SetActionState(ActionState.TAUNTED, enabled);
+                        return;
+                    }
             }
 
             if (!(Status.HasFlag(StatusFlags.CanAttack)
@@ -1498,7 +1467,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
                 FollowTravelTime = 0
             };
 
-            SetDashingState(true);
+            SetDashingState(ForceMovementState.DASHING);
 
             if (animation != null && animation != "")
             {
@@ -1516,25 +1485,40 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
         /// <summary>
         /// Sets this unit's current dash state to the given state.
         /// </summary>
-        /// <param name="state">State to set. True = dashing, false = not dashing.</param>
+        /// <param name="state">State to set. DASHING = dashing, NOT_DASHING = not dashing, DASH_CANCELLER = cancel dashing.</param>
         /// TODO: Implement ForcedMovement methods and enumerators to handle different kinds of dashes.
-        public virtual void SetDashingState(bool state)
+        public virtual void SetDashingState(ForceMovementState state)
         {
-            if (MovementParameters != null && state == false)
+            switch (state)
             {
-                MovementParameters = null;
-
-                var animPairs = new Dictionary<string, string> { { "RUN", "" } };
-                SetAnimStates(animPairs);
+                case ForceMovementState.NOT_DASHING when MovementParameters != null:
+                    MovementParameters = null;
+                    var animPairs = new Dictionary<string, string> { { "RUN", "" } };
+                    SetAnimStates(animPairs);
+                    Stats.SetActionState(ActionState.CAN_ATTACK, true);
+                    Stats.SetActionState(ActionState.CAN_NOT_ATTACK, false);
+                    Stats.SetActionState(ActionState.CAN_MOVE, true);
+                    Stats.SetActionState(ActionState.CAN_NOT_MOVE, false);
+                    DashState = ForceMovementState.NOT_DASHING;
+                    ApiEventManager.OnFinishDash.Publish(this);
+                    break;
+                case ForceMovementState.DASHING:
+                    Stats.SetActionState(ActionState.CAN_ATTACK, false);
+                    Stats.SetActionState(ActionState.CAN_NOT_ATTACK, true);
+                    Stats.SetActionState(ActionState.CAN_MOVE, false);
+                    Stats.SetActionState(ActionState.CAN_NOT_MOVE, true);
+                    DashState = ForceMovementState.DASHING;
+                    ApiEventManager.OnDash.Publish(this);
+                    break;
+                case ForceMovementState.DASH_CANCELLED:
+                    Stats.SetActionState(ActionState.CAN_ATTACK, true);
+                    Stats.SetActionState(ActionState.CAN_NOT_ATTACK, false);
+                    Stats.SetActionState(ActionState.CAN_MOVE, true);
+                    Stats.SetActionState(ActionState.CAN_NOT_MOVE, false);
+                    DashState = ForceMovementState.NOT_DASHING;
+                    break;
             }
-
-            // TODO: Implement this as a parameter.
-            Stats.SetActionState(ActionState.CAN_ATTACK, !state);
-            Stats.SetActionState(ActionState.CAN_NOT_ATTACK, state);
-            Stats.SetActionState(ActionState.CAN_MOVE, !state);
-            Stats.SetActionState(ActionState.CAN_NOT_MOVE, state);
         }
-
         /// <summary>
         /// Sets this unit's animation states to the given set of states.
         /// Given state pairs are expected to follow a specific structure:

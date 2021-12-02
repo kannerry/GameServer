@@ -79,6 +79,7 @@ namespace Spells
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
             s.SetToRemove();
             spell.CastInfo.Owner.StopMovement();
+            spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "run", spell.CastInfo.Owner.Position, 1000, 0, 0, 0);
             AddBuff("Stun", 1.0f, 1, spell, target, owner);
 

@@ -51,7 +51,7 @@ namespace Spells
 
 
 
-            if (target.HasBuff("Blaze"))
+            if (target.HasBuff("BrandWildfire"))
             {
                 foreach (var enemy in GetUnitsInRange(target.Position, 550, true)
                  .Where(x => x.Team == CustomConvert.GetEnemyTeam(owner.Team)))
@@ -61,15 +61,15 @@ namespace Spells
                     {
                         enemy.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
                         AddParticleTarget(owner, enemy, "BrandConflagration_tar.troy", enemy, 1f);
-                        AddBuff("Blaze", 4f, 1, spell, enemy, owner);
+                        AddBuff("BrandWildfire", 4f, 1, spell, enemy, owner);
                     }
                 }
-                AddBuff("Blaze", 4f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
             else
             {
 
-                AddBuff("Blaze", 4f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
 
         }

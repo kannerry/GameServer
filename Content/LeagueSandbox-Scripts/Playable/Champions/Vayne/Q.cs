@@ -61,6 +61,7 @@ namespace Spells
             var to = Vector2.Normalize(spellPos - current);
             var range = to * spell.SpellData.CastRangeDisplayOverride;
             var trueCoords = current + range;
+            spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "Spell1", trueCoords, 700, 0, 0, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT);
         }
 

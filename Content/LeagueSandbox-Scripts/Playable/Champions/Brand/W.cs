@@ -61,19 +61,19 @@ namespace Spells
             //Graves_SmokeGrenade_Cloud_Team_Green.troy
             //Graves_SmokeGrenade_Cloud_Team_Red.troy
             var owner = spell.CastInfo.Owner;
-            if (target.HasBuff("Blaze"))
+            if (target.HasBuff("BrandWildfire"))
             {
                 var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.75f;
                 var damage = 37.5f + (56.25f * spell.CastInfo.SpellLevel) + ap;
                 target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-                AddBuff("Blaze", 4f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
             else
             {
                 var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.6f;
                 var damage = 30 + (45 * spell.CastInfo.SpellLevel) + ap;
                 target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-                AddBuff("Blaze", 4f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4f, 1, spell, target, owner);
             }
         }
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {}
+    "D:\\GIT\\Main\\GameServerCore\\GameServerCore.csproj": {}
   },
   "projects": {
-    "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {
+    "D:\\GIT\\Main\\GameServerCore\\GameServerCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj",
+        "projectUniqueName": "D:\\GIT\\Main\\GameServerCore\\GameServerCore.csproj",
         "projectName": "GameServerCore",
-        "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj",
+        "projectPath": "D:\\GIT\\Main\\GameServerCore\\GameServerCore.csproj",
         "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
-        "outputPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\obj\\",
+        "outputPath": "D:\\GIT\\Main\\GameServerCore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -56,6 +56,7 @@ namespace Spells
 
             FaceDirection(trueCoords, spell.CastInfo.Owner, true);
             owner.PlayAnimation("Spell3", 1, 0, 1);
+            spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "Spell3", trueCoords, 1050, 0, 35, 0, GameServerCore.Enums.ForceMovementType.FIRST_COLLISION_HIT);
         }
 

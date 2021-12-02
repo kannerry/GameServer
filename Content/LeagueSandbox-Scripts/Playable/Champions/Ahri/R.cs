@@ -59,7 +59,8 @@ namespace Spells
 
 
             FaceDirection(current, spell.CastInfo.Owner, true);
-            CreateTimer(0.01f, () => { ForceMovement(spell.CastInfo.Owner, "Spell4", trueCoords, 1500, 0, 0, 0); });
+            spell.CastInfo.Owner.SetTargetUnit(null);
+            ForceMovement(spell.CastInfo.Owner, "Spell4", trueCoords, 1500, 0, 0, 0);
 
         }
 

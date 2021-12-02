@@ -18,7 +18,7 @@ namespace GameServerCore.Domain.GameObjects
         /// Whether or not this Unit's model has been changeds this tick. Resets to False when the next tick update happens in ObjectManager.
         /// </summary>
         bool IsModelUpdated { get; set; }
-
+        ForceMovementState DashState { get; }
         /// <summary>
         /// The "score" of this Unit which increases as kills are gained and decreases as deaths are inflicted.
         /// Used in determining kill gold rewards.
@@ -272,7 +272,7 @@ namespace GameServerCore.Domain.GameObjects
         /// </summary>
         /// <param name="state">State to set. True = dashing, false = not dashing.</param>
         /// TODO: Implement ForcedMovement methods and enumerators to handle different kinds of dashes.
-        void SetDashingState(bool state);
+        void SetDashingState(ForceMovementState state);
         /// <summary>
         /// Sets this unit's animation states to the given set of states.
         /// Given state pairs are expected to follow a specific structure:

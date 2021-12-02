@@ -5473,11 +5473,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj",
+      "projectUniqueName": "D:\\GIT\\Main\\GameServerLib\\GameServerLib.csproj",
       "projectName": "GameServerLib",
-      "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj",
+      "projectPath": "D:\\GIT\\Main\\GameServerLib\\GameServerLib.csproj",
       "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
-      "outputPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\obj\\",
+      "outputPath": "D:\\GIT\\Main\\GameServerLib\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5497,14 +5497,14 @@
         "netcoreapp3.0": {
           "targetAlias": "netcoreapp3.0",
           "projectReferences": {
-            "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj": {
-              "projectPath": "D:\\CUSTOM\\GameServerGit\\GameMaths\\GameMaths.csproj"
+            "D:\\GIT\\Main\\GameMaths\\GameMaths.csproj": {
+              "projectPath": "D:\\GIT\\Main\\GameMaths\\GameMaths.csproj"
             },
-            "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj": {
-              "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerCore\\GameServerCore.csproj"
+            "D:\\GIT\\Main\\GameServerCore\\GameServerCore.csproj": {
+              "projectPath": "D:\\GIT\\Main\\GameServerCore\\GameServerCore.csproj"
             },
-            "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj": {
-              "projectPath": "D:\\CUSTOM\\GameServerGit\\PacketDefinitions420\\PacketDefinitions420.csproj"
+            "D:\\GIT\\Main\\PacketDefinitions420\\PacketDefinitions420.csproj": {
+              "projectPath": "D:\\GIT\\Main\\PacketDefinitions420\\PacketDefinitions420.csproj"
             }
           }
         }

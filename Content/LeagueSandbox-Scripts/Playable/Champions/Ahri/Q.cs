@@ -34,7 +34,6 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
-
             var targetPos = GetPointFromUnit(owner, 700f, 0);
             SpellCast(owner, 0, SpellSlotType.ExtraSlots, targetPos, targetPos, true, Vector2.Zero);
         }
@@ -90,7 +89,7 @@ namespace Spells
                 SpellCast(owner, 0, SpellSlotType.ExtraSlots, true, owner, missile.Position);
                 comeBack = true;
             }
-            CreateTimer(3.0f, () => { comeBack = false; });
+            CreateTimer(2.0f, () => { comeBack = false; });
         }
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)

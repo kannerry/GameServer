@@ -18,3 +18,13 @@ D:\CUSTOM\GameServer\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.Assem
 D:\CUSTOM\GameServer\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.csproj.CoreCompileInputs.cache
 D:\CUSTOM\GameServer\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.dll
 D:\CUSTOM\GameServer\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.pdb
+D:\CUSTOM\GameServerBackup\GameServerCore\bin\Debug\netcoreapp3.0\GameServerCore.deps.json
+D:\CUSTOM\GameServerBackup\GameServerCore\bin\Debug\netcoreapp3.0\GameServerCore.dll
+D:\CUSTOM\GameServerBackup\GameServerCore\bin\Debug\netcoreapp3.0\GameServerCore.pdb
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.csproj.AssemblyReference.cache
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.GeneratedMSBuildEditorConfig.editorconfig
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.AssemblyInfoInputs.cache
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.AssemblyInfo.cs
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.csproj.CoreCompileInputs.cache
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.dll
+D:\CUSTOM\GameServerBackup\GameServerCore\obj\Debug\netcoreapp3.0\GameServerCore.pdb

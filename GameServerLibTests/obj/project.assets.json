@@ -7146,11 +7146,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CUSTOM\\GameServerGit\\GameServerLibTests\\GameServerLibTests.csproj",
+      "projectUniqueName": "D:\\GIT\\Main\\GameServerLibTests\\GameServerLibTests.csproj",
       "projectName": "GameServerLibTests",
-      "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerLibTests\\GameServerLibTests.csproj",
+      "projectPath": "D:\\GIT\\Main\\GameServerLibTests\\GameServerLibTests.csproj",
       "packagesPath": "C:\\Users\\KANNNORRRRRRRRRRRRRR\\.nuget\\packages\\",
-      "outputPath": "D:\\CUSTOM\\GameServerGit\\GameServerLibTests\\obj\\",
+      "outputPath": "D:\\GIT\\Main\\GameServerLibTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -7170,8 +7170,8 @@
         "netcoreapp3.0": {
           "targetAlias": "netcoreapp3.0",
           "projectReferences": {
-            "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj": {
-              "projectPath": "D:\\CUSTOM\\GameServerGit\\GameServerLib\\GameServerLib.csproj"
+            "D:\\GIT\\Main\\GameServerLib\\GameServerLib.csproj": {
+              "projectPath": "D:\\GIT\\Main\\GameServerLib\\GameServerLib.csproj"
             }
           }
         }

@@ -104,6 +104,10 @@ namespace LeagueSandbox.GameServer.API
             OnTakeDamage.RemoveListener(owner);
             OnUnitCrowdControlled.RemoveListener(owner);
             OnUnitUpdateMoveOrder.RemoveListener(owner);
+
+            OnFinishDash.RemoveListener(owner);
+            OnDash.RemoveListener(owner);
+
         }
 
         public static EventOnCreateSector OnCreateSector = new EventOnCreateSector();
@@ -133,9 +137,87 @@ namespace LeagueSandbox.GameServer.API
         public static EventOnUnitCrowdControlled OnUnitCrowdControlled = new EventOnUnitCrowdControlled();
         // TODO: Change to OnMoveSuccess and change where Publish is called internally to reflect the name.
         public static EventOnUnitUpdateMoveOrder OnUnitUpdateMoveOrder = new EventOnUnitUpdateMoveOrder();
+
+        public static EventOnFinishDash OnFinishDash = new EventOnFinishDash();
+        public static EventOnDash OnDash = new EventOnDash();
+
     }
 
     // TODO: Make listeners support removal at any point in code execution.
+
+
+    public class EventOnDash
+    {
+        private readonly List<Tuple<object, IObjAiBase, Action<IAttackableUnit>, bool>> _listeners = new List<Tuple<object, IObjAiBase, Action<IAttackableUnit>, bool>>();
+        public void AddListener(object owner, IObjAiBase unit, Action<IAttackableUnit> callback, bool singleInstance)
+        {
+            var listenerTuple = new Tuple<object, IObjAiBase, Action<IAttackableUnit>, bool>(owner, unit, callback, singleInstance);
+            _listeners.Add(listenerTuple);
+        }
+        public void RemoveListener(object owner, IObjAiBase unit)
+        {
+            _listeners.RemoveAll((listener) => listener.Item1 == owner && listener.Item2 == unit);
+        }
+        public void RemoveListener(object owner)
+        {
+            _listeners.RemoveAll((listener) => listener.Item1 == owner);
+        }
+        public void Publish(IAttackableUnit unit)
+        {
+            var count = _listeners.Count;
+            if (count == 0)
+            {
+                return;
+            }
+            for (int i = count - 1; i >= 0; i--)
+            {
+                if (_listeners[i].Item2 == unit)
+                {
+                    _listeners[i].Item3(unit);
+                    if (_listeners[i].Item4 == true)
+                    {
+                        _listeners.RemoveAt(i);
+                    }
+                }
+            }
+        }
+    }
+    public class EventOnFinishDash
+    {
+        private readonly List<Tuple<object, IObjAiBase, Action<IAttackableUnit>, bool>> _listeners = new List<Tuple<object, IObjAiBase, Action<IAttackableUnit>, bool>>();
+        public void AddListener(object owner, IObjAiBase unit, Action<IAttackableUnit> callback, bool singleInstance)
+        {
+            var listenerTuple = new Tuple<object, IObjAiBase, Action<IAttackableUnit>, bool>(owner, unit, callback, singleInstance);
+            _listeners.Add(listenerTuple);
+        }
+        public void RemoveListener(object owner, IObjAiBase unit)
+        {
+            _listeners.RemoveAll((listener) => listener.Item1 == owner && listener.Item2 == unit);
+        }
+        public void RemoveListener(object owner)
+        {
+            _listeners.RemoveAll((listener) => listener.Item1 == owner);
+        }
+        public void Publish(IAttackableUnit owner)
+        {
+            var count = _listeners.Count;
+            if (count == 0)
+            {
+                return;
+            }
+            for (int i = count - 1; i >= 0; i--)
+            {
+                if (_listeners[i].Item2 == owner)
+                {
+                    _listeners[i].Item3(owner);
+                    if (_listeners[i].Item4 == true)
+                    {
+                        _listeners.RemoveAt(i);
+                    }
+                }
+            }
+        }
+    }
 
     public class EventOnCreateSector
     {
