@@ -45,14 +45,13 @@ namespace Spells
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             FaceDirection(spellPos, owner, false);
 
-            var sector = spell.CreateSpellSector(new SectorParameters
+            spell.CreateSpellSector(new SectorParameters
             {
-                Length = 825f,
+                Length = 750f,
                 SingleTick = true,
-                ConeAngle = 80f,
+                ConeAngle = 40f,
                 Type = SectorType.Cone
             });
-            //AddParticle(owner, null, "Cassiopeia_Base_R_cas.troy", owner.Position, direction: owner.Direction);
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
@@ -62,14 +61,17 @@ namespace Spells
             var champs = GetChampionsInRange(point, 825, true);
 
             var owner = spell.CastInfo.Owner;
+            var ap = owner.Stats.AbilityPower.Total * 0.5f;
+            var damage = 50 + spell.CastInfo.SpellLevel * 100 + ap;
 
             foreach (var champion in champs)
             {
                 if (champion.NetId == spell.CastInfo.Owner.NetId)
-                {
-                    var ap = owner.Stats.AbilityPower.Total * 0.5f;
-                    var damage = 50 + spell.CastInfo.SpellLevel * 100 + ap;
+                { 
                     AddParticleTarget(owner, target, "Cassiopeia_Base_R_tar.troy", target);
+                    AddParticleTarget(owner, target, "CassDeadlyCadence_buf.troy", target, lifetime: 2f, bone: "C_BUFFBONE_GLB_HEAD_LOC");
+                    AddParticleTarget(owner, target, "CassDeathDust.troy", target, lifetime: 2f, bone: "root");
+                    AddParticleTarget(owner, target, "Cassiopeia_Base_R_PetrifyMiss_tar.troy", target, lifetime: 2f, bone: "C_BUFFBONE_GLB_HEAD_LOC");
                     target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
                     AddBuff("Stun", 2f, 1, spell, target, owner);
                     hitFacing = true;
@@ -78,20 +80,10 @@ namespace Spells
 
             if (hitFacing == false)
             {
-                var ap = owner.Stats.AbilityPower.Total * 0.5f;
-                var damage = 50 + spell.CastInfo.SpellLevel * 100 + ap;
                 AddParticleTarget(owner, target, "Cassiopeia_Base_R_tar.troy", target);
                 target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
                 AddBuff("CassiopeiaSlow", 2f, 1, spell, target, owner);
             }
-
-            //var owner = spell.CastInfo.Owner;
-
-            //var ap = owner.Stats.AbilityPower.Total * 0.5f;
-            //var damage = 50 + spell.CastInfo.SpellLevel * 100 + ap;
-            //AddParticleTarget(owner, target, "Cassiopeia_Base_R_tar.troy", target);
-            //target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-            //AddBuff("Stun", 2f, 1, spell, target, owner);
         }
 
         public void OnSpellChannel(ISpell spell)
