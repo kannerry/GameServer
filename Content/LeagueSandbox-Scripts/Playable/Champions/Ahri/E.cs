@@ -103,6 +103,8 @@ namespace Spells
                 missile.SetToRemove();
                 FaceDirection(owner.Position, target);
                 var x = GetPointFromUnit(target, 300);
+                var xy = target as IObjAiBase;
+                xy.SetTargetUnit(null);
                 ForceMovement(target, "run", x, 10, 0, 0, 0);
                 AddBuff("VeigarEventHorizon", 2.0f, 1, spell, target, owner);
             }

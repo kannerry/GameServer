@@ -111,6 +111,8 @@ namespace Spells
             var APratio = owner.Stats.AttackDamage.Total;
             var spelllvl = (spell.CastInfo.SpellLevel * 20);
             target.TakeDamage(owner, APratio + spelllvl + 2, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            var xy = target as IObjAiBase;
+            xy.SetTargetUnit(null);
             ForceMovement(target, "RUN", new Vector2(target.Position.X + 5f, target.Position.Y + 5f), 13f, 0, 16.5f, 0);
             if (target is Champion)
             {

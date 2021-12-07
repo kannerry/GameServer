@@ -29,7 +29,7 @@ namespace Spells
             owner.Spells[2].LowerCooldown((float)1.5);   //E
             //owner.Spells[3].LowerCooldown((float)1.5);   //R
             var lvlDur = owner.Spells[3].CastInfo.SpellLevel;
-            AddBuff("RyzeRBuff", 4.0f + lvlDur, 1, spell, owner, owner);
+            AddBuff("DesperatePower", 4.0f + lvlDur, 1, spell, owner, owner);
         }
 
         public void OnSpellCast(ISpell spell)

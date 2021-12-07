@@ -47,6 +47,7 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             var trueCoords = GetPointFromUnit(owner, 600f);
 
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell3", trueCoords, 1200, 0, 0, 0);
             s = spell.CreateSpellSector(new SectorParameters
             {

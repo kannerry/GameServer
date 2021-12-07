@@ -42,6 +42,8 @@ namespace Spells
                 if (champ.HasBuff("Pulverize"))
                 {
                     var dmg = own.Stats.AttackDamage.Total * 1.5f;
+                    var xyz = champ as IObjAiBase;
+                    xyz.SetTargetUnit(null);
                     ForceMovement(champ, "RUN", new Vector2(champ.Position.X + 5f, champ.Position.Y + 5f), 13f, 0, 16.5f, 0);
                     PlayAnimation(owner, "Spell4");
                     TeleportTo(owner, xy.X, xy.Y);

@@ -26,6 +26,10 @@ namespace Buffs
             AddParticleTarget(owner, owner, "Fizz_PiercingStrike.troy", owner);
             AddParticleTarget(owner, target, "Fizz_PiercingStrike_tar.troy", target);
             var to = Vector2.Normalize(target.Position - unit.Position);
+
+            var xy = unit as IObjAiBase;
+            xy.SetTargetUnit(null);
+
             ForceMovement(unit, null, new Vector2(target.Position.X + to.X * 250f, target.Position.Y + to.Y * 250f), 800f + unit.Stats.MoveSpeed.Total * 0.6f, 0, 0, 0); ; ;
             target.TakeDamage(unit, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
         }

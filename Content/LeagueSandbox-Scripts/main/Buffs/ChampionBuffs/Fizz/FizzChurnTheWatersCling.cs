@@ -65,6 +65,10 @@ namespace Buffs
                         {
                             units[i].TakeDamage(Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
                             var randPoint1 = new Vector2(units[i].Position.X + (40.0f), units[i].Position.Y + 40.0f);
+
+                            var xyz = units[i] as IObjAiBase;
+                            xyz.SetTargetUnit(null);
+
                             ForceMovement(units[i], "", randPoint1, 90.0f, 80.0f, 20.0f, 0.0f, ForceMovementType.FURTHEST_WITHIN_RANGE, ForceMovementOrdersType.CANCEL_ORDER, ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
                             units.RemoveAt(i);
                         }
@@ -76,6 +80,10 @@ namespace Buffs
                     AddParticleTarget(Owner, Target, "Fizz_SharkSplash.troy", Target);
                     AddParticleTarget(Owner, Target, "Fizz_SharkSplash_Ground.troy", Target);
                     var randPoint = new Vector2(Target.Position.X + (40.0f), Target.Position.Y + 40.0f);
+
+                    var xy = Target as IObjAiBase;
+                    xy.SetTargetUnit(null);
+
                     ForceMovement(Target, "", randPoint, 90.0f, 80.0f, 20.0f, 0.0f, ForceMovementType.FURTHEST_WITHIN_RANGE, ForceMovementOrdersType.CANCEL_ORDER, ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
                     true1 = 1;
                 }

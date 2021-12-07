@@ -47,6 +47,10 @@ namespace Spells
                     target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
                     FaceDirection(owner.Position, target);
                     var xy = GetPointFromUnit(target, 300);
+
+                    var xy1 = target as IObjAiBase;
+                    xy1.SetTargetUnit(null);
+
                     ForceMovement(target, "run", xy, 10, 0, 0, 0);
                     AddBuff("VeigarEventHorizon", 2.0f, 1, spell, target, owner);
                 }

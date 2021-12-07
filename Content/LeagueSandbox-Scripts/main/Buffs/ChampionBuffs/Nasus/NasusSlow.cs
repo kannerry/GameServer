@@ -18,10 +18,10 @@ namespace Buffs
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            var spellLevel = ownerSpell.CastInfo.Owner.GetSpell("NasusW").CastInfo.SpellLevel * 0.12;
-            StatsModifier.MoveSpeed.PercentBonus = (float)(StatsModifier.MoveSpeed.PercentBonus - 0.40f - spellLevel);
+            StatsModifier.MoveSpeed.PercentBonus -= 0.35f + 0.12f * ownerSpell.CastInfo.SpellLevel;
+            StatsModifier.AttackSpeed.PercentBonus -= 0.175f + 0.06f * ownerSpell.CastInfo.SpellLevel;
             unit.AddStatModifier(StatsModifier);
-            AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "Ashe_Base_W_tar.troy", unit, 1f);
+            //AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "Ashe_Base_W_tar.troy", unit, 1f);
             // ApplyAssistMarker
         }
 

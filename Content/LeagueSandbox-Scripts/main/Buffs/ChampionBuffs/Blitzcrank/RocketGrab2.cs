@@ -20,6 +20,9 @@ namespace Buffs
         {
             buff.SetStatusEffect(StatusFlags.CanAttack | StatusFlags.CanMove | StatusFlags.CanCast, false);
 
+            var xy = unit as IObjAiBase;
+            xy.SetTargetUnit(null);
+
             ForceMovement(unit, "RUN", buff.SourceUnit.Position, 1800f, 0, 5.0f, 0, movementOrdersType: ForceMovementOrdersType.CANCEL_ORDER);
         }
 

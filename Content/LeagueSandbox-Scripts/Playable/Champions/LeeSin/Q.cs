@@ -125,6 +125,7 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+            spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "RUN_GLIDE", BlindMonkQOne.targ.Position, 1800f, 0, 2.0f, 0, movementOrdersType: ForceMovementOrdersType.CANCEL_ORDER);
             spell.CastInfo.Owner.SetSpell("BlindMonkQOne", 0, true);
             spell.CastInfo.Owner.Spells[0].SetCooldown(spell.SpellData.Cooldown[0]);

@@ -48,6 +48,7 @@ namespace Spells
             }
             AddParticleTarget(owner, null, "katarina_shadowStep_cas.troy", owner);
 
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell2", Vector2.Zero, 20, 20, 0.3f, 20);
             TeleportTo(owner, Target.Position.X, Target.Position.Y);
             AddBuff("KatarinaEReduction", 1.5f, 1, spell, owner, owner);

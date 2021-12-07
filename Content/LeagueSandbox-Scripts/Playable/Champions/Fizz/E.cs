@@ -47,7 +47,7 @@ namespace Spells
                 {
                     trueCoords = GetPointFromUnit(owner, 400f);
                 }
-
+                owner.SetTargetUnit(null);
                 ForceMovement(owner, null, trueCoords, 1200, 0, 0, 0);
                 PlayAnimation(owner, "Spell3a", 0.75f);
                 AddParticleTarget(owner, owner, "Fizz_Jump_cas.troy", owner);
@@ -112,7 +112,7 @@ namespace Spells
             {
                 trueCoords = GetPointFromUnit(owner, 400f);
             }
-
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell1", trueCoords, 1200, 0, 0, 0);
             AddParticleTarget(owner, owner, "Fizz_Jump_cas.troy", owner);
             AddParticleTarget(owner, owner, "Fizz_Jump_WeaponGlow.troy", owner, bone: "BUFFBONE_GLB_WEAPON_1");
@@ -173,7 +173,7 @@ namespace Spells
             {
                 trueCoords = GetPointFromUnit(owner, 400f);
             }
-
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell3a", trueCoords, 1200, 0, 0, 0);
             AddParticleTarget(owner, owner, "Fizz_Jump_cas.troy", owner);
             AddParticleTarget(owner, owner, "Fizz_Jump_WeaponGlow.troy", owner, bone: "BUFFBONE_GLB_WEAPON_1");

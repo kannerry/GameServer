@@ -74,7 +74,7 @@ namespace Spells
             var damage = 40 + (20 * (spell.CastInfo.SpellLevel - 1)) + ap;
 
             target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-            AddBuff("NasusSlow", 1.0f, 1, spell, target, spell.CastInfo.Owner);
+            AddBuff("NasusE", 1.0f, 1, spell, target, spell.CastInfo.Owner);
         }
 
         public void OnSpellChannel(ISpell spell)

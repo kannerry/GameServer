@@ -28,6 +28,10 @@ namespace Buffs
             AddParticleTarget(owner, target, "Yasuo_Base_E_dash_hit.troy", target);
             var to = Vector2.Normalize(target.Position - unit.Position);
             unit.SetStatus(StatusFlags.Ghosted, true);
+
+            var xy = unit as IObjAiBase;
+            xy.SetTargetUnit(null);
+
             ForceMovement(unit, "Spell3", new Vector2(target.Position.X + to.X * 175f, target.Position.Y + to.Y * 175f), 750f + unit.Stats.MoveSpeed.Total * 0.6f, 0, 0, 0);
             CancelDash(unit);
             owner.PlayAnimation("Spell3", 0.45f, 0, 1);

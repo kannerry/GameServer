@@ -27,6 +27,9 @@ namespace Spells
         {
             FaceDirection(pos, target);
             var pos2 = GetPointFromUnit(target, -500);
+
+            var xy = target as IObjAiBase;
+            xy.SetTargetUnit(null);
             ForceMovement(target, "run", pos2, 1000, 0, 0, 0);
         }
 

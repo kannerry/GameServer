@@ -40,6 +40,7 @@ namespace Spells
             var trueCoords = current + range;
 
             FaceDirection(trueCoords, spell.CastInfo.Owner, true);
+            spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "SRU_Crab_Dash", trueCoords, 750, 0, 0, 0, movementOrdersFacing: GameServerCore.Enums.ForceMovementOrdersFacing.FACE_MOVEMENT_DIRECTION);
         }
 

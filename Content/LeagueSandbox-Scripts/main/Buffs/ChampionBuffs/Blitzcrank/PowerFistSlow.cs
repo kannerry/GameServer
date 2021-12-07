@@ -25,6 +25,9 @@ namespace Buffs
             var randOffset = (float)new Random().NextDouble();
             var randPoint = new Vector2(unit.Position.X + (80.0f), unit.Position.Y + 80.0f);
 
+            var xy = unit as IObjAiBase;
+            xy.SetTargetUnit(null);
+
             ForceMovement(unit, "", randPoint, 90.0f, 80.0f, 20.0f, 0.0f, ForceMovementType.FURTHEST_WITHIN_RANGE, ForceMovementOrdersType.CANCEL_ORDER, ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
             buff.SetStatusEffect(StatusFlags.CanAttack | StatusFlags.CanCast | StatusFlags.CanMove, false);
             // ApplyAssistMarker(ownerSpell.CastInfo.Owner, unit, 10.0f);

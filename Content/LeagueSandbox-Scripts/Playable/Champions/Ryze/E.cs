@@ -16,8 +16,9 @@ namespace Spells
             IsDamagingSpell = true,
             MissileParameters = new MissileParameters
             {
-                Type = MissileType.None
-            }
+                Type = MissileType.Target
+            },
+            ChannelDuration = 0.5f
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)

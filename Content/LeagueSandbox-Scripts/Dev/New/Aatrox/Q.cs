@@ -35,6 +35,7 @@ namespace Spells
             CreateTimer((float)0.05, () =>
             {
                 var trueCoords = GetPointFromUnit(spell.CastInfo.Owner, 750);
+                owner.SetTargetUnit(null);
                 ForceMovement(spell.CastInfo.Owner, "Spell1", trueCoords, 750, 0, 15, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT);
                 owner.PlayAnimation("Spell1", 1, 0, 1);
             });

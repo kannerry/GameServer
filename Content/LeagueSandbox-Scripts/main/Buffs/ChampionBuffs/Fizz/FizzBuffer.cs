@@ -57,6 +57,8 @@ namespace Buffs
             //StopAnimation(owner, "Spell3a", false);
             //PauseAnimation(owner, true);
             PlayAnimation(owner, "Spell3d", 0.9f);
+
+            owner.SetTargetUnit(null);
             ForceMovement(owner, null, trueCoords, 1200, 0, 0, 0);
 
             CreateTimer(0.5f, () =>

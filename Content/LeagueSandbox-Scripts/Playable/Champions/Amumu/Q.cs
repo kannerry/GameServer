@@ -116,6 +116,7 @@ namespace Spells
             AddBuff("Stun", 1.0f, 1, spell, target, owner);
 
             var to = Vector2.Normalize(target.Position - owner.Position);
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell1", new Vector2(target.Position.X - to.X * 100f, target.Position.Y - to.Y * 100f), spell.SpellData.MissileSpeed, 0, 0, 0);
 
             //ForceMovement(owner, "Spell1", target.Position, spell.SpellData.MissileSpeed, 0, 0, 0);

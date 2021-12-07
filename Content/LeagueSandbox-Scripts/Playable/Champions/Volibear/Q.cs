@@ -98,6 +98,8 @@ namespace Spells
             {
                 var x = GetPointFromUnit(owner, -200);
                 unit.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                var xy = unit as IObjAiBase;
+                xy.SetTargetUnit(null);
                 ForceMovement(unit, "Spell1", x, 500, 0, 20, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT);
                 Applied = 1;
                 //CreateTimer((float)6, () => { Applied = 1; });

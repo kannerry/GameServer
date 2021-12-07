@@ -1,14 +1,13 @@
-﻿using GameServerCore.Domain.GameObjects;
+using System.Linq;
+using GameServerCore;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
-using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System.Linq;
-using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using GameServerCore.Scripting.CSharp;
 
 namespace Spells
 {
@@ -34,30 +33,30 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
-            var owner = spell.CastInfo.Owner as IChampion;
-            PlayAnimation(owner, "SPELL1");
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
-            var xwxwx = GetPointFromUnit(spell.CastInfo.Owner, 600);
-            SpellCast(spell.CastInfo.Owner, 0, SpellSlotType.ExtraSlots, spell.CastInfo.Owner.Position, xwxwx, true, Vector2.Zero);
-            var ownerr = spell.CastInfo.Owner as IChampion;
-            AddParticle(ownerr, ownerr, "RenektonCleave_trail.troy", ownerr.Position, lifetime: 0.5f, reqVision: false);
+            var owner = spell.CastInfo.Owner as IChampion;
+            var ad = spell.CastInfo.Owner.Stats.AttackDamage.FlatBonus * 0.8f;
+            var damage = 60*spell.CastInfo.SpellLevel  + ad;
+             var heal = 12 * spell.CastInfo.SpellLevel;
+ 
+            owner.Stats.CurrentHealth += heal;
 
-            var spellLevel = ownerr.GetSpell("RenektonCleave").CastInfo.SpellLevel;
 
-            var ap = spell.CastInfo.Owner.Stats.AttackDamage.Total * 0.5f;
-            var damage = 20 + spellLevel * 40 + ap;
-            foreach (var enemy in GetUnitsInRange(ownerr.Position, 600, true)
-                .Where(x => x.Team != ownerr.Team))
+            PlayAnimation(owner, "Spell1");
+            var units = GetUnitsInRange(owner.Position, 425f, true);
+            for (int i = 0; i < units.Count; i++)
             {
-                if (enemy is IObjAiBase)
+                if (!(units[i].Team == owner.Team || units[i] is IBaseTurret || units[i] is IObjBuilding || units[i] is IInhibitor))
                 {
-                    enemy.TakeDamage(ownerr, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-                    //AddBuff("Pulverize", 0.5f, 1, spell, enemy, ownerr);
+                    units[i].TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+                    AddParticle(owner, null, "RenektonCleave_trail.troy", owner.Position, direction: owner.Direction);
+                    
                 }
             }
+
         }
 
         public void OnSpellChannel(ISpell spell)

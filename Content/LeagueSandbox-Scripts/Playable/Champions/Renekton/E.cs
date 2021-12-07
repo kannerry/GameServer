@@ -39,13 +39,22 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
-
+        int reset = 0;
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
             var APratio = owner.Stats.AttackDamage.Total * 0.75f;
             var damage = 35 + spell.CastInfo.SpellLevel * 40 + APratio;
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            if(target.Team != owner.Team)
+            {
+                if (reset != 1)
+                {
+                    owner.GetSpell(2).SetCooldown(0);
+                    reset = 1;
+                    CreateTimer(10.0f, () => { reset = 0; });
+                }
+            }
         }
 
         public void OnSpellPostCast(ISpell spell)

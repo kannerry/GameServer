@@ -37,6 +37,7 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             var to = Vector2.Normalize(target.Position - owner.Position);
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell2", new Vector2(target.Position.X - to.X * 100f, target.Position.Y - to.Y * 100f), 1500, 0, 0, 0);
             _target = target;
             _owner = owner;
@@ -51,6 +52,10 @@ namespace Spells
             LogDebug("yo");
             FaceDirection(_owner.Position, _target);
             var x = GetPointFromUnit(_target, -600);
+
+            var xy = _target as IObjAiBase;
+            xy.SetTargetUnit(null);
+
             ForceMovement(_target, "run", x, 1500, 0, 0, 0);
         }
 

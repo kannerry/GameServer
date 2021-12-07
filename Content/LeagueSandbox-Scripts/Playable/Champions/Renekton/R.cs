@@ -1,9 +1,9 @@
-﻿using GameServerCore.Domain.GameObjects;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 
 namespace Spells
 {
@@ -11,6 +11,7 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
+            // TODO
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -23,31 +24,9 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            owner.Stats.Size.BaseValue = 1.5f;
-            CreateTimer(15f, () => { owner.Stats.Size.BaseValue = 1.00f; });
-            owner.Stats.HealthPoints.FlatBonus += 200f;
-            CreateTimer(15f, () => { owner.Stats.HealthPoints.FlatBonus -= 200f; });
-            //CreateTimer(15f, () => { owner.Stats.Size.BaseValue = 1.500f; });
-            //CreateTimer(15.02f, () => { owner.Stats.Size.BaseValue = 1.475f; });
-            //CreateTimer(15.04f, () => { owner.Stats.Size.BaseValue = 1.450f; });
-            //CreateTimer(15.06f, () => { owner.Stats.Size.BaseValue = 1.425f; });
-            //CreateTimer(15.08f, () => { owner.Stats.Size.BaseValue = 1.400f; });
-            //CreateTimer(15.10f, () => { owner.Stats.Size.BaseValue = 1.375f; });
-            //CreateTimer(15.12f, () => { owner.Stats.Size.BaseValue = 1.350f; });
-            //CreateTimer(15.14f, () => { owner.Stats.Size.BaseValue = 1.325f; });
-            //CreateTimer(15.16f, () => { owner.Stats.Size.BaseValue = 1.300f; });
-            //CreateTimer(15.18f, () => { owner.Stats.Size.BaseValue = 1.275f; });
-            //CreateTimer(15.20f, () => { owner.Stats.Size.BaseValue = 1.250f; });
-            //CreateTimer(15.22f, () => { owner.Stats.Size.BaseValue = 1.225f; });
-            //CreateTimer(15.24f, () => { owner.Stats.Size.BaseValue = 1.200f; });
-            //CreateTimer(15.26f, () => { owner.Stats.Size.BaseValue = 1.175f; });
-            //CreateTimer(15.28f, () => { owner.Stats.Size.BaseValue = 1.150f; });
-            //CreateTimer(15.30f, () => { owner.Stats.Size.BaseValue = 1.125f; });
-            //CreateTimer(15.32f, () => { owner.Stats.Size.BaseValue = 1.100f; });
-            //CreateTimer(15.34f, () => { owner.Stats.Size.BaseValue = 1.075f; });
-            //CreateTimer(15.36f, () => { owner.Stats.Size.BaseValue = 1.050f; });
-            //CreateTimer(15.38f, () => { owner.Stats.Size.BaseValue = 1.025f; });
-            //CreateTimer(15.40f, () => { owner.Stats.Size.BaseValue = 1.000f; });
+            AddBuff("RenektonReignOfTheTyrant", 15f, 1, spell, owner, owner);
+           AddParticleTarget(owner, owner, "RenektonDominus_aura.troy", owner, 15f);
+           
         }
 
         public void OnSpellCast(ISpell spell)

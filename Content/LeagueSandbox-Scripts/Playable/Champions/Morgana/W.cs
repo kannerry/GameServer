@@ -27,6 +27,7 @@ namespace Spells
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
+        private IBuff thisBuff;
         public ISpellSector DamageSector;
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -48,9 +49,9 @@ namespace Spells
             SpellCast(owner, 1, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
             var spellpos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
 
-            AddParticle(owner, null, "TormentedSoil_tar.troy", targetPos, lifetime: 5.0f, reqVision: false);
-            AddParticle(owner, null, "TormentedSoil_green_tar.troy", targetPos, lifetime: 5.0f, reqVision: false);
-            AddParticle(owner, null, "TormentedSoil_red_tar.troy", targetPos, lifetime: 5.0f, reqVision: false);
+            AddParticle(owner, null, "TormentedSoil_tar.troy", spellpos, lifetime: 5.0f, reqVision: false);
+            AddParticle(owner, null, "TormentedSoil_green_tar.troy", spellpos, lifetime: 5.0f, reqVision: false);
+            AddParticle(owner, null, "TormentedSoil_red_tar.troy", spellpos, lifetime: 5.0f, reqVision: false);
             DamageSector = spell.CreateSpellSector(new SectorParameters
             {
                 Length = 275f,

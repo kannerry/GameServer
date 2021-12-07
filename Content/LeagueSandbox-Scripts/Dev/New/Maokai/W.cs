@@ -39,6 +39,7 @@ namespace Spells
         {
             var to = Vector2.Normalize(target.Position - owner.Position);
             owner.StopMovement();
+            owner.SetTargetUnit(null);
             ForceMovement(owner, "Spell1", new Vector2(target.Position.X - to.X * 100f, target.Position.Y - to.Y * 100f), 5000, 0, 0, 0);
             _target = target;
             _owner = owner;

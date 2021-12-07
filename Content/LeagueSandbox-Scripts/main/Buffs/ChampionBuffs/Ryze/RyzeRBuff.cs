@@ -7,7 +7,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    internal class RyzeRBuff : IBuffGameScript
+    internal class DesperatePower : IBuffGameScript
     {
         public BuffType BuffType => BuffType.HEAL;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;

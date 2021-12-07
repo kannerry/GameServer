@@ -48,7 +48,8 @@ namespace Spells
             var dash = Vector2.Negate(to) * 500;
             var dashCoords = current + dash;
             SpellCast(spell.CastInfo.Owner, 1, SpellSlotType.ExtraSlots, spellPos, spellPos, true, Vector2.Zero);
-            CreateTimer(0.05f, () => { ForceMovement(owner, "RUN", dashCoords, 1000, 0, 0, 0, movementOrdersFacing: ForceMovementOrdersFacing.KEEP_CURRENT_FACING); });
+            owner.SetTargetUnit(null);
+            ForceMovement(owner, "RUN", dashCoords, 1000, 0, 0, 0, movementOrdersFacing: ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
             //var owner = spell.CastInfo.Owner;
             //// Calculate net coords
             //var current = new Vector2(owner.Position.X, owner.Position.Y);
