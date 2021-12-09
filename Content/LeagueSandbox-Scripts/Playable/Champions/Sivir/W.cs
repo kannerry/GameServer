@@ -30,6 +30,10 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             AddBuff("SivirW", 6.0f, 3, spell, owner, owner);
+            if (owner.GetSpell(3).CastInfo.SpellLevel > 0)
+            {
+                AddBuff("SivirWR", 6.0f, 1, spell, owner, owner);
+            }
         }
 
         public void OnSpellCast(ISpell spell)
@@ -85,7 +89,14 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             owner.AutoAttackHit(target);
             AddParticleTarget(owner, target, "Sivir_Base_W_Tar.troy", target, bone: "C_BUFFBONE_GLB_CHEST_LOC");
-            SpellCast(owner, 2, SpellSlotType.ExtraSlots, false, target, missile.Position);
+            var x = GetUnitsInRange(target.Position, 500, true);
+            foreach(var unit in x)
+            {
+                if(unit.Team != owner.Team)
+                {
+                    SpellCast(owner, 2, SpellSlotType.ExtraSlots, false, unit, missile.Position);
+                }
+            }
         }
 
         public void OnSpellCast(ISpell spell)
