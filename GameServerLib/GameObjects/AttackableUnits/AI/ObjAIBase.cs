@@ -1138,5 +1138,11 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
         {
             _game.PacketNotifier.NotifyHealthbarVisibility(playerId, unit, show);
         }
+
+        public void NotifyPlayerStatsOppositeTeam(IChampion unit)
+        {
+            _game.PacketNotifier.NotifyPlayerStatsOppositeTeam(unit);
+        }
+
     }
 }

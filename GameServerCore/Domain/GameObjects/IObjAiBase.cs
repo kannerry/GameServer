@@ -184,5 +184,6 @@ namespace GameServerCore.Domain.GameObjects
         void UpdateMoveOrder(OrderType order, bool publish = true);
         void SetInvisible(int netId, IObjAiBase obj, float swag, float swag2);
         void SetHealthbarVisibility(int playerId, IAttackableUnit unit, bool show);
+        void NotifyPlayerStatsOppositeTeam(IChampion champ);
     }
 }

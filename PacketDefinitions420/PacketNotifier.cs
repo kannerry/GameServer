@@ -2944,7 +2944,10 @@ namespace PacketDefinitions420
             {
                 var us = new UpdateStats(u.Replication, partial);
                 var channel = Channel.CHL_LOW_PRIORITY;
-                _packetHandlerManager.BroadcastPacketVision(u, us, channel, PacketFlags.Unsequenced);
+                if (u.disableBroadcastStats == false)
+                {
+                    _packetHandlerManager.BroadcastPacketVision(u, us, channel, PacketFlags.Unsequenced);
+                }
                 if (partial)
                 {
                     u.Replication.MarkAsUnchanged();
@@ -3160,5 +3163,30 @@ namespace PacketDefinitions420
             var icon = new AttachMinimapIcon(unit, ChangeIcon, IconCategory, ChangeBorder, BorderCategory, BorderScriptName);
             _packetHandlerManager.BroadcastPacket(icon, Channel.CHL_S2C);
         }
+
+        public void NotifyPlayerStatsOppositeTeam(IChampion u)
+        {
+
+            if (u.Team == TeamId.TEAM_BLUE)
+            {
+                if (u.Replication != null)
+                {
+                    var us = new UpdateStats(u.Replication, false);
+                    var channel = Channel.CHL_LOW_PRIORITY;
+                    _packetHandlerManager.BroadcastPacketTeam(TeamId.TEAM_PURPLE, us, channel, PacketFlags.Unsequenced);
+                }
+            }
+            
+            if (u.Team == TeamId.TEAM_PURPLE)
+            {
+                if (u.Replication != null)
+                {
+                    var us = new UpdateStats(u.Replication, false);
+                    var channel = Channel.CHL_LOW_PRIORITY;
+                    _packetHandlerManager.BroadcastPacketTeam(TeamId.TEAM_BLUE, us, channel, PacketFlags.Unsequenced);
+                }
+            }
+        }
+
     }
 }

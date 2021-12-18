@@ -933,5 +933,6 @@ namespace GameServerCore.Packets.Interfaces
         void NotifyCreateMonsterCamp(Vector2 pos, byte campId, TeamId team, string icon);
         void NotifyModelTransparency(int netId, IAttackableUnit champ, float transparency, float transitionTime);
         void NotifyHealthbarVisibility(int playerId, IAttackableUnit unit, bool show);
+        void NotifyPlayerStatsOppositeTeam(IChampion champ);
     }
 }

@@ -14,6 +14,9 @@ namespace GameServerCore.Domain.GameObjects
         /// Whether or not this Unit is dead. Refer to TakeDamage() and Die().
         /// </summary>
         bool IsDead { get; }
+
+        bool disableBroadcastStats { get; set; }
+
         /// <summary>
         /// Whether or not this Unit's model has been changeds this tick. Resets to False when the next tick update happens in ObjectManager.
         /// </summary>

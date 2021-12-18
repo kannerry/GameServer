@@ -25,7 +25,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            AddBuff("TalonDisappear", 2f, 1, spell, owner, owner);
+            //AddBuff("TalonDisappear", 2f, 1, spell, owner, owner);
             AddParticleTarget(owner, owner, "Khazix_Base_R_Cas.troy", owner);
             var Champs = GetChampionsInRange(owner.Position, 50000, true);
             foreach (IChampion player in Champs)

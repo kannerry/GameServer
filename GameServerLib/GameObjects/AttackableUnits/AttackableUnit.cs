@@ -36,6 +36,9 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
         /// Whether or not this Unit is dead. Refer to TakeDamage() and Die().
         /// </summary>
         public bool IsDead { get; protected set; }
+
+        public bool disableBroadcastStats { get; set; }
+
         /// <summary>
         /// Whether or not this Unit's model has been changeds this tick. Resets to False when the next tick update happens in ObjectManager.
         /// </summary>
