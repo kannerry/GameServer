@@ -1,13 +1,10 @@
-using System.Linq;
-using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -39,13 +36,12 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner as IChampion;
             var ad = spell.CastInfo.Owner.Stats.AttackDamage.FlatBonus * 0.5f;
-            var damage = 70*spell.CastInfo.SpellLevel  + ad;
+            var damage = 70 * spell.CastInfo.SpellLevel + ad;
 
             PlayAnimation(owner, "Spell1", 0.5f);
             AddParticle(owner, null, "darius_Base_Q_aoe_cast.troy", owner.Position, direction: owner.Direction);
             AddParticle(owner, null, "darius_Base_Q_aoe_cast_mist", owner.Position, direction: owner.Direction);
             AddParticle(owner, null, "darius_Base_Q_tar_inner.troy", owner.Position, direction: owner.Direction);
-
 
             var units = GetUnitsInRange(owner.Position, 425f, true);
             for (int i = 0; i < units.Count; i++)
@@ -57,7 +53,6 @@ namespace Spells
                     AddBuff("DariusHemoMarker", 5f, 1, spell, units[i], owner);
                 }
             }
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -76,5 +71,4 @@ namespace Spells
         {
         }
     }
-
 }

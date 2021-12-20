@@ -1,16 +1,15 @@
+﻿//MasterYiDoubleStrike
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class NamiE : ISpellScript
+    public class MasterYiDoubleStrike : ISpellScript
     {
-        private IAttackableUnit Target;
-
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true
@@ -27,7 +26,11 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            Target = target;
+            owner.PlayAnimation("ATTACK1", timeScale: 0.5f);
+            //LogDebug(owner.TargetUnit.Model.ToString());
+
+            float dmg = owner.Stats.AttackDamage.Total * 0.5f;
+            owner.TargetUnit.TakeDamage(owner, dmg, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
         }
 
         public void OnSpellCast(ISpell spell)
@@ -36,11 +39,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-            var owner = spell.CastInfo.Owner;
-
-            //  AddParticle(owner, spell.CastInfo.Targets[0].Unit, "Intervention_tar.troy", Vector2.Zero);
-
-            AddBuff("NamiE", 6f, 1, spell, Target, owner);
         }
 
         public void OnSpellChannel(ISpell spell)

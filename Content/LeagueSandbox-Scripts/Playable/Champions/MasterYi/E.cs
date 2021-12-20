@@ -1,4 +1,4 @@
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
@@ -7,18 +7,17 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class NamiE : ISpellScript
+    public class WujuStyle : ISpellScript
     {
-        private IAttackableUnit Target;
-
-        public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
+        public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
-            TriggersSpellCasts = true
-            // TODO
         };
+
+        private IObjAiBase own;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            own = owner;
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -27,20 +26,16 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            Target = target;
+            AddBuff("MasterYiE", 5.0f, 1, spell, owner, owner);
         }
 
         public void OnSpellCast(ISpell spell)
         {
+            //SealSpellSlot(spell.CastInfo.Owner, SpellSlotType.SpellSlots, 2, SpellbookType.SPELLBOOK_CHAMPION, true);
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
-            var owner = spell.CastInfo.Owner;
-
-            //  AddParticle(owner, spell.CastInfo.Targets[0].Unit, "Intervention_tar.troy", Vector2.Zero);
-
-            AddBuff("NamiE", 6f, 1, spell, Target, owner);
         }
 
         public void OnSpellChannel(ISpell spell)

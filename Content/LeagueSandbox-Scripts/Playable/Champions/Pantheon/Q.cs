@@ -11,19 +11,31 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class DariusAxeGrabCone : ISpellScript
+    public class PantheonQ : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
             IsDamagingSpell = true,
-            NotSingleTargetSpell = true
-            // TODO
+            MissileParameters = new MissileParameters
+            {
+                Type = MissileType.Target
+            }
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
+        }
+
+        public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
+        {
+            var owner = spell.CastInfo.Owner as IChampion;
+            var ADratio = owner.Stats.AttackDamage.FlatBonus * 1.4f;
+            var damage = 65 * spell.CastInfo.SpellLevel + ADratio;
+
+            target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            AddParticleTarget(owner, target, "Pantheon_Base_Q_mis.troy", target, 1f);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -40,30 +52,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-            var owner = spell.CastInfo.Owner;
-
-            var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
-            FaceDirection(spellPos, owner, false);
-
-            var sector = spell.CreateSpellSector(new SectorParameters
-            {
-                Length = 540f,
-                SingleTick = true,
-                ConeAngle = 24.76f,
-                Type = SectorType.Cone
-            });
-        }
-
-        public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
-        {
-            var owner = spell.CastInfo.Owner;
-
-            var t = target as IObjAiBase;
-            t.SetTargetUnit(null);
-
-            var to = Vector2.Normalize(target.Position - owner.Position);
-
-            ForceMovement(target, "RUN", GetPointFromUnit(owner, 150), 2000f, 0, 5.0f, 0, movementOrdersType: ForceMovementOrdersType.CANCEL_ORDER);
         }
 
         public void OnSpellChannel(ISpell spell)

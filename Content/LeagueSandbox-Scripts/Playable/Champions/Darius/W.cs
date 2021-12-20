@@ -1,19 +1,18 @@
-using System.Collections.Generic;
-using System.Numerics;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
     public class DariusNoxianTacticsONH : ISpellScript
     {
-        IObjAiBase Owner;
+        private IObjAiBase Owner;
+
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
@@ -50,7 +49,6 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner;
             AddBuff("DariusNoxianTacticsActive", 4f, 1, spell, Owner, Owner, false);
-
         }
 
         public void TargetExecute(IAttackableUnit unit, bool arg2)

@@ -1,13 +1,13 @@
-using System.Numerics;
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using LeagueSandbox.GameServer.Scripting.CSharp;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -19,7 +19,7 @@ namespace Spells
             // TODO
         };
 
-        //CAN CRASH !!! 
+        //CAN CRASH !!!
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -124,7 +124,7 @@ namespace Spells
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
-            if(target.Team != spell.CastInfo.Owner.Team)
+            if (target.Team != spell.CastInfo.Owner.Team)
             {
                 var owner = spell.CastInfo.Owner;
 

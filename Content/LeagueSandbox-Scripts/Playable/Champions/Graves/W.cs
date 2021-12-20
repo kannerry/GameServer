@@ -50,9 +50,9 @@ namespace Spells
                 Tickrate = 1,
                 Length = 250f,
                 OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
-                Type = SectorType.Area
+                Type = SectorType.Area,
+                Lifetime = 1
             });
-            CreateTimer(1.0f, () => { DamageSector.SetToRemove(); });
             var spellPos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
             if (owner.Team == TeamId.TEAM_BLUE)
             {

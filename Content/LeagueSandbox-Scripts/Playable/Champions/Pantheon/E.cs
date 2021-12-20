@@ -11,7 +11,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class DariusAxeGrabCone : ISpellScript
+    public class PantheonE : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
@@ -32,6 +32,18 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            var sector = spell.CreateSpellSector(new SectorParameters
+            {
+                Length = 600f,
+                Tickrate = 5,
+                CanHitSameTargetConsecutively = true,
+                OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
+                ConeAngle = 24.76f,
+                Type = SectorType.Cone,
+                Lifetime = 3.0f,
+                BindObject = owner,
+                MaximumHits = 3
+            }); ;
         }
 
         public void OnSpellCast(ISpell spell)
@@ -44,26 +56,17 @@ namespace Spells
 
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             FaceDirection(spellPos, owner, false);
-
-            var sector = spell.CreateSpellSector(new SectorParameters
-            {
-                Length = 540f,
-                SingleTick = true,
-                ConeAngle = 24.76f,
-                Type = SectorType.Cone
-            });
+            AddParticleTarget(owner, owner, "Pantheon_Base_E_cas.troy", owner, bone: "L_hand", size: -1);
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
 
-            var t = target as IObjAiBase;
-            t.SetTargetUnit(null);
+            var ad = owner.Stats.AttackDamage.FlatBonus * 1.2f;
+            var damage = 26 * spell.CastInfo.SpellLevel + ad;
 
-            var to = Vector2.Normalize(target.Position - owner.Position);
-
-            ForceMovement(target, "RUN", GetPointFromUnit(owner, 150), 2000f, 0, 5.0f, 0, movementOrdersType: ForceMovementOrdersType.CANCEL_ORDER);
+            target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
         }
 
         public void OnSpellChannel(ISpell spell)

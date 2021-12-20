@@ -1,13 +1,13 @@
-using GameServerCore.Enums;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using LeagueSandbox.GameServer.API;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
@@ -32,7 +32,7 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner as IChampion;
             var APratio = owner.Stats.AbilityPower.Total * 0.6f;
-            var damage = 70 * spell.CastInfo.SpellLevel  + APratio;
+            var damage = 70 * spell.CastInfo.SpellLevel + APratio;
 
             AddParticleTarget(owner, target, "Malphite_Base_SeismicShard_mis.troy", target, 1f);
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);

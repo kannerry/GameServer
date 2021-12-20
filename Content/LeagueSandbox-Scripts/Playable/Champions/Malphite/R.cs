@@ -4,7 +4,6 @@ using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System;
 using System.Numerics;
@@ -52,7 +51,6 @@ namespace Spells
 
         public void AlistarPush(IAttackableUnit unit)
         {
-
             var ap = _owner.Stats.AbilityPower.Total;
             var damage = 200 * _owner.GetSpell(3).CastInfo.SpellLevel + ap;
 
@@ -62,9 +60,9 @@ namespace Spells
             AddParticle(_owner, null, "Malphite_Base_UnstoppableForce_tar.troy", _owner.Position);
 
             var x = GetUnitsInRange(_owner.Position, 325, true);
-            foreach(var unitx in x)
+            foreach (var unitx in x)
             {
-                if(unitx.Team != _owner.Team)
+                if (unitx.Team != _owner.Team)
                 {
                     var randOffset = (float)new Random().NextDouble();
                     var randPoint = new Vector2(unit.Position.X + 25.0f, unit.Position.Y + 25.0f);
@@ -76,7 +74,6 @@ namespace Spells
                     ForceMovement(unitx, "", randPoint, 90.0f, 80.0f, 20.0f, 0.0f, ForceMovementType.FURTHEST_WITHIN_RANGE, ForceMovementOrdersType.CANCEL_ORDER, ForceMovementOrdersFacing.KEEP_CURRENT_FACING);
 
                     unitx.TakeDamage(_owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-
                 }
             }
         }

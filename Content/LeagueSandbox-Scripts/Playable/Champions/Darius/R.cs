@@ -1,16 +1,17 @@
-using LeagueSandbox.GameServer.API;
 using GameServerCore.Domain.GameObjects;
+using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Enums;
+
 namespace Spells
 {
     public class DariusExecute : ISpellScript
     {
-        IAttackableUnit Target;
+        private IAttackableUnit Target;
+
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
@@ -38,10 +39,10 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
-            var ad = owner.Stats.AttackDamage.FlatBonus*1.5f;
+            var ad = owner.Stats.AttackDamage.FlatBonus * 1.5f;
             var stacks = Target.GetBuffWithName("DariusHemoMarker");
             var damage = 160 * spell.CastInfo.SpellLevel + ad;
-            if(stacks != null)
+            if (stacks != null)
             {
                 damage += (float)(stacks.StackCount * 0.2 * damage);
             }

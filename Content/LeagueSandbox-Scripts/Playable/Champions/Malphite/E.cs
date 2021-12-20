@@ -1,13 +1,10 @@
-using System.Linq;
-using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Enums;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -38,12 +35,11 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
-            var armor = spell.CastInfo.Owner.Stats.Armor.Total*0.3f;
+            var armor = spell.CastInfo.Owner.Stats.Armor.Total * 0.3f;
             var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.2f;
-            var damage = 60*spell.CastInfo.SpellLevel + ap + armor;
+            var damage = 60 * spell.CastInfo.SpellLevel + ap + armor;
 
             AddParticleTarget(owner, owner, "Malphite_Base_Landslide_nova.troy", owner, 1f);
-
 
             var units = GetUnitsInRange(owner.Position, 400f, true);
             for (int i = 0; i < units.Count; i++)
@@ -54,7 +50,6 @@ namespace Spells
                     AddParticleTarget(owner, units[i], "globalhit_orange_tar.troy", units[i], 1f);
                 }
             }
-
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -73,5 +68,4 @@ namespace Spells
         {
         }
     }
-
 }

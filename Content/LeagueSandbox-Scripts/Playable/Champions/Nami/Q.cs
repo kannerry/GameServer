@@ -1,14 +1,13 @@
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-using GameServerCore.Enums;
-using LeagueSandbox.GameServer.API;
-using System.Collections.Generic;
-using GameServerCore.Domain.GameObjects.Spell.Sector;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Domain.GameObjects.Spell.Missile;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
@@ -23,6 +22,7 @@ namespace Spells
             NotSingleTargetSpell = true,
             SpellToggleSlot = 4
         };
+
         public ISpellSector DamageSector;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -37,10 +37,10 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             var spellPos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
-              AddParticle(owner, null, "Nami_Base_Q_pop.troy", spellPos, lifetime: 0.5f , reqVision: false);
-                AddParticle(owner, null, "Nami_Base_Q_tar.troy", spellPos, lifetime: 0.5f , reqVision: false);
-                AddParticle(owner, null, "Nami_Base_Q_cas.troy", spellPos, lifetime: 0.5f , reqVision: false);
-                 AddParticle(owner, null, "Nami_Base_Q_aoe_ground.troy", spellPos, lifetime: 0.5f , reqVision: false);
+            AddParticle(owner, null, "Nami_Base_Q_pop.troy", spellPos, lifetime: 0.5f, reqVision: false);
+            AddParticle(owner, null, "Nami_Base_Q_tar.troy", spellPos, lifetime: 0.5f, reqVision: false);
+            AddParticle(owner, null, "Nami_Base_Q_cas.troy", spellPos, lifetime: 0.5f, reqVision: false);
+            AddParticle(owner, null, "Nami_Base_Q_aoe_ground.troy", spellPos, lifetime: 0.5f, reqVision: false);
             DamageSector = spell.CreateSpellSector(new SectorParameters
             {
                 Tickrate = 1,
@@ -67,7 +67,7 @@ namespace Spells
             //Graves_SmokeGrenade_Cloud_Team_Green.troy
             //Graves_SmokeGrenade_Cloud_Team_Red.troy
             target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-              AddBuff("Stun", 1.5f, 1, spell, target, owner);
+            AddBuff("Stun", 1.5f, 1, spell, target, owner);
         }
 
         public void OnSpellChannel(ISpell spell)

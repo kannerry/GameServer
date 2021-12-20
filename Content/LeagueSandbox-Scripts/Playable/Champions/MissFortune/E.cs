@@ -66,7 +66,6 @@ namespace Spells
                     var randPoint = new Vector2(spellpos.X + randOffsetX, spellpos.Y + randOffsetY);
 
                     var particle1 = AddParticlePos(owner, "MissFortune_Base_E_cas.troy", randPoint, randPoint, lifetime: 1.0f);
-
                 });
                 CreateTimer((float)(i + 0.1), () =>
                 {
@@ -76,7 +75,6 @@ namespace Spells
                     var randPoint = new Vector2(spellpos.X + randOffsetX, spellpos.Y + randOffsetY);
 
                     var particle1 = AddParticlePos(owner, "MissFortune_Base_E_cas.troy", randPoint, randPoint, lifetime: 1.0f);
-
                 });
                 CreateTimer((float)(i + 0.25), () =>
                 {
@@ -86,7 +84,6 @@ namespace Spells
                     var randPoint = new Vector2(spellpos.X + randOffsetX, spellpos.Y + randOffsetY);
 
                     var particle1 = AddParticlePos(owner, "MissFortune_Base_E_cas.troy", randPoint, randPoint, lifetime: 1.0f);
-
                 });
                 LogDebug(i.ToString());
                 i += 0.5f;

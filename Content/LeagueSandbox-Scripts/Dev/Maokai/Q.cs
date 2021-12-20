@@ -6,16 +6,18 @@ using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Linq;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class VorpalSpikes : ISpellScript
+    public class MaokaiTrunkLine : ISpellScript
     {
-        public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
+        public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true
+            // TODO
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -26,29 +28,36 @@ namespace Spells
         {
         }
 
-        private bool toggled = false;
-
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            toggled = !toggled;
-            if (toggled == false)
-            {
-                RemoveBuff(owner, "ChogathSpikes");
-                LogDebug("toggled off");
-            }
-            if (toggled == true)
-            {
-                AddBuff("ChogathSpikes", float.MaxValue, 1, spell, target, owner, true);
-                LogDebug("toggled on");
-            }
         }
 
         public void OnSpellCast(ISpell spell)
         {
+            var owner = spell.CastInfo.Owner as IChampion;
+            PlayAnimation(owner, "SPELL1");
         }
 
         public void OnSpellPostCast(ISpell spell)
         {
+            var xwxwx = GetPointFromUnit(spell.CastInfo.Owner, 600);
+            SpellCast(spell.CastInfo.Owner, 0, SpellSlotType.ExtraSlots, spell.CastInfo.Owner.Position, xwxwx, true, Vector2.Zero);
+            var ownerr = spell.CastInfo.Owner as IChampion;
+            AddParticle(ownerr, null, "Pulverize_cas.troy", ownerr.Position, lifetime: 0.5f, reqVision: false);
+
+            var spellLevel = ownerr.GetSpell("MaokaiTrunkLine").CastInfo.SpellLevel;
+
+            var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.5f;
+            var damage = 20 + spellLevel * 40 + ap;
+            foreach (var enemy in GetUnitsInRange(ownerr.Position, 250, true)
+                .Where(x => x.Team != ownerr.Team))
+            {
+                if (enemy is IObjAiBase)
+                {
+                    enemy.TakeDamage(ownerr, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                    AddBuff("Pulverize", 0.15f, 1, spell, enemy, ownerr);
+                }
+            }
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -68,17 +77,15 @@ namespace Spells
         }
     }
 
-    public class VorpalSpikesMissle : ISpellScript
+    public class MaokaiTrunkLineMissile : ISpellScript
     {
-        public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
+        public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
+            TriggersSpellCasts = true,
             MissileParameters = new MissileParameters
             {
                 Type = MissileType.Circle
-            },
-            IsDamagingSpell = true,
-            TriggersSpellCasts = true
-
+            }
             // TODO
         };
 
@@ -87,20 +94,7 @@ namespace Spells
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
-        private void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile arg3, ISpellSector arg4)
-        {
-            var owner = spell.CastInfo.Owner;
-            var ap = owner.Stats.AbilityPower.Total * 0.3f;
-            var damage = 5 + spell.CastInfo.SpellLevel * 15 + ap;
-            LogDebug("yo");
-            target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
-        }
-
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
-        {
-        }
-
-        public void OnMissileEnd(ISpellMissile missile)
         {
         }
 
@@ -114,6 +108,14 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+        }
+
+        public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
+        {
+            var owner = spell.CastInfo.Owner;
+            var ad = owner.Stats.AttackDamage.Total + spell.CastInfo.SpellLevel - 1 * 20;
+            target.TakeDamage(owner, ad, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            AddBuff("Pulverize", 0.15f, 1, spell, target, spell.CastInfo.Owner);
         }
 
         public void OnSpellChannel(ISpell spell)
