@@ -40,6 +40,7 @@ namespace Spells
                 //SingleTick = true,
                 Type = SectorType.Area,
                 Lifetime = 0.1f,
+                BindObject = owner,
             });
 
             sectorb = _spell.CreateSpellSector(new SectorParameters
@@ -49,7 +50,10 @@ namespace Spells
                 //SingleTick = true,
                 Type = SectorType.Area,
                 Lifetime = 0.1f,
+                BindObject = owner,
             });
+            //Aatrox_Base_Q_Land.troy
+            AddParticle(owner, null, "Aatrox_Base_Q_Land.troy", owner.Position, lifetime: 3.0f, reqVision: false);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -71,11 +75,13 @@ namespace Spells
                     owner.SetTargetUnit(null);
                     ForceMovement(spell.CastInfo.Owner, "Spell1", spellPos, speed1, 0, 5, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT);
                     owner.PlayAnimation("Spell1", 1, 0, 1);
+                    AddParticle(owner, null, "Aatrox_Base_Q_Tar_Green.troy", spellPos, lifetime: 3.0f, reqVision: false);
                     return;
                 }
                 owner.SetTargetUnit(null);
                 ForceMovement(spell.CastInfo.Owner, "Spell1", spellPos, speed1, 0, 5, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT);
-                CreateTimer(0.5f, () => { ForceMovement(spell.CastInfo.Owner, "Spell1", spellPos, speed2, 0, -110, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT); });
+                CreateTimer(0.5f, () => { ForceMovement(spell.CastInfo.Owner, "Spell1", spellPos, speed2, 0, 0, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT); });
+                AddParticle(owner, null, "Aatrox_Base_Q_Tar_Green.troy", spellPos, lifetime: 3.0f, reqVision: false);
                 owner.PlayAnimation("Spell1", 1, 0, 1);
             }
             else
@@ -84,7 +90,8 @@ namespace Spells
                 var trueCoords = GetPointFromUnit(spell.CastInfo.Owner, 750);
                 owner.SetTargetUnit(null);
                 ForceMovement(spell.CastInfo.Owner, "Spell1", trueCoords, speed1, 0, 5, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT);
-                CreateTimer(0.5f, () => { ForceMovement(spell.CastInfo.Owner, "Spell1", trueCoords, speed2, 0, -5, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT); });
+                CreateTimer(0.5f, () => { ForceMovement(spell.CastInfo.Owner, "Spell1", trueCoords, speed2, 0, 0, 0, GameServerCore.Enums.ForceMovementType.FIRST_WALL_HIT); });
+                AddParticle(owner, null, "Aatrox_Base_Q_Tar_Green.troy", trueCoords, lifetime: 3.0f, reqVision: false);
                 owner.PlayAnimation("Spell1", 1, 0, 1);
             }
         }

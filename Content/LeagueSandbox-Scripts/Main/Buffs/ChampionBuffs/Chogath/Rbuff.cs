@@ -11,7 +11,7 @@ namespace Buffs
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.STACKS_AND_OVERLAPS;
-        public int MaxStacks => 5;
+        public int MaxStacks => 6;
         public bool IsHidden => false;
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();

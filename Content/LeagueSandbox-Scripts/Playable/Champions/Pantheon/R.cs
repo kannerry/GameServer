@@ -32,7 +32,8 @@ namespace Spells
         {
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             owner.SetStatus(StatusFlags.CanMove, false);
-            CreateTimer(1.0f, () => {
+            CreateTimer(1.0f, () =>
+            {
                 AddParticle(owner, null, "Pantheon_Base_R_jump.troy", owner.Position, lifetime: 3.0f);
 
                 owner.SetStatus(StatusFlags.Targetable, false);
@@ -66,7 +67,8 @@ namespace Spells
                     AddParticle(owner, null, "Pantheon_Base_R_indicator_red.troy", spellPos, lifetime: 3.0f, reqVision: false, teamOnly: TeamId.TEAM_BLUE);
                 }
             });
-            CreateTimer(3.0f, () => { 
+            CreateTimer(3.0f, () =>
+            {
                 TeleportTo(owner, spellPos.X, spellPos.Y);
                 var DamageSector = spell.CreateSpellSector(new SectorParameters
                 {
@@ -88,7 +90,6 @@ namespace Spells
                     owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0.1f);
                     owner.SetHealthbarVisibility((int)player.GetPlayerId(), owner, true);
                 }
-
             });
         }
 

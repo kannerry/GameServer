@@ -1,24 +1,20 @@
-﻿using GameServerCore.Domain.GameObjects;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class Pyromania_Marker : ISpellScript
+    public class LuluR : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
-            TriggersSpellCasts = true
             // TODO
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
-        {
-        }
-
-        public void ExecuteAbility(ISpell spell)
         {
         }
 
@@ -28,6 +24,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            AddBuff("LuluR", 7.0f, 1, spell, target, owner);
         }
 
         public void OnSpellCast(ISpell spell)

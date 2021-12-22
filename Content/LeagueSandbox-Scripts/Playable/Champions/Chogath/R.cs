@@ -1,25 +1,58 @@
-using LeagueSandbox.GameServer.API;
+using GameServerCore.Domain;
 using GameServerCore.Domain.GameObjects;
+using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
+using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Scripting.CSharp;
-using GameServerCore.Enums;
+
 namespace Spells
 {
     public class Feast : ISpellScript
     {
-        IAttackableUnit Target;
+        private IAttackableUnit Target;
+
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true,
             IsDamagingSpell = true
             // TODO
         };
-
+        IObjAiBase _owner;
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            ApiEventManager.OnDeath.AddListener(this, owner, OnDeath, false);
+        }
+
+        public void OnDeath(IDeathData deathData)
+        {
+            int i = 0;
+            LogDebug("died");
+            while (i < _owner.GetBuffWithName("Feast").StackCount)
+            {
+                i++;
+                if (i == _owner.GetBuffWithName("Feast").StackCount)
+                {
+                    LogDebug((i / 2).ToString());
+                    RemoveStacks(i / 2);
+                }
+            }
+        }
+
+        public void RemoveStacks(int var)
+        {
+            int x = 0;
+            foreach (var swag in _owner.GetBuffsWithName("Feast"))
+            {
+                if(x < var)
+                {
+                    x++;
+                    swag.DeactivateBuff();
+                }
+            }
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -41,18 +74,21 @@ namespace Spells
             var APratio = owner.Stats.AbilityPower.Total * 0.7f;
             var damage = 300 + spell.CastInfo.SpellLevel * 175 + APratio;
             var damageMM = 1000 + APratio;
-
-            Target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            if(Target is IMinion || Target is IMonster)
             {
-                if( Target is IMinion)
-
-               Target.TakeDamage(owner, damageMM, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_SPELL, false);
-                { if (Target is IMonster)
-                   Target.TakeDamage(owner, damageMM, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_SPELL, false);
-                }
+                Target.TakeDamage(owner, damageMM, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_SPELL, false);
             }
-            AddBuff("Feast", 1f, 1, spell, owner, owner, true);
-
+            if(Target is IChampion)
+            {
+                Target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            }
+            CreateTimer(0.05f, () => 
+            {
+            if(Target.IsDead == true)
+                {
+                    add = true;
+                }
+            });
             AddParticleTarget(owner, Target, "feast_tar.troy", Target, 1f, 1f);
         }
 
@@ -67,10 +103,14 @@ namespace Spells
         public void OnSpellPostChannel(ISpell spell)
         {
         }
-
+        bool add = false;
         public void OnUpdate(float diff)
         {
+            if(add == true)
+            {
+                AddBuff("Feast", float.MaxValue, 1, _owner.Spells[3], _owner, _owner, true);
+                add = false;
+            }
         }
     }
 }
-
