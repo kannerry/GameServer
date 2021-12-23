@@ -1,21 +1,29 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
-namespace ItemSpells
+namespace Spells
 {
-    public class SightWard : ISpellScript
+    public class RengarPassive : ISpellScript
     {
-        public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
+        public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
-            // TODO
+            TriggersSpellCasts = true
         };
+
+        IObjAiBase _owner;
+        ISpell _spell;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            _spell = spell;
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -24,8 +32,6 @@ namespace ItemSpells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
-            AddMinion(owner, "SightWard", "SightWard", spellPos);
         }
 
         public void OnSpellCast(ISpell spell)
@@ -50,6 +56,7 @@ namespace ItemSpells
 
         public void OnUpdate(float diff)
         {
+            LogDebug("yo");
         }
     }
 }

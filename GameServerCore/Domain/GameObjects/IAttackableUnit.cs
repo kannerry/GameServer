@@ -282,5 +282,7 @@ namespace GameServerCore.Domain.GameObjects
         /// First string is the animation to override, second string is the animation to play in place of the first.
         /// <param name="animPairs">Dictionary of animations to set.</param>
         void SetAnimStates(Dictionary<string, string> animPairs);
+
+        public bool IsBrush(Vector2 coords);
     }
 }

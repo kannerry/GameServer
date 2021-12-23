@@ -1,6 +1,7 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
@@ -25,7 +26,7 @@ namespace ItemSpells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
-            IMinion m = AddMinion((IChampion)owner, "VisionWard", "VisionWard", spellPos);
+            AddMinion(owner, "VisionWard", "VisionWard", spellPos);
         }
 
         public void OnSpellCast(ISpell spell)

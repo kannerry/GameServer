@@ -412,13 +412,13 @@ namespace LeagueSandbox.GameServer.API
             c.Stats.SetSummonerSpellEnabled(0, true);
             c.Stats.SetSummonerSpellEnabled(1, true);
 
-            c.Stats.CurrentHealth = 50000;
+            //c.Stats.CurrentHealth = 50000;
             _game.PacketNotifier.NotifyEnterVisibilityClient(c, 0, true, false, true);
-            CreateTimer(15f, () => 
-            {
-                _game.ObjectManager.RemoveObject(c);
-                c.SetToRemove();
-            });
+            //CreateTimer(15f, () => 
+            //{
+            //    _game.ObjectManager.RemoveObject(c);
+            //    c.SetToRemove();
+            //});
 
             return c;
         }

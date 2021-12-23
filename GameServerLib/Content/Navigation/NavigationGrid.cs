@@ -991,5 +991,13 @@ namespace LeagueSandbox.GameServer.Content.Navigation
 
             return new Vector2((float)trueX, (float)trueY);
         }
+
+        public bool HasGrassCell(Vector2 location)
+        {
+            var vector = TranslateToNavGrid(new Vector2 { X = location.X, Y = location.Y });
+            NavigationGridCell cellFrom = GetCell((short)vector.X, (short)vector.Y);
+            return cellFrom.HasFlag(NavigationGridCellFlags.HAS_GRASS);
+        }
+
     }
 }

@@ -1534,5 +1534,13 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
                 _game.PacketNotifier.NotifyS2C_SetAnimStates(this, animPairs);
             }
         }
+
+        public bool IsBrush(Vector2 coords)
+        {
+            //var vector = _game.Map.NavigationGrid.TranslateToNavGrid(new Vector2 { X = coords.X, Y = coords.Y });
+            bool hasGrass = _game.Map.NavigationGrid.HasGrassCell(coords);
+            return hasGrass;
+        }
+
     }
 }

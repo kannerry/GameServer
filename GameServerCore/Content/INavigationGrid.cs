@@ -193,5 +193,7 @@ namespace GameServerCore.Content
         /// <param name="distanceThreshold">Amount of distance away from terrain that the exit should be.</param>
         /// <returns>Vector2 position which can be pathed on.</returns>
         Vector2 GetClosestTerrainExit(Vector2 location, float distanceThreshold = 0);
+
+        bool HasGrassCell(Vector2 location);
     }
 }
