@@ -29,6 +29,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            PlayAnimation(owner, "Spell3");
             IMinion x;
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             if (Extensions.IsVectorWithinRange(owner.Position, spellPos, 860))
