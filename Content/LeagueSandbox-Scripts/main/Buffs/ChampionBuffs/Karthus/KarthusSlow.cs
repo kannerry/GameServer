@@ -18,7 +18,7 @@ namespace Buffs
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            var spellLevel = ownerSpell.CastInfo.Owner.GetSpell("NasusW").CastInfo.SpellLevel * 0.12;
+            var spellLevel = ownerSpell.CastInfo.Owner.GetSpell("KarthusWallOfPain").CastInfo.SpellLevel * 0.12;
             StatsModifier.MoveSpeed.PercentBonus = (float)(StatsModifier.MoveSpeed.PercentBonus - 0.40f - spellLevel);
             unit.AddStatModifier(StatsModifier);
             AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "Ashe_Base_W_tar.troy", unit, 1f);
