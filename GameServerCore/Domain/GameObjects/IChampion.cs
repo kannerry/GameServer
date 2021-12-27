@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 using GameServerCore.Domain.GameObjects.Spell;
 
 namespace GameServerCore.Domain.GameObjects
@@ -11,7 +12,7 @@ namespace GameServerCore.Domain.GameObjects
         IRuneCollection RuneList { get; }
         IChampionStats ChampStats { get; }
         byte SkillPoints { get; set; }
-
+        Vector2 SpellChargeXY { get; set; }
         // basic
         void UpdateSkin(int skinNo);
         uint GetPlayerId();

@@ -14,6 +14,9 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
 {
     public class Champion : ObjAiBase, IChampion
     {
+
+        public Vector2 SpellChargeXY { get; set; }
+
         public IShop Shop { get; protected set; }
         public float RespawnTimer { get; private set; }
         public float ChampionGoldFromMinions { get; set; }
