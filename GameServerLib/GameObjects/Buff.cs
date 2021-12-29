@@ -30,7 +30,7 @@ namespace LeagueSandbox.GameServer.GameObjects
         public byte Slot { get; private set; }
         public IObjAiBase SourceUnit { get; }
         public IAttackableUnit TargetUnit { get; }
-        public float TimeElapsed { get; private set; }
+        public float TimeElapsed { get; set; }
         /// <summary>
         /// Script instance for this buff. Casting to a specific buff class gives access its functions and variables.
         /// </summary>

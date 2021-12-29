@@ -141,8 +141,6 @@ namespace Spells
             //min = AddMinion(owner, "Velkoz", "temp", mis.Position, ignoreCollision: true, isVisible: false);
             cast90DEG = true;
             mis.SetToRemove();
-            //var unitChamp = unit as IChampion;
-            //unitChamp.ApplyShield();
         }
 
         public void OnSpellCast(ISpell spell)

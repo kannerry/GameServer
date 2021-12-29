@@ -1,5 +1,6 @@
-using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
@@ -7,10 +8,8 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class BlackShield : ISpellScript
+    public class ShenFeint : ISpellScript
     {
-        private IAttackableUnit Target;
-
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             TriggersSpellCasts = true
@@ -27,13 +26,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.7;
-            var spellvl = spell.CastInfo.SpellLevel * 55;
-            var x = target as IChampion;
-            var shieldamt = (float)(ap + spellvl + 25);
-            x.ApplyShield(target, shieldamt, true, true, false);
-            AddParticleTarget(x, x, "BlackShield_buf.troy", x, lifetime: 5.0f);
-            CreateTimer(5.0f, () => { x.ApplyShield(target, -shieldamt, true, true, false); });
+            AddBuff("ShenWShield", 3.0f, 1, spell, owner, owner);
         }
 
         public void OnSpellCast(ISpell spell)

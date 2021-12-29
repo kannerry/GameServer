@@ -14,7 +14,6 @@ namespace Spells
 
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
-            // TODO
         };
 
         private Vector2 basepos;
@@ -29,12 +28,13 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            CreateTimer(4.0f, () => { cancelled = false; });
             basepos = owner.Position;
-            for (var i = 0.0f; i < 2.5; i += 0.25f)
+            for (var i = 0.0f; i < 4.0; i += 0.25f)
             {
-                CreateTimer(i, () => { ApplySpinDamage(owner, spell, target); });
+                CreateTimer(i, () => { CheckPosition(owner, spell, target); });
             }
+            CreateTimer(0.1f, () => { playanim = true; });
+            CreateTimer(4.1f, () => { cancelled = false; StopAnimation(owner, "Spell2"); });
         }
 
         private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
@@ -48,8 +48,8 @@ namespace Spells
             var newHealth = target.Stats.CurrentHealth + healthGain;
             target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
         }
-
-        private void ApplySpinDamage(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        bool playanim = true;
+        private void CheckPosition(IObjAiBase owner, ISpell spell, IAttackableUnit target)
         {
             if (owner.Position.X != basepos.X)
             {
@@ -62,7 +62,11 @@ namespace Spells
             if (!cancelled)
             {
                 PerformHeal(owner, spell, owner);
-                PlayAnimation(owner, "Spell2");
+                if(playanim == true)
+                {
+                    PlayAnimation(owner, "Spell2");
+                    playanim = false;
+                }
             }
             if (cancelled)
             {

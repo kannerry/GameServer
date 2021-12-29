@@ -30,7 +30,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            CreateTimer(3.0f, () => { cancelled = false; });
+            CreateTimer(2.6f, () => { cancelled = false; });
             CreateTimer(2.5f, () => { owner.PlayAnimation("IDLE1", 1); owner.StopAnimation("IDLE1"); });
             basepos = owner.Position;
             for (var i = 0.0f; i < 2.5; i += 0.25f)

@@ -112,16 +112,14 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             var ap = owner.Stats.AbilityPower.Total * 0.35;
             float damage = (float)(ap + 55 + (owner.Spells[1].CastInfo.SpellLevel * 25));
+            var shieldamt = damage / 2;
             if (unit is Champion)
             {
                 LogDebug("yo");
                 var unitChamp = unit as IChampion;
-                unitChamp.ApplyShield(unitChamp, damage / 2, true, true, false);
-                CreateTimer(3.0f, () => { unitChamp.ApplyShield(unitChamp, -50000, true, true, false); });
+                unitChamp.ApplyShield(unitChamp, shieldamt, true, true, false);
+                CreateTimer(3.0f, () => { unitChamp.ApplyShield(unitChamp, -shieldamt, true, true, false); });
             }
-
-            //var unitChamp = unit as IChampion;
-            //unitChamp.ApplyShield();
         }
 
         public void OnSpellCast(ISpell spell)

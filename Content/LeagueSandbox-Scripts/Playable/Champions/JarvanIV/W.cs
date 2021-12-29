@@ -42,9 +42,9 @@ namespace Spells
             AddParticle(owner, owner, "JarvanGoldenAegis_nova.troy", owner.Position);
 
             var dmgshield = 10 + (40 * spell.CastInfo.SpellLevel) + (i * (20 + (10 * spell.CastInfo.SpellLevel)));
-            LogDebug(dmgshield.ToString());
+            //LogDebug(dmgshield.ToString());
             owner.ApplyShield(owner, dmgshield, true, true, false);
-            CreateTimer(5.0f, () => { owner.ApplyShield(owner, -5000, true, true, false); });
+            CreateTimer(5.0f, () => { owner.ApplyShield(owner, -dmgshield, true, true, false); });
             i = 0;
 
         }

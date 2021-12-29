@@ -101,10 +101,10 @@ namespace Spells
                 Type = MissileType.Circle,
             });
             ApiEventManager.OnSpellMissileEnd.AddListener(this, missile, OnMissileEnd, true);
-            ApiEventManager.OnSpellHit.AddListener(this, spell, ShieldXD, true);
+            ApiEventManager.OnSpellHit.AddListener(this, spell, OrbDamage, true);
         }
 
-        public void ShieldXD(ISpell spell, IAttackableUnit unit, ISpellMissile mis, ISpellSector sec)
+        public void OrbDamage(ISpell spell, IAttackableUnit unit, ISpellMissile mis, ISpellSector sec)
         {
             var owner = spell.CastInfo.Owner;
             var ap = owner.Stats.AbilityPower.Total * 0.35;
@@ -117,9 +117,6 @@ namespace Spells
             {
                 unit.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             }
-
-            //var unitChamp = unit as IChampion;
-            //unitChamp.ApplyShield();
         }
 
         public void OnSpellCast(ISpell spell)

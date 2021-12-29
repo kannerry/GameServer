@@ -30,7 +30,7 @@ namespace Spells
             AddParticleTarget(owner, owner, "Garen_Base_W_Cas.troy", owner);
             //AddBuff("GarenW", 2f, 1, spell, owner, owner);
             owner.ApplyShield(owner, damage, true, true, false);
-            CreateTimer(2.0f, () => { owner.ApplyShield(owner, -5000, true, true, false); });
+            CreateTimer(2.0f, () => { owner.ApplyShield(owner, -damage, true, true, false); });
         }
 
         public void OnSpellCast(ISpell spell)

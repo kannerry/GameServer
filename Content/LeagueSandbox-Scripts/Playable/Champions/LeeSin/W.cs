@@ -33,8 +33,9 @@ namespace Spells
             //owner.SetTargetUnit(null);
             var x = target as IObjAiBase;
             //AddParticleTarget(x, x, "blindMonk_W_shield_block.troy", x, lifetime: 2.0f);
-            x.ApplyShield(target, (float)(ap + spellvl), true, true, false);
-            CreateTimer(2.0f, () => { x.ApplyShield(target, -5000, true, true, false); });
+            float shieldamt = (float)(ap + spellvl);
+            x.ApplyShield(target, shieldamt, true, true, false);
+            CreateTimer(2.0f, () => { x.ApplyShield(target, -shieldamt, true, true, false); });
             CreateTimer(0.5f, () => { owner.SetSpell("BlindMonkWTwo", 1, true); });
             //owner.DashToTarget(target, 1000f, "RUN", 0, false, 0, 0, 5000) ;
         }

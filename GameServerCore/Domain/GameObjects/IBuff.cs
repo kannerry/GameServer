@@ -46,7 +46,7 @@ namespace GameServerCore.Domain.GameObjects
         /// <summary>
         /// Time since this buff's timer started.
         /// </summary>
-        float TimeElapsed { get; }
+        float TimeElapsed { get; set; }
         /// <summary>
         /// Script instance for this buff. Casting to a specific buff class gives access its functions and variables.
         /// </summary>

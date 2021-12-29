@@ -32,14 +32,14 @@ namespace Spells
             basepos = owner.Position;
             PlayAnimation(owner, "Spell2", startTime: 0.5f);
             p = AddParticleTarget(owner, target, "Drain.troy", owner, lifetime: 5.0f);
-            for (var i = 0.0f; i < 2.5; i += 0.25f)
+            for (var i = 0.0f; i < 5.0; i += 0.25f)
             {
-                CreateTimer(i, () => { ApplySpinDamage(owner, spell, target); });
+                CreateTimer(i, () => { ApplyDrainDamage(owner, spell, target); });
             }
-            CreateTimer(5.5f, () => { cancelled = false; });
+            CreateTimer(5.1f, () => { cancelled = false; });
         }
 
-        private void ApplySpinDamage(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        private void ApplyDrainDamage(IObjAiBase owner, ISpell spell, IAttackableUnit target)
         {
             if (cancelled == true)
             {

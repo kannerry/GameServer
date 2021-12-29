@@ -30,9 +30,10 @@ namespace Spells
             var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.7;
             var spellvl = spell.CastInfo.SpellLevel * 55;
             var x = target as IChampion;
-            x.ApplyShield(target, (float)(ap + spellvl + 25), true, true, false);
+            var shieldamt = (float)(ap + spellvl + 25);
+            x.ApplyShield(target, shieldamt, true, true, false);
             AddParticleTarget(x, x, "Sivir_Base_E_shield.troy", x, lifetime: 5.0f);
-            CreateTimer(5.0f, () => { x.ApplyShield(target, -5000, true, true, false); });
+            CreateTimer(5.0f, () => { x.ApplyShield(target, -shieldamt, true, true, false); });
         }
 
         public void OnSpellCast(ISpell spell)

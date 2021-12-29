@@ -50,7 +50,8 @@ namespace Spells
                 var x = target as IObjAiBase;
                 var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.6;
                 var spellvl = spell.CastInfo.SpellLevel * 40;
-                x.ApplyShield(target, (float)(ap + spellvl + 40), true, true, false);
+                var shieldamt = (float)(ap + spellvl + 40);
+                x.ApplyShield(target, shieldamt, true, true, false);
 
                 spell.CastInfo.Owner.SetTargetUnit(null);
 
@@ -58,7 +59,7 @@ namespace Spells
 
                 CreateTimer(6.0f, () => 
                 { 
-                    x.ApplyShield(target, -5000, true, true, false);
+                    x.ApplyShield(target, -shieldamt, true, true, false);
                     ETarget = null;
                 });
             }
