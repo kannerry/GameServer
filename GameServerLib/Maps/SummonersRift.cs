@@ -158,7 +158,7 @@ namespace LeagueSandbox.GameServer.Maps
         private List<MonsterCamp> _monsterCamps = new List<MonsterCamp>();
 
         public float GoldPerSecond { get; set; } = 1.9f;
-        public float StartingGold { get; set; } = 475.0f;
+        public float StartingGold { get; set; } = 1300;
         public bool HasFirstBloodHappened { get; set; } = false;
         public bool IsKillGoldRewardReductionActive { get; set; } = true;
         public int BluePillId { get; set; } = 2001;

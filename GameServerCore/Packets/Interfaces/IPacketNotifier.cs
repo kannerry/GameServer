@@ -61,6 +61,13 @@ namespace GameServerCore.Packets.Interfaces
         /// <param name="grantVis">Whether or not the region should give the region's team vision of enemy units.</param>
         /// <param name="stealthVis">Whether or not invisible units should be visible in the region.</param>
         void NotifyAddRegion(uint newFogId, TeamId team, Vector2 position, float time, float radius = 0, int regionType = 0, ClientInfo clientInfo = null, IGameObject obj = null, float collisionRadius = 0, float grassRadius = 0, float sizemult = 1.0f, float addsize = 0, bool grantVis = true, bool stealthVis = false);
+
+        /// Sends a basic heartbeat packet to either the given player or all players.
+        /// </summary>
+        void NotifyKeyCheck(int clientID, long playerId, uint version, ulong checkSum = 0, byte action = 0, bool broadcast = false);
+        void NotifyRequestRename(int userId, Tuple<uint, ClientInfo> player);
+        void NotifyRequestReskin(int userId, Tuple<uint, ClientInfo> player);
+
         /// <summary>
         /// Sends a packet to all players that have vision of the specified Azir turret that it has spawned.
         /// </summary>

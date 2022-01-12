@@ -17,18 +17,26 @@ namespace LeagueSandbox.GameServer.Packets.PacketHandlers
 
         public override bool HandlePacket(int userId, MapRequest req)
         {
+            var players = _playerManager.GetPlayers();
+            uint version = uint.Parse(Config.VERSION.ToString().Replace(".", string.Empty));
+
             // Builds team info e.g. first UserId set on Blue has PlayerId 0
             // increment by 1 for each added player
-             _game.PacketNotifier.NotifyLoadScreenInfo(userId, _playerManager.GetPlayers());
+            _game.PacketNotifier.NotifyLoadScreenInfo(userId, players);
 
             // Distributes each players info by UserId
-            foreach (var player in _playerManager.GetPlayers(false))
+            foreach (var player in players)
             {
-                if (!player.Item2.IsStartedClient) continue; //Don't inform about not started clients
-                // Giving the UserId in loading screen a name
-                 _game.PacketNotifier.NotifyLoadScreenPlayerName(userId, player);
-                // Giving the UserId in loading screen a champion
-                 _game.PacketNotifier.NotifyLoadScreenPlayerChampion(userId, player);
+                // Load everyone's player name.
+                _game.PacketNotifier.NotifyRequestRename(userId, player);
+                // Load everyone's champion.
+                _game.PacketNotifier.NotifyRequestReskin(userId, player);
+
+                // Let other players know we loaded in.
+                if (player.Item1 == userId)
+                {
+                    _game.PacketNotifier.NotifyKeyCheck((int)player.Item2.ClientId, player.Item2.PlayerId, version, broadcast: true);
+                }
             }
 
             return true;

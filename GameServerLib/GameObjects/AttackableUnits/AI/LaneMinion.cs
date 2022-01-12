@@ -62,6 +62,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
         public override void OnAdded()
         {
             base.OnAdded();
+            //this.SetStatus(StatusFlags.Ghosted, true);
         }
 
         public override void Update(float diff)
@@ -143,7 +144,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                     // If the closest minion is in collision range, add its collision radius to the waypoint success range.
                     if (GameServerCore.Extensions.IsVectorWithinRange(minion.Position, Position, waypointSuccessRange))
                     {
-                        waypointSuccessRange += minion.CollisionRadius;
+                        waypointSuccessRange += minion.CollisionRadius + 100;
                     }
                     // If the closest minion (above) is not in collision range, then we stop the loop.
                     else
@@ -154,7 +155,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
             }
 
             // Since we are pathfinding to our current main waypoint, we check if 
-            if (GameServerCore.Extensions.IsVectorWithinRange(Position, _mainWaypoints[_curMainWaypoint], waypointSuccessRange) && _mainWaypoints.Count > _curMainWaypoint + 1)
+            if (GameServerCore.Extensions.IsVectorWithinRange(Position, _mainWaypoints[_curMainWaypoint], waypointSuccessRange + 50) && _mainWaypoints.Count > _curMainWaypoint + 1)
             {
                 ++_curMainWaypoint;
 

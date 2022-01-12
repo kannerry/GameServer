@@ -35,7 +35,6 @@ namespace PacketDefinitions420
     {
         private readonly IPacketHandlerManager _packetHandlerManager;
         private readonly INavigationGrid _navGrid;
-
         /// <summary>
         /// Instantiation which preps PacketNotifier for packet sending.
         /// </summary>
@@ -91,6 +90,32 @@ namespace PacketDefinitions420
                 StringBuffer = name
             };
             _packetHandlerManager.SendPacket(userId, debugObjPacket.GetBytes(), Channel.CHL_S2C);
+        }
+
+        /// <summary>
+        /// Sends a basic heartbeat packet to either the given player or all players.
+        /// </summary>
+        public void NotifyKeyCheck(int clientID, long playerId, uint version, ulong checkSum = 0, byte action = 0, bool broadcast = false)
+        {
+            var keyCheck = new LeaguePackets.KeyCheckPacket
+            {
+                Action = action,
+                ClientID = clientID,
+                PlayerID = playerId,
+                VersionNumber = version,
+                CheckSum = checkSum,
+                // Padding
+                ExtraBytes = new byte[4]
+            };
+
+            if (broadcast)
+            {
+                _packetHandlerManager.BroadcastPacket(keyCheck.GetBytes(), Channel.CHL_HANDSHAKE);
+            }
+            else
+            {
+                _packetHandlerManager.SendPacket((int)playerId, keyCheck.GetBytes(), Channel.CHL_HANDSHAKE);
+            }
         }
 
         /// <summary>
@@ -1282,14 +1307,75 @@ namespace PacketDefinitions420
         }
 
         /// <summary>
+        /// Sends a packet to the specified user detailing skin and player name information of the specified player on the loading screen.
+        /// </summary>
+        /// <param name="userId">User to send the packet to.</param>
+        /// <param name="player">Player information to send.</param>
+        public void NotifyRequestRename(int userId, Tuple<uint, ClientInfo> player)
+        {
+            var loadName = new LeaguePackets.LoadScreen.RequestRename
+            {
+                PlayerID = player.Item2.PlayerId,
+                PlayerName = player.Item2.Name,
+                // Most packets show a large default value (in place of what you would expect to be 0)
+                // Seems to be randomized per-game and used for every RequestRename packet during that game.
+                // So, using this SkinNo may be incorrect.
+                SkinID = player.Item2.SkinNo,
+            };
+            _packetHandlerManager.SendPacket(userId, loadName.GetBytes(), Channel.CHL_LOADING_SCREEN);
+        }
+
+        /// <summary>
+        /// Sends a packet to the specified user detailing skin information of the specified player on the loading screen.
+        /// </summary>
+        /// <param name="userId">User to send the packet to.</param>
+        /// <param name="player">Player information to send.</param>
+        public void NotifyRequestReskin(int userId, Tuple<uint, ClientInfo> player)
+        {
+            var loadChampion = new LeaguePackets.LoadScreen.RequestReskin
+            {
+                PlayerID = player.Item2.PlayerId,
+                SkinID = player.Item2.SkinNo,
+                SkinName = player.Item2.Champion.Model
+            };
+            _packetHandlerManager.SendPacket(userId, loadChampion.GetBytes(), Channel.CHL_LOADING_SCREEN);
+        }
+
+        /// <summary>
         /// Sends a packet to the specified player detailing the order and size of both teams on the loading screen.
         /// </summary>
         /// <param name="userId">User to send the packet to.</param>
         /// <param name="players">Client info of all players in the loading screen.</param>
         public void NotifyLoadScreenInfo(int userId, List<Tuple<uint, ClientInfo>> players)
         {
-            var screenInfo = new LoadScreenInfo(players);
-            _packetHandlerManager.SendPacket(userId, screenInfo, Channel.CHL_LOADING_SCREEN);
+            uint orderSizeCurrent = 0;
+            uint chaosSizeCurrent = 0;
+
+            var teamRoster = new LeaguePackets.LoadScreen.TeamRosterUpdate
+            {
+                TeamSizeOrder = 6,
+                TeamSizeChaos = 6
+            };
+
+            foreach (var player in players)
+            {
+                if (player.Item2.Team == TeamId.TEAM_BLUE)
+                {
+                    teamRoster.OrderMembers[orderSizeCurrent] = player.Item2.PlayerId;
+                    orderSizeCurrent++;
+                }
+                // TODO: Verify if it is ok to allow neutral
+                else
+                {
+                    teamRoster.ChaosMembers[chaosSizeCurrent] = player.Item2.PlayerId;
+                    chaosSizeCurrent++;
+                }
+            }
+
+            teamRoster.TeamSizeOrderCurrent = orderSizeCurrent;
+            teamRoster.TeamSIzeChaosCurrent = chaosSizeCurrent;
+
+            _packetHandlerManager.SendPacket(userId, teamRoster.GetBytes(), Channel.CHL_LOADING_SCREEN);
         }
 
         /// <summary>

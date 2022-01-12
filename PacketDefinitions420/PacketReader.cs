@@ -159,7 +159,9 @@ namespace PacketDefinitions420
         [PacketType(LoadScreenPacketID.RequestJoinTeam)]
         public static MapRequest ReadClientReadyRequest(byte[] data)
         {
-            return new MapRequest();
+            var rq = new RequestJoinTeam();
+            rq.Read(data);
+            return new MapRequest(rq.ClientID, rq.NetTeamID);
         }
 
         [PacketType(LoadScreenPacketID.Chat, Channel.CHL_COMMUNICATION)]

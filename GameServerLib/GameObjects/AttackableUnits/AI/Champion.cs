@@ -85,6 +85,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
             base.OnAdded();
             _game.ObjectManager.AddChampion(this);
             _game.PacketNotifier.NotifySpawn(this);
+            this.DashState = ForceMovementState.NOT_DASHING; // THIS FIXES NOT BEING ABLE TO MOVE ON SPAWN
         }
 
         public override void OnRemoved()

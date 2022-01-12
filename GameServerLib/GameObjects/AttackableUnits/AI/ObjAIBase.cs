@@ -518,105 +518,97 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
         {
             // Stop dashing to target if we reached them.
             // TODO: Implement events so we can centralize things like this.
-            if (MovementParameters != null)
-            {
-                if (TargetUnit != null)
+                if (MovementParameters != null)
                 {
-                    if (IsCollidingWith(TargetUnit))
+                    if (TargetUnit != null)
                     {
-                        SetDashingState(ForceMovementState.NOT_DASHING);
+                        if (IsCollidingWith(TargetUnit))
+                        {
+                            SetDashingState(ForceMovementState.NOT_DASHING);
+                        }
+                        else
+                        {
+                            SetWaypoints(new List<Vector2> { Position, TargetUnit.Position });
+                        }
                     }
-                    else
-                    {
-                        SetWaypoints(new List<Vector2> { Position, TargetUnit.Position });
-                    }
-                }
 
-                return;
-            }
-
-            if (MoveOrder == OrderType.AttackMove
-                || MoveOrder == OrderType.AttackTo
-                || MoveOrder == OrderType.AttackTerrainOnce
-                || MoveOrder == OrderType.AttackTerrainSustained)
-            {
-                idealRange = Stats.Range.Total;
-            }
-
-            if (MoveOrder != OrderType.AttackTo && TargetUnit != null)
-            {
-                UpdateMoveOrder(OrderType.AttackTo, true);
-                idealRange = Stats.Range.Total;
-            }
-
-            if (SpellToCast != null)
-            {
-                idealRange = SpellToCast.GetCurrentCastRange();
-            }
-
-            Vector2 targetPos = Vector2.Zero;
-
-            if ((MoveOrder == OrderType.AttackTo)
-                && TargetUnit != null)
-            {
-                if (!TargetUnit.IsDead)
-                {
-                    targetPos = TargetUnit.Position;
-                }
-            }
-
-            if (MoveOrder == OrderType.AttackMove
-                || MoveOrder == OrderType.AttackTerrainOnce
-                || MoveOrder == OrderType.AttackTerrainSustained
-                && !IsPathEnded())
-            {
-                targetPos = Waypoints.LastOrDefault();
-
-                if (targetPos == Vector2.Zero)
-                {
-                    // Neither AttackTo nor AttackMove (etc.) were successful.
                     return;
                 }
-            }
 
-            // If the target is already in range, stay where we are.
-            if (MoveOrder == OrderType.AttackMove && targetPos != Vector2.Zero)
-            {
-                if (MovementParameters == null && Vector2.DistanceSquared(Position, targetPos) <= idealRange * idealRange)
+                if (MoveOrder != OrderType.AttackTo && TargetUnit != null)
                 {
-                    UpdateMoveOrder(OrderType.Stop, true);
+                    UpdateMoveOrder(OrderType.AttackTo, true);
+                    idealRange = Stats.Range.Total;
                 }
-            }
-            // No TargetUnit
-            else if (targetPos == Vector2.Zero)
-            {
-                return;
-            }
 
-            if (MoveOrder == OrderType.AttackTo && targetPos != Vector2.Zero)
-            {
-                if (MovementParameters == null)
+                if (SpellToCast != null)
                 {
-                    if (Vector2.DistanceSquared(Position, targetPos) <= idealRange * idealRange)
+                    idealRange = SpellToCast.GetCurrentCastRange();
+                }
+
+                Vector2 targetPos = Vector2.Zero;
+
+                if ((MoveOrder == OrderType.AttackTo)
+                    && TargetUnit != null)
+                {
+                    if (!TargetUnit.IsDead)
+                    {
+                        targetPos = TargetUnit.Position;
+                    }
+                }
+
+                if (MoveOrder == OrderType.AttackMove
+                    || MoveOrder == OrderType.AttackTerrainOnce
+                    || MoveOrder == OrderType.AttackTerrainSustained
+                    && !IsPathEnded())
+                {
+                    targetPos = Waypoints.LastOrDefault();
+
+                    if (targetPos == Vector2.Zero)
+                    {
+                        // Neither AttackTo nor AttackMove (etc.) were successful.
+                        return;
+                    }
+                }
+
+                // If the target is already in range, stay where we are.
+                if (MoveOrder == OrderType.AttackMove && targetPos != Vector2.Zero)
+                {
+                    if (MovementParameters == null && Vector2.DistanceSquared(Position, targetPos) <= idealRange + 100 * idealRange + 100)
                     {
                         UpdateMoveOrder(OrderType.Stop, true);
                     }
-                    else
-                    {
-                        if (!_game.Map.NavigationGrid.IsWalkable(targetPos, CollisionRadius))
-                        {
-                            targetPos = _game.Map.NavigationGrid.GetClosestTerrainExit(targetPos, CollisionRadius);
-                        }
+                }
+                // No TargetUnit
+                else if (targetPos == Vector2.Zero)
+                {
+                    return;
+                }
 
-                        var newWaypoints = _game.Map.NavigationGrid.GetPath(Position, targetPos);
-                        if (newWaypoints.Count > 1)
+                if (MoveOrder == OrderType.AttackTo && targetPos != Vector2.Zero)
+                {
+                    if (MovementParameters == null)
+                    {
+                        if (Vector2.DistanceSquared(Position, targetPos) <= idealRange * idealRange)
                         {
-                            SetWaypoints(newWaypoints);
+                            UpdateMoveOrder(OrderType.Stop, true);
+                        }
+                        else
+                        {
+                            if (!_game.Map.NavigationGrid.IsWalkable(targetPos, CollisionRadius))
+                            {
+                                targetPos = _game.Map.NavigationGrid.GetClosestTerrainExit(targetPos, CollisionRadius);
+                            }
+
+                            var newWaypoints = _game.Map.NavigationGrid.GetPath(Position, targetPos);
+                            if (newWaypoints.Count > 1)
+                            {
+                                SetWaypoints(newWaypoints);
+                            }
                         }
                     }
                 }
             }
-        }
 
         /// <summary>
         /// Gets a random auto attack spell from the list of auto attacks available for this AI.
@@ -960,7 +952,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
 
             var idealRange = Stats.Range.Total;
 
-            if (TargetUnit is IObjBuilding)
+            if (TargetUnit != null)
             {
                 idealRange = Stats.Range.Total + TargetUnit.CollisionRadius;
             }
@@ -1026,8 +1018,8 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                         if (AutoAttackSpell.State == SpellState.STATE_READY)
                         {
                             // Stops us from continuing to move towards the target.
-                            RefreshWaypoints(Stats.Range.Total);
-
+                            RefreshWaypoints(idealRange);
+                            
                             if (CanAttack())
                             {
                                 IsNextAutoCrit = _random.Next(0, 100) < Stats.CriticalChance.Total * 100;

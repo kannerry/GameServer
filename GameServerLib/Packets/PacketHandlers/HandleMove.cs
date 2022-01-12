@@ -86,7 +86,10 @@ namespace LeagueSandbox.GameServer.Packets.PacketHandlers
                 case OrderType.MoveTo:
                     translatedWaypoints[0] = champion.Position;
                     champion.UpdateMoveOrder(OrderType.MoveTo, true);
-                    champion.SetWaypoints(translatedWaypoints);
+                    if(champion.DashState != ForceMovementState.DASHING)
+                    {
+                        champion.SetWaypoints(translatedWaypoints);
+                    }
                     break;
             }
 

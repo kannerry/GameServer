@@ -532,6 +532,11 @@ namespace LeagueSandbox.GameServer.API
             return _game.ObjectManager.GetChampionsInRange(targetPos, range, isAlive);
         }
 
+        public static IGameObject GetObjectNET(uint netid)
+        {
+            return _game.ObjectManager.GetObjectById(netid);
+        }
+
         /// <summary>
         /// Instantly cancels any dashes the specified unit is performing.
         /// </summary>
