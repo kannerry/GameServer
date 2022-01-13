@@ -19,13 +19,23 @@ namespace Buffs
 
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
+        IObjAiBase _owner;
+
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
+            _owner = unit as IObjAiBase;
+            ApiEventManager.OnHitUnit.AddListener(this, _owner, TargetExecute, true);
             //PlayAnimation(unit, "SPELL3A");
+        }
+
+        private void TargetExecute(IAttackableUnit Unit, bool crit)
+        {
+            Unit.TakeDamage(_owner, _owner.Stats.AttackDamage.Total, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
+            ApiEventManager.OnHitUnit.RemoveListener(this, _owner);
         }
 
         public void OnUpdate(float diff)

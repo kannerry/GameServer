@@ -51,7 +51,7 @@ namespace Spells
             {
                 BindObject = owner,
                 Length = 550f,
-                Tickrate = 2 + x * 5,
+                Tickrate = x * 2,
                 CanHitSameTargetConsecutively = true,
                 OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
                 Type = SectorType.Area,

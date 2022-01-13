@@ -32,6 +32,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            //ner.StopMovement();
         }
 
         public void OnSpellCast(ISpell spell)
@@ -40,13 +41,14 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+            CreateTimer(0.01f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(0).SetCooldown(1.33f); });
             var owner = spell.CastInfo.Owner;
 
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
 
             if (owner.HasBuff("YasuoEFIX"))
             {
-                CreateTimer(0.45F, () =>
+                CreateTimer(0.25F, () =>
                 {
                     owner.PlayAnimation("Spell1E", 0.5f, 0, 1);
                     AddParticleTarget(owner, owner, "Yasuo_Base_EQ_cas.troy", owner);
@@ -66,7 +68,9 @@ namespace Spells
                 owner.PlayAnimation("Spell1A", 0.5f, 0, 1);
                 CreateTimer(0.15F, () => { AddParticleTarget(owner, owner, "Yasuo_Q_WindStrike.troy", owner); });
                 owner.SetStatus(StatusFlags.CanMove, false);
+                FaceDirection(spellPos, owner, true);
                 owner.StopMovement();
+                CreateTimer(0.1f, () => { FaceDirection(spellPos, owner, true); });
                 CreateTimer(0.25f, () => { owner.SetStatus(StatusFlags.CanMove, true); });
                 CreateTimer(0.25F, () =>
                 {
@@ -74,7 +78,7 @@ namespace Spells
                     {
                         BindObject = owner,
                         Length = 450f,
-                        Width = 80f,
+                        Width = 100f,
                         PolygonVertices = new Vector2[]
     {
                     // Basic square, however the values will be scaled by Length/Width, which will make it a rectangle

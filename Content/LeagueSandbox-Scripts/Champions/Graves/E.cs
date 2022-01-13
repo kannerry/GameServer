@@ -1,8 +1,13 @@
 using GameServerCore;
 using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Collections.Generic;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
@@ -19,13 +24,37 @@ namespace Spells
             NotSingleTargetSpell = true
             // TODO
         };
-
+        ISpell _spell;
+        IObjAiBase _owner;
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            _spell = spell;
+            ApiEventManager.OnLaunchAttack.AddListener(this, owner, lowerCD, false);
+            ApiEventManager.OnFinishDash.AddListener(this, owner, resetAtk, false);
+        }
+
+        public void resetAtk(IAttackableUnit owner)
+        {
+            if(resetatk == true)
+            {
+                if(atkunit != null)
+                {
+                    _owner.CancelAutoAttack(true);
+                    _owner.SetTargetUnit(atkunit);
+                }
+                resetatk = false;
+            }
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
+        }
+
+        public void lowerCD(ISpell spell)
+        {
+            _spell.LowerCooldown(1.0f);
+            AddBuff("GravesPassiveGrit", 3.0f, 1, _spell, _spell.CastInfo.Owner, _spell.CastInfo.Owner);
         }
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
@@ -35,7 +64,8 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
-
+        bool resetatk = false;
+        IAttackableUnit atkunit;
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
@@ -45,8 +75,11 @@ namespace Spells
             var range = to * 425;
             var maxCoords = current + range;
             var mincoords = GetPointFromUnit(owner, 175);
+            atkunit = spell.CastInfo.Owner.TargetUnit;
             spell.CastInfo.Owner.SetTargetUnit(null);
             AddBuff("Quickdraw", 4.0f, 1, spell, owner, owner);
+
+            resetatk = true;
 
             if (Extensions.IsVectorWithinRange(current, spellPos, 175))
             {

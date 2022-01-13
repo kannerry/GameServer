@@ -44,9 +44,13 @@ namespace Spells
                     var dmg = own.Stats.AttackDamage.Total * 1.5f;
                     var xyz = champ as IObjAiBase;
                     xyz.SetTargetUnit(null);
-                    ForceMovement(champ, "RUN", new Vector2(champ.Position.X + 5f, champ.Position.Y + 5f), 13f, 0, 16.5f, 0);
+                    ForceMovement(champ, "RUN", new Vector2(champ.Position.X + 10f, champ.Position.Y + 10f), 13f, 0, 16.5f, 0);
                     PlayAnimation(owner, "Spell4");
                     TeleportTo(owner, xy.X, xy.Y);
+
+                    var lvl = 25+80 - spell.CastInfo.SpellLevel * 25;
+                    CreateTimer(0.1f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(3).SetCooldown(lvl); });
+
                     champ.TakeDamage(owner, dmg, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
                 }
             }

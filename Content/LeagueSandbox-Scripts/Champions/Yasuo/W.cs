@@ -31,7 +31,7 @@ namespace Spells
             var x = GetPointFromUnit(owner, 250);
             var x1 = GetPointFromUnit(owner, 260);
             var x2 = GetPointFromUnit(owner, 1);
-            var mushroom2 = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", x);             //
+            var mushroom2 = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", x, ignoreCollision: true);             //
             mushroom2.SetStatus(StatusFlags.Ghosted, true);                                                               //FOR Particle
             var mushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", x);  //MIDDLE MUSHROOM
 

@@ -21,6 +21,8 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            SealSpellSlot(_owner, SpellSlotType.SpellSlots, 1, SpellbookType.SPELLBOOK_CHAMPION, true);
         }
 
         public ISpellSector DamageSector;
@@ -28,7 +30,7 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-
+        IObjAiBase _owner;
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             var ownerr = spell.CastInfo.Owner as IChampion;
@@ -88,9 +90,20 @@ namespace Spells
         public void OnSpellPostChannel(ISpell spell)
         {
         }
-
         public void OnUpdate(float diff)
         {
+            foreach (var unit in GetUnitsInRange(_owner.Position, 600, true)
+                .Where(x => x.Team == CustomConvert.GetEnemyTeam(_owner.Team)))
+            {
+                if (unit is IAttackableUnit)
+                {
+                    if (unit.HasBuff("KennenMarkOfStorm"))
+                    {
+                        SealSpellSlot(_owner, SpellSlotType.SpellSlots, 1, SpellbookType.SPELLBOOK_CHAMPION, false);
+                        AddBuff("KennenAnyHasBuff", 0.2f, 1, _owner.GetSpell(1), _owner, _owner);
+                    }
+                }
+            }
         }
     }
 }

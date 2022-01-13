@@ -24,8 +24,9 @@ namespace Buffs
         {
             var caster = ownerSpell.CastInfo.Owner;
             ((IChampion)unit).SetSpell("YasuoQ3W", 0, true);
-            p1 = AddParticleTarget(caster, (IChampion)unit, "Yasuo_Base_Q3_Indicator_Ring.troy", unit, lifetime: 10.0f);
-            p2 = AddParticleTarget(caster, (IChampion)unit, "Yasuo_Base_Q3_Indicator_Ring_alt.troy", unit, lifetime: 10.0f);
+            ((IObjAiBase)unit).GetSpell(0).SetCooldown(1.33f);
+            p1 = AddParticleTarget(caster, (IChampion)unit, "Yasuo_Base_Q3_Indicator_Ring.troy", unit, lifetime: 10.0f, teamOnly: unit.Team);
+            p2 = AddParticleTarget(caster, (IChampion)unit, "Yasuo_Base_Q3_Indicator_Ring_alt.troy", unit, lifetime: 10.0f, teamOnly: unit.Team);
             p3 = AddParticleTarget(caster, (IChampion)unit, "Yasuo_Base_Q_wind_ready_buff.troy", unit, lifetime: 10.0f);
             p4 = AddParticleTarget(caster, (IChampion)unit, "Yasuo_Base_Q_strike_build_up_test.troy", unit, lifetime: 10.0f);
         }

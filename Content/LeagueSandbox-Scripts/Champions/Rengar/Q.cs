@@ -59,6 +59,7 @@ namespace Spells
                 AddBuff("RengarQBuff", 3.0f, 1, spell, owner, owner);
                 RengarBasicAttack.Applied = 0;
                 maxStacked = true;
+                owner.Stats.CurrentMana = 1;
             }
         }
 
@@ -239,7 +240,6 @@ namespace Spells
                 if (RengarQ.maxStacked == true)
                 {
                     unit.TakeDamage(owner, (float)(adscalingMAX + bonusdmg), DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-                    owner.Stats.CurrentMana = 1;
                     RengarQ.maxStacked = false;
                 }
                 else

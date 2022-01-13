@@ -88,7 +88,10 @@ namespace LeagueSandbox.GameServer.Packets.PacketHandlers
                     champion.UpdateMoveOrder(OrderType.MoveTo, true);
                     if(champion.DashState != ForceMovementState.DASHING)
                     {
-                        champion.SetWaypoints(translatedWaypoints);
+                        if (!champion.HasBuff("YasuoEFIX"))
+                        {
+                            champion.SetWaypoints(translatedWaypoints);
+                        }
                     }
                     break;
             }

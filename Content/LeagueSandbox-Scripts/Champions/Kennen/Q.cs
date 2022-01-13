@@ -29,10 +29,12 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            LogDebug("yo");
         }
 
         public void OnSpellCast(ISpell spell)
         {
+            LogDebug("yo1");
             var owner = spell.CastInfo.Owner;
             AddParticleTarget(owner, owner, "Kennen_ts_mis.troy", owner, bone: "L_HAND");
         }
@@ -40,7 +42,7 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
-
+            LogDebug("yo2");
             var targetPos = GetPointFromUnit(owner, 1050.0f);
             SpellCast(owner, 0, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
         }
@@ -85,6 +87,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            owner.StopMovement();
             FaceDirection(end, owner);
         }
 

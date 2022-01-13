@@ -14,7 +14,6 @@ namespace Passives
         {
             originspell = spell;
             ownermain = owner;
-            AddBuff("PassiveMSVayne", float.MaxValue, 1, spell, owner, spell.CastInfo.Owner);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -23,6 +22,16 @@ namespace Passives
 
         public void OnUpdate(float diff)
         {
+            var point = GetPointFromUnit(ownermain, 900);
+            var champs = GetChampionsInRange(point, 900, true);
+            foreach (var unit in champs)
+            {
+                if(unit.Team != ownermain.Team)
+                {
+                    AddBuff("PassiveMSVayne", 0.1f, 1, originspell, ownermain, originspell.CastInfo.Owner);
+                }
+            }
+
         }
     }
 }

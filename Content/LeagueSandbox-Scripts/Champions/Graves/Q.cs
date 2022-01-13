@@ -40,7 +40,6 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
-
             for (int shotsCount = 0; shotsCount < 3; shotsCount++)
             {
                 var targetPos = GetPointFromUnit(owner, 925f, (-15.32f + (shotsCount * 15.32f)));
@@ -90,7 +89,7 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-
+        bool procGrit = false;
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             UnitsHit.Clear();
@@ -111,6 +110,13 @@ namespace Spells
             else
             {
                 damage *= 0.4f;
+            }
+
+            if (procGrit == false)
+            {
+                AddBuff("GravesPassiveGrit", 3.0f, 1, spell, owner, owner);
+                procGrit = true;
+                CreateTimer(0.5f, () => { procGrit = false; });
             }
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
         }

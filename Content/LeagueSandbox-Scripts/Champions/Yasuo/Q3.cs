@@ -1,4 +1,5 @@
-﻿using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
@@ -20,6 +21,7 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            yasuo = owner;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
@@ -27,8 +29,9 @@ namespace Spells
         {
         }
 
-        private ISpellMissile v;
-        private IMinion mushroom;
+        static internal IObjAiBase yasuo;
+        static internal ISpellMissile v;
+        static internal IMinion mushroom;
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
@@ -43,7 +46,7 @@ namespace Spells
 
             if (owner.HasBuff("YasuoEFIX"))
             {
-                CreateTimer(0.45F, () =>
+                CreateTimer(0.25F, () =>
                 {
                     owner.PlayAnimation("Spell3A", 0.5f, 0, 1);
                     AddParticleTarget(owner, owner, "Yasuo_Base_EQ_cas.troy", owner);
@@ -67,10 +70,12 @@ namespace Spells
                 mushroom.SetStatus(StatusFlags.Ghosted, true);
                 var Champs = GetChampionsInRange(owner.Position, 50000, true);
                 var spellPos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
-                FaceDirection(spellPos, spell.CastInfo.Owner, true);
+                FaceDirection(spellPos, owner, true);
                 owner.StopMovement();
+                CreateTimer(0.1f, () => { FaceDirection(spellPos, owner, true); });
                 owner.PlayAnimation("Spell1C", 0.5f, 0, 1);
                 owner.SetSpell("YasuoQW", 0, true);
+                CreateTimer(0.01f, () => { ((IObjAiBase)owner).GetSpell(0).SetCooldown(1.33f); });
                 owner.RemoveBuffsWithName("YasuoQ02");
                 var x = AddParticle(owner, mushroom, "Yasuo_Base_Q_wind_mis.troy", owner.Position);
                 float inte = 0.0f;

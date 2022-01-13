@@ -1,4 +1,5 @@
-﻿using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
@@ -17,6 +18,11 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            CreateTimer(0.1f, ()=> { owner.SetSpell("Consume", 0, true); });
+            CreateTimer(0.2f, () => { owner.SetSpell("ShenFeint", 1, true); });
+            CreateTimer(0.3f, () => { owner.SetSpell("GravesMove", 2, true); });
+            CreateTimer(0.4f, () => { owner.SetSpell("Feast", 3, true); });
+            CreateTimer(0.5f, () => { owner.SetStatus(GameServerCore.Enums.StatusFlags.Ghosted, true); });
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -33,15 +39,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-            var current = new Vector2(spell.CastInfo.Owner.Position.X, spell.CastInfo.Owner.Position.Y);
-            var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
-            var to = Vector2.Normalize(spellPos - current);
-            var range = to * spell.SpellData.CastRangeDisplayOverride;
-            var trueCoords = current + range;
-
-            FaceDirection(trueCoords, spell.CastInfo.Owner, true);
-            spell.CastInfo.Owner.SetTargetUnit(null);
-            ForceMovement(spell.CastInfo.Owner, "SRU_Crab_Dash", trueCoords, 750, 0, 0, 0, movementOrdersFacing: GameServerCore.Enums.ForceMovementOrdersFacing.FACE_MOVEMENT_DIRECTION);
         }
 
         public void OnSpellChannel(ISpell spell)

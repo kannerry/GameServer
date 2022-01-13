@@ -17,6 +17,7 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             ((IObjAiBase)unit).SetSpell("YasuoQ2W", 0, true);
+            ((IObjAiBase)unit).GetSpell(0).SetCooldown(1.0f);
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)

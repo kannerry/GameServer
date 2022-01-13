@@ -100,7 +100,7 @@ namespace Spells
             var ad = owner.Stats.AttackDamage.Total;
 
             var damage = 100 + (float)ad * 1.5 + spell.CastInfo.SpellLevel * 150;
-
+            AddBuff("GravesPassiveGrit", 3.0f, 1, spell, owner, owner);
             target.TakeDamage(owner, (float)damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
             if ((target is Minion).Equals(false))
             {

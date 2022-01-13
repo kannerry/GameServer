@@ -77,7 +77,7 @@ namespace Spells
 
         private IParticle red;
         private IParticle green;
-
+        bool procGrit = false;
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -87,6 +87,12 @@ namespace Spells
             //Graves_SmokeGrenade_Cloud_Team_Red.troy
             if(sector == DamageSector)
             {
+              if(procGrit == false)
+                {
+                    AddBuff("GravesPassiveGrit", 3.0f, 1, spell, owner, owner);
+                    procGrit = true;
+                    CreateTimer(0.5f, () => { procGrit = false; });
+                }  
                 target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
             }
             if (sector == BlindSector)
