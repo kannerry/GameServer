@@ -21,6 +21,7 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -31,10 +32,12 @@ namespace Spells
         {
         }
 
+        bool remove50Fury = false;
+
         public void OnSpellCast(ISpell spell)
         {
         }
-
+        IObjAiBase _owner;
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
@@ -44,15 +47,20 @@ namespace Spells
  
             owner.Stats.CurrentHealth += heal;
 
+            if(owner.Stats.CurrentMana >= 50)
+            {
+                owner.Stats.CurrentMana -= 50;
+            }
 
+            AddParticle(owner, null, "RenektonCleave_trail.troy", owner.Position, direction: owner.Direction);
             PlayAnimation(owner, "Spell1");
             var units = GetUnitsInRange(owner.Position, 425f, true);
             for (int i = 0; i < units.Count; i++)
             {
                 if (!(units[i].Team == owner.Team || units[i] is IBaseTurret || units[i] is IObjBuilding || units[i] is IInhibitor))
                 {
+                    owner.Stats.CurrentMana += 2;
                     units[i].TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-                    AddParticle(owner, null, "RenektonCleave_trail.troy", owner.Position, direction: owner.Direction);
                 }
             }
 
@@ -72,6 +80,10 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
+            if(_owner.Stats.CurrentMana == 0)
+            {
+                _owner.Stats.CurrentMana = 1;
+            }
         }
     }
 

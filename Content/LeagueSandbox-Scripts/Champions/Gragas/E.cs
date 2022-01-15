@@ -6,6 +6,7 @@ using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
@@ -25,7 +26,35 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            ApiEventManager.OnSpellCast.AddListener(this, spell, PassiveHeal);
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
+        }
+
+
+        public void PassiveHeal(ISpell spell)
+        {
+            var owner = spell.CastInfo.Owner;
+
+            if (owner.HasBuff("GragasCanPassive"))
+            {
+                owner.RemoveBuffsWithName("GragasCanPassive");
+                LogDebug("yo1");
+                AddBuff("GragasPassiveCooldown", 8.0f, 1, spell, owner, owner);
+                PerformHeal(owner, spell, owner);
+            }
+
+        }
+
+        private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        {
+            var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
+            float healthGain = 15 + (spell.CastInfo.SpellLevel * 45) + ap;
+            if (target.HasBuff("HealCheck"))
+            {
+                healthGain *= 0.5f;
+            }
+            var newHealth = target.Stats.CurrentHealth + healthGain;
+            target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -79,6 +108,7 @@ namespace Spells
             spell.CastInfo.Owner.SetTargetUnit(null);
             ForceMovement(spell.CastInfo.Owner, "run", spell.CastInfo.Owner.Position, 1000, 0, 0, 0);
             AddBuff("Stun", 1.0f, 1, spell, target, owner);
+            ForceMovement(target, "run", GetPointFromUnit(owner, 150), 1000, 0, 0, 0);
         }
 
         public void OnSpellPostChannel(ISpell spell)

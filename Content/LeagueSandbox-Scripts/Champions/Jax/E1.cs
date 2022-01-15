@@ -34,13 +34,11 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
+            var cd = (new float[] { 18f, 16f, 14f, 12f, 10f }[spell.CastInfo.SpellLevel - 1]);
             var owner = spell.CastInfo.Owner;
             PlayAnimation(owner, "Spell3", 2.0f);
-            AddBuff("JaxCounterStrikeAttack", 5f, 1, spell, Owner, Owner, false);
-            CreateTimer(0.1f, () => { owner.Spells[2].SetCooldown((float)0.1); });
-            //CreateTimer(2.f, () => { owner.Spells[2].Cast(owner.Position, owner.Position); });
-            //CreateTimer(3.0f, () => { owner.SetSpell("JaxCounterStrike", 2, true); });
-            //CreateTimer(3.0f, () => { owner.Spells[2].SetCooldown((float)4.1); });
+            AddBuff("JaxCounterStrikeAttack", 2f, 1, spell, Owner, Owner, false); // REPROC COSTS MANA SO WE ADD THE COST BACK TO THE MANA POOL (so you can actually recast it :D)
+            CreateTimer(0.1f, () => { owner.Spells[2].SetCooldown((float)0.1); owner.Stats.CurrentMana += 60;  });
             x = AddParticleTarget(owner, owner, "JaxDodger.troy", owner, 5f);
         }
 

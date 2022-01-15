@@ -11,7 +11,7 @@ namespace Buffs
     internal class FizzMalison : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
-        public BuffAddType BuffAddType => BuffAddType.STACKS_AND_RENEWS;
+        public BuffAddType BuffAddType => BuffAddType.STACKS_AND_CONTINUE;
         public int MaxStacks => 1;
         public bool IsHidden => false;
         private IObjAiBase Owner;

@@ -32,7 +32,7 @@ namespace Spells
             basepos = owner.Position;
             PlayAnimation(owner, "Spell2", startTime: 0.5f);
             p = AddParticleTarget(owner, target, "Drain.troy", owner, lifetime: 5.0f);
-            for (var i = 0.0f; i < 5.0; i += 0.25f)
+            for (var i = 0.0f; i < 5.0; i += 1f)
             {
                 CreateTimer(i, () => { ApplyDrainDamage(owner, spell, target); });
             }
@@ -55,13 +55,11 @@ namespace Spells
             }
             if (target.Team != owner.Team)
             {
-                var damage = 35.0f;
-                var ap = owner.Stats.AbilityPower.Total * 0.25f;
-                var ad = owner.Stats.AttackDamage.Total * 0.37f;
-                if (target is Minion) damage *= 0.75f;
+                var damage = 60;
+                var ap = owner.Stats.AbilityPower.Total * 0.45f;
                 if (!cancelled)
                 {
-                    target.TakeDamage(owner, ap + ad + damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                    target.TakeDamage(owner, ap + damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
                 }
             }
         }

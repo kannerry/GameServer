@@ -247,6 +247,18 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                 return;
             }
 
+            //ItemID_3047
+
+            //if(target.)
+
+            if (target.HasBuff("JaxCounterStrikeAttack"))
+            {
+                target.TakeDamage(this, 0, DamageType.DAMAGE_TYPE_PHYSICAL,
+                                             DamageSource.DAMAGE_SOURCE_ATTACK,
+                                             DamageResultType.RESULT_MISS);
+                return;
+            }
+
             var damage = Stats.AttackDamage.Total;
             if (IsNextAutoCrit)
             {
@@ -538,10 +550,12 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                 if (MoveOrder != OrderType.AttackTo && TargetUnit != null)
                 {
                     UpdateMoveOrder(OrderType.AttackTo, true);
-                    idealRange = Stats.Range.Total;
-                }
+                    idealRange = Stats.Range.Total + 75;
+                // when i remove the bonus range, he wants to walk when on "attack cooldown" for some reason .
+                // 75 seems to be a nice middle ground - you still walk towards them, but you don't go out of range completely
+            }
 
-                if (SpellToCast != null)
+            if (SpellToCast != null)
                 {
                     idealRange = SpellToCast.GetCurrentCastRange();
                 }

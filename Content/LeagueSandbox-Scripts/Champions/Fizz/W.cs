@@ -22,6 +22,7 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            CreateTimer(0.1f, () => { ApiEventManager.OnLevelUpSpell.AddListener(this, owner.GetSpell("FizzSeastonePassive"), AddFizzPassive, false); });
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -33,13 +34,14 @@ namespace Spells
             Target = target;
             daspell = spell;
             daowner = owner;
-            ApiEventManager.OnLevelUpSpell.AddListener(this, owner.GetSpell("FizzSeastonePassive"), AddFizzPassive, false);
+            owner.CancelAutoAttack(true);
         }
 
         public void AddFizzPassive(ISpell spell)
         {
+            LogDebug("yo");
             var owner = spell.CastInfo.Owner;
-            AddBuff("FizzMalison", 99999f, 1, spell, daowner, daowner, true);
+            AddBuff("FizzMalison", 99999f, 1, spell, owner, owner, true);
         }
 
         public void OnSpellCast(ISpell spell)

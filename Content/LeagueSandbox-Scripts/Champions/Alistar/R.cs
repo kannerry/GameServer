@@ -24,6 +24,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            AddBuff("Trample", 4.0f, 1, spell, owner, owner);
             //AddParticleTarget(owner, owner, "Malphite_Base_UnstoppableForce_cas.troy", owner, 1);
         }
 

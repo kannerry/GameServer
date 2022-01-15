@@ -45,14 +45,29 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             var APratio = owner.Stats.AttackDamage.Total * 0.75f;
             var damage = 35 + spell.CastInfo.SpellLevel * 40 + APratio;
+            owner.Stats.CurrentMana += 2;
+
+            if (reset == 1)
+            {
+                if(owner.Stats.CurrentMana >= 50)
+                {
+                    owner.Stats.CurrentMana -= 50;
+                    damage = damage * 1.2f;
+                }
+            }
+            if(reset == 0)
+            {
+                LogDebug("reset 0");
+            }
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             if(target.Team != owner.Team)
             {
                 if (reset != 1)
                 {
+                    var cd = owner.GetSpell(2).GetCooldown();
                     owner.GetSpell(2).SetCooldown(0);
                     reset = 1;
-                    CreateTimer(10.0f, () => { reset = 0; });
+                    CreateTimer(10f, () => { reset = 0; });
                 }
             }
         }

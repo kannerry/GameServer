@@ -35,8 +35,8 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
-            
-       
+
+            owner.CancelAutoAttack(true);
             
             AddParticleTarget(owner, owner, "armsmaster_empower_buf.troy", owner, 8f, 1f);
             AddBuff("JaxEmpowerAttack", 5f, 1, spell, Owner, Owner, false);

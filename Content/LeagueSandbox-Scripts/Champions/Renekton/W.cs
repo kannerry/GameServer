@@ -37,6 +37,7 @@ namespace Spells
 
         public void OnSpellCast(ISpell spell)
         {
+            spell.CastInfo.Owner.CancelAutoAttack(true);
             AddBuff("RenektonW", 6f, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
         }
 

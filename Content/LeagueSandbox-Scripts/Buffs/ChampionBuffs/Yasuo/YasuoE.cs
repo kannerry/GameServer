@@ -31,7 +31,8 @@ namespace Buffs
 
             var xy = unit as IObjAiBase;
             xy.SetTargetUnit(null);
-            ForceMovement(unit, "Spell3", new Vector2(target.Position.X + to.X * 175f, target.Position.Y + to.Y * 175f), 750f + unit.Stats.MoveSpeed.Total * 0.6f, 0, 0, 0);
+            FaceDirection(target.Position, owner);
+            ForceMovement(unit, "Spell3", GetPointFromUnit(owner, 475), 750f + unit.Stats.MoveSpeed.Total * 0.6f, 0, 0, 0);
             CancelDash(unit);
             owner.PlayAnimation("Spell3", 0.45f, 0, 1);
             CreateTimer(2.5f, () => { unit.SetStatus(StatusFlags.Ghosted, false); });

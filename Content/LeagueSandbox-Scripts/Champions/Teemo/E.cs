@@ -31,9 +31,16 @@ namespace Spells
 
         public void TargetExecute(IAttackableUnit unit, bool arg2)
         {
-            var ap = own.Stats.AbilityPower.Total;
-            float damage = (float)(ap * 0.3 + own.GetSpell(2).CastInfo.SpellLevel * 10);
-            unit.TakeDamage(own, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_PROC, false);
+
+            Passives.Camouflage.timer = 0;
+            Passives.Camouflage.isinvis = false;
+
+            if (own.GetSpell(2).CastInfo.SpellLevel != 0)
+            {
+                var ap = own.Stats.AbilityPower.Total;
+                float damage = (float)(ap * 0.3 + own.GetSpell(2).CastInfo.SpellLevel * 10);
+                unit.TakeDamage(own, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_PROC, false);
+            }
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)

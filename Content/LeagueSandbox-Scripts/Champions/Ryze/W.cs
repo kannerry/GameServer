@@ -14,7 +14,8 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
-            TriggersSpellCasts = true
+            TriggersSpellCasts = true,
+            CastTime = 0.25f
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
@@ -43,11 +44,27 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+            var owner = spell.CastInfo.Owner;
+            var target = spell.CastInfo.Targets[0].Unit;
             var time = 0.75f;
             var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total;
             float damage = (float)(25 + ap * 0.6 + spell.CastInfo.SpellLevel * 35);
-            AddBuff("RyzeWDebuff", time, 1, spell, spell.CastInfo.Targets[0].Unit, spell.CastInfo.Owner);
-            spell.CastInfo.Targets[0].Unit.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            AddBuff("RyzeWDebuff", time, 1, spell, target, spell.CastInfo.Owner);
+
+            if (owner.HasBuff("DesperatePower"))
+            {
+                AddParticle(owner, target, "DesperatePower_aoe.troy", target.Position);
+                var u = GetUnitsInRange(target.Position, 300, true);
+                foreach (var unit in u)
+                {
+                    if (unit.Team != owner.Team)
+                    {
+                        unit.TakeDamage(owner, damage / 2, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                    }
+                }
+            }
+
+            target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
         }
 
         public void OnSpellChannel(ISpell spell)

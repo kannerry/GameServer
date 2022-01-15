@@ -6,6 +6,7 @@ using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
@@ -30,12 +31,15 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
-
+        static internal Vector2 endpos;
+        static internal int addpassive = 0;
         public void OnSpellCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner as IChampion;
-            var targetPos = GetPointFromUnit(owner, 1200f, 0);
+            var targetPos = GetPointFromUnit(owner, 800f, 0);
+            endpos = targetPos;
             SpellCast(owner, 0, SpellSlotType.ExtraSlots, targetPos, targetPos, true, Vector2.Zero);
+            CreateTimer(2.0f, () => { addpassive = 0; });
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -65,22 +69,24 @@ namespace Spells
         {
             MissileParameters = new MissileParameters
             {
-                Type = MissileType.Circle
+                Type = MissileType.Circle,
+                CanHitSameTargetConsecutively = true,
             },
             IsDamagingSpell = true,
-            TriggersSpellCasts = true
+            TriggersSpellCasts = true,
 
             // TODO
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-
+        IObjAiBase _owner;
         private bool comeBack = false;
 
         public void OnMissileEnd(ISpellMissile missile)
@@ -88,7 +94,7 @@ namespace Spells
             var owner = missile.CastInfo.Owner;
             if (comeBack == false)
             {
-                SpellCast(owner, 0, SpellSlotType.ExtraSlots, true, owner, GetPointFromUnit(owner, 800f, 0));
+                SpellCast(owner, 0, SpellSlotType.ExtraSlots, true, owner, AhriOrbofDeception.endpos);
                 comeBack = true;
             }
             CreateTimer(2.0f, () => { comeBack = false; });
@@ -103,9 +109,46 @@ namespace Spells
             ApiEventManager.OnSpellMissileEnd.AddListener(this, missile, OnMissileEnd, true);
             ApiEventManager.OnSpellHit.AddListener(this, spell, OrbDamage, true);
         }
+        public void RemoveStacks(int var)
+        {
+            int x = 0;
+            foreach (var swag in _owner.GetBuffsWithName("AhriSoulCrusherCounter"))
+            {
+                if (x < var)
+                {
+                    x++;
+                    swag.DeactivateBuff();
+                }
+            }
+        }
+
+        private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        {
+            var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
+            float healthGain = 15 + (spell.CastInfo.SpellLevel * 45) + ap;
+            if (target.HasBuff("HealCheck"))
+            {
+                healthGain *= 0.5f;
+            }
+            var newHealth = target.Stats.CurrentHealth + healthGain;
+            target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
+        }
 
         public void OrbDamage(ISpell spell, IAttackableUnit unit, ISpellMissile mis, ISpellSector sec)
         {
+            if(AhriOrbofDeception.addpassive < 3)
+            {
+                AddBuff("AhriSoulCrusherCounter", float.MaxValue, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
+                AhriOrbofDeception.addpassive++;
+                LogDebug(AhriOrbofDeception.addpassive.ToString());
+            }
+
+            if(spell.CastInfo.Owner.GetBuffWithName("AhriSoulCrusherCounter").StackCount == 9)
+            {
+                PerformHeal(_owner, spell, _owner);
+                CreateTimer(0.1f, () => { RemoveStacks(9); });
+            }
+
             var owner = spell.CastInfo.Owner;
             var ap = owner.Stats.AbilityPower.Total * 0.35;
             float damage = (float)((float)(owner.Spells[0].CastInfo.SpellLevel * 30) + ap);

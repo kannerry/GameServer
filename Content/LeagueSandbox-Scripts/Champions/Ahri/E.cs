@@ -6,6 +6,7 @@ using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
@@ -68,9 +69,10 @@ namespace Spells
             }
             // TODO
         };
-
+        IObjAiBase _owner;
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
@@ -107,7 +109,40 @@ namespace Spells
                 xy.SetTargetUnit(null);
                 ForceMovement(target, "run", x, 10, 0, 0, 0);
                 AddBuff("VeigarEventHorizon", 2.0f, 1, spell, target, owner);
+                AddBuff("AhriSoulCrusherCounter", float.MaxValue, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
+
+                if (spell.CastInfo.Owner.GetBuffWithName("AhriSoulCrusherCounter").StackCount == 9)
+                {
+                    PerformHeal(spell.CastInfo.Owner, spell, spell.CastInfo.Owner);
+                    CreateTimer(0.1f, () => { RemoveStacks(9); });
+                }
+
             }
+        }
+
+        public void RemoveStacks(int var)
+        {
+            int x = 0;
+            foreach (var swag in _owner.GetBuffsWithName("AhriSoulCrusherCounter"))
+            {
+                if (x < var)
+                {
+                    x++;
+                    swag.DeactivateBuff();
+                }
+            }
+        }
+
+        private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        {
+            var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
+            float healthGain = 15 + (spell.CastInfo.SpellLevel * 45) + ap;
+            if (target.HasBuff("HealCheck"))
+            {
+                healthGain *= 0.5f;
+            }
+            var newHealth = target.Stats.CurrentHealth + healthGain;
+            target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
         }
 
         public void OnSpellChannel(ISpell spell)

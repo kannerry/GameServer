@@ -117,6 +117,7 @@ namespace Spells
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
+            AddBuff("EzrealRisingSpellForce", 6.0f, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
             target.TakeDamage(spell.CastInfo.Owner, 75f + ((spell.CastInfo.SpellLevel - 1) * 50f) + spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.75f,
                 DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             missile.SetToRemove();

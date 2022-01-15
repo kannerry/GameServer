@@ -51,6 +51,7 @@ namespace Spells
             }
             if (Destiny.toggled == true)
             {
+                CreateTimer(0.01f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(0).SetCooldown(0f); });
                 AddParticle(spell.CastInfo.Owner, null, "SealFate_tar.troy", en, lifetime: 1.5f);
                 PlayAnimation(spell.CastInfo.Owner, "Spell4");
                 spell.CastInfo.Owner.StopMovement();

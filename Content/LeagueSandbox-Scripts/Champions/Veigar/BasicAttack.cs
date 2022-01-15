@@ -1,26 +1,32 @@
-﻿using GameServerCore.Domain.GameObjects;
+﻿
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Enums;
-using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.API;
-using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
+using LeagueSandbox.GameServer.API;
+using GameServerCore.Scripting.CSharp;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using GameServerCore.Enums;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
+using GameServerCore.Domain.GameObjects.Spell.Sector;
 
 namespace Spells
 {
     public class VeigarBasicAttack : ISpellScript
     {
+        IObjAiBase _owner;
+        IAttackableUnit _targ;
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
             MissileParameters = new MissileParameters
             {
-                Type = MissileType.Target
+                Type = MissileType.Arc
             }
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
             ApiEventManager.OnLaunchAttack.AddListener(this, owner, OnLaunchAttack, false);
         }
 
@@ -32,13 +38,25 @@ namespace Spells
         {
         }
 
+        // SCUFFED AS SHIT
+        // BUT IT FEELS BETTER THAN
+        // INSTANT DAMAGE AUTO ATTACKS
+
         public void OnLaunchAttack(ISpell spell)
         {
-            if (spell.CastInfo.Targets[0].Unit is Champion)
-            {
-                float damage = spell.CastInfo.Owner.Stats.AttackDamage.Total;
-                spell.CastInfo.Targets[0].Unit.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-            }
+            _targ = _owner.TargetUnit;
+            LogDebug(" yo 1");
+            var x = _owner.GetSpell("VeigarBasicAttack").CreateSpellMissile(ScriptMetadata.MissileParameters);
+            // in VeigarBasicAttack.json
+            // "MissileSpeed": "1100.0000",
+            x.SetSpeed(1100f);
+            ApiEventManager.OnSpellMissileEnd.AddListener(this, x, OnSpellHit, true);
+        }
+
+        public void OnSpellHit(ISpellMissile mis)
+        {
+            LogDebug("yo 2");
+            _targ.TakeDamage(_owner, _owner.Stats.AttackDamage.Total, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
         }
 
         public void OnSpellCast(ISpell spell)

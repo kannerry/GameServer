@@ -8,7 +8,7 @@ namespace Buffs
 {
     internal class TalonWSlow : IBuffGameScript
     {
-        public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
+        public BuffType BuffType => BuffType.SLOW;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
         public int MaxStacks => 1;
         public bool IsHidden => false;

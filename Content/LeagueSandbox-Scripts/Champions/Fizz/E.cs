@@ -40,6 +40,7 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             if (!owner.HasBuff("FizzBuffer") && !owner.HasBuff("FizzTrickSlam"))
             {
+                spell.SetCooldown(0);
                 var trueCoords = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
                 var startPos = owner.Position;
                 var to = trueCoords - startPos;

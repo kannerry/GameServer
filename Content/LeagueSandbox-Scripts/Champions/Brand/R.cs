@@ -56,13 +56,13 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner;
             var ap = owner.Stats.AbilityPower.Total * 0.5f;
-            var damage = 45f + spell.CastInfo.SpellLevel * 35f + ap;
+            var damage = 50f + spell.CastInfo.SpellLevel * 100f + ap;
 
-            RemoveBuff(owner, "BrandWildfire");
+            //RemoveBuff(owner, "BrandWildfire");
 
             if (target is IObjAiBase aiTarget)
             {
-                AddBuff("BrandWildfire", 4.0f, 1, spell, owner, aiTarget);
+                //AddBuff("BrandWildfire", 4.0f, 1, spell, owner, aiTarget);
 
                 doOnce = false;
 
@@ -80,7 +80,7 @@ namespace Spells
                     units[n] = value;
                 }
 
-                foreach (var unit in units.GetRange(0, 10))
+                foreach (var unit in units)
                 {
                     if (unit == target || unit.Team == owner.Team || unit is IObjBuilding || unit is IBaseTurret)
                     {
@@ -91,7 +91,7 @@ namespace Spells
                     {
                         if (!unit.Status.HasFlag(StatusFlags.Stealthed))
                         {
-                            if (HasBuff(target, "BrandAblaze"))
+                            if (HasBuff(target, "BrandWildfire"))
                             {
                                 // Extra spell 5 no longer exists?
                                 //SpellCast(owner, 4, SpellSlotType.ExtraSlots, true, unit, target.Position);
@@ -107,7 +107,7 @@ namespace Spells
                         {
                             if (unit.IsVisibleByTeam(owner.Team))
                             {
-                                if (HasBuff(target, "BrandAblaze"))
+                                if (HasBuff(target, "BrandWildfire"))
                                 {
                                     // Extra spell 5 no longer exists?
                                     //SpellCast(owner, 4, SpellSlotType.ExtraSlots, true, unit, target.Position);
@@ -123,7 +123,7 @@ namespace Spells
                     }
                 }
 
-                if (HasBuff(target, "BrandAblaze"))
+                if (HasBuff(target, "BrandWildfire"))
                 {
                     if (owner.SkinID == 3)
                     {
@@ -136,7 +136,7 @@ namespace Spells
 
                     // BreakSpellShields(target);
 
-                    AddBuff("BrandAblaze", 4.0f, 1, spell, target, owner);
+                    AddBuff("BrandWildfire", 4.0f, 1, spell, target, owner);
 
                     target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
                 }
@@ -144,7 +144,7 @@ namespace Spells
                 {
                     // BreakSpellShields(target);
 
-                    AddBuff("BrandAblaze", 4.0f, 1, spell, target, owner);
+                    AddBuff("BrandWildfire", 4.0f, 1, spell, target, owner);
 
                     target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
 
@@ -190,7 +190,7 @@ namespace Spells
             SpellFXOverrideSkins = new string[] { "FrostFireBrand" },
             MissileParameters = new MissileParameters
             {
-                Type = MissileType.Target
+                Type = MissileType.Target,
             }
         };
 
@@ -215,13 +215,13 @@ namespace Spells
             LogInfo("BrandWildfireMissile TargetExecute called.");
             var owner = spell.CastInfo.Owner;
             var ap = owner.Stats.AbilityPower.Total * 0.5f;
-            var damage = 45f + spell.CastInfo.SpellLevel * 35f + ap;
+            var damage = 50f + spell.CastInfo.SpellLevel * 100f + ap;
 
-            AddBuff("BrandWildfire", 4.0f, 1, spell, owner, owner);
+            AddBuff("CrashFixStacks", 4.0f, 1, spell, owner, owner);
 
             doOnce = false;
 
-            if (owner.GetBuffWithName("BrandWildfire").StackCount <= 4)
+            if (owner.GetBuffWithName("CrashFixStacks").StackCount <= 5)
             {
                 var units = GetUnitsInRange(target.Position, 600.0f, true).FindAll(unit => unit != target && unit.Team != owner.Team && !(unit is IObjBuilding || unit is IBaseTurret));
 
@@ -237,7 +237,7 @@ namespace Spells
                     units[n] = value;
                 }
 
-                foreach (var unit in units.GetRange(0, 10))
+                foreach (var unit in units)
                 {
                     if (unit == target || unit.Team == owner.Team || unit is IObjBuilding || unit is IBaseTurret)
                     {
@@ -248,7 +248,7 @@ namespace Spells
                     {
                         if (!unit.Status.HasFlag(StatusFlags.Stealthed))
                         {
-                            if (HasBuff(target, "BrandAblaze"))
+                            if (HasBuff(target, "BrandWildfire"))
                             {
                                 // Extra spell 5 no longer exists?
                                 //SpellCast(owner, 4, SpellSlotType.ExtraSlots, true, unit, target.Position);
@@ -264,7 +264,7 @@ namespace Spells
                         {
                             if (unit.IsVisibleByTeam(owner.Team))
                             {
-                                if (HasBuff(target, "BrandAblaze"))
+                                if (HasBuff(target, "BrandWildfire"))
                                 {
                                     // Extra spell 5 no longer exists?
                                     //SpellCast(owner, 4, SpellSlotType.ExtraSlots, true, unit, target.Position);
@@ -281,7 +281,7 @@ namespace Spells
                 }
             }
 
-            if (HasBuff(target, "BrandAblaze"))
+            if (HasBuff(target, "BrandWildfire"))
             {
                 if (owner.SkinID == 3)
                 {
@@ -294,7 +294,7 @@ namespace Spells
 
                 // BreakSpellShields(target);
 
-                AddBuff("BrandAblaze", 4.0f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4.0f, 1, spell, target, owner);
 
                 target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
             }
@@ -302,7 +302,7 @@ namespace Spells
             {
                 // BreakSpellShields(target);
 
-                AddBuff("BrandAblaze", 4.0f, 1, spell, target, owner);
+                AddBuff("BrandWildfire", 4.0f, 1, spell, target, owner);
 
                 target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
 

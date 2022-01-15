@@ -13,7 +13,7 @@ namespace Buffs
     internal class DravenSpinning : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
-        public BuffAddType BuffAddType => BuffAddType.STACKS_AND_OVERLAPS;
+        public BuffAddType BuffAddType => BuffAddType.STACKS_AND_CONTINUE;
         public int MaxStacks => 2;
         public bool IsHidden => false;
 
@@ -30,6 +30,7 @@ namespace Buffs
 
         private void TargetExecute(IAttackableUnit Unit, bool crit)
         {
+            LogDebug("yo");
             Unit.TakeDamage(_owner, _owner.Stats.AttackDamage.Total, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
         }
 

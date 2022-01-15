@@ -24,6 +24,9 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+
+            AddBuff("Trample", 4.0f, 1, spell, owner, owner);
+
             IChampion mostWoundedAlliedIChampion = null;
 
             if (target != null

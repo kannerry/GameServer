@@ -107,6 +107,7 @@ namespace Spells
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
+            AddBuff("EzrealRisingSpellForce", 6.0f, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
             var owner = spell.CastInfo.Owner;
             var ad = owner.Stats.AttackDamage.Total * spell.SpellData.AttackDamageCoefficient;
             var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;

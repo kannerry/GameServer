@@ -45,8 +45,16 @@ namespace Spells
 
             var damage = 20 * spell.CastInfo.SpellLevel + ad;
 
-            
-            
+
+            CreateTimer(0.1f, () =>
+            {
+                if (Target.IsDead)
+                {
+                    owner.GetSpell(0).SetCooldown(0);
+                    owner.Stats.CurrentMana += 35;
+                }
+            });
+
 
             Target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             var target = Target;

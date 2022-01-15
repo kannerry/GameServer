@@ -33,6 +33,7 @@ namespace Spells
 
         public void onDash(IAttackableUnit owner)
         {
+
             sectora = _spell.CreateSpellSector(new SectorParameters
             {
                 Length = 300f,
@@ -62,6 +63,10 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+
+            owner.Stats.CurrentHealth = owner.Stats.CurrentHealth - owner.Stats.CurrentHealth * 0.1f;
+            owner.Stats.CurrentMana += owner.Stats.ManaPoints.Total * 0.1f;
+
             int speed1 = 250;
             int speed2 = 2550;
             var castrange = spell.GetCurrentCastRange();

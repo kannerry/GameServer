@@ -33,9 +33,17 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
-
+        int proc = 0;
         public void OnSpellPostCast(ISpell spell)
         {
+            if(proc < 2)
+            {
+                proc++;
+                CreateTimer(0.3f, () => { spell.SetCooldown(0); });
+            }
+
+            CreateTimer(10.0f, () => { proc = 0; });
+
             var current = new Vector2(spell.CastInfo.Owner.Position.X, spell.CastInfo.Owner.Position.Y);
             var trueCoords = GetPointFromUnit(spell.CastInfo.Owner, spell.SpellData.CastRangeDisplayOverride);
 
@@ -49,6 +57,7 @@ namespace Spells
                     {
                         if (i < 1)
                         {
+                            AddBuff("AhriSoulCrusherCounter", float.MaxValue, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
                             SpellCast(spell.CastInfo.Owner, 3, SpellSlotType.ExtraSlots, true, allyTarget, Vector2.Zero);
                             i++;
                         }

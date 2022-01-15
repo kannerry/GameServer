@@ -18,6 +18,7 @@ namespace ItemPassives
         private IObjAiBase ItemOwner;
         public void OnActivate(IObjAiBase owner)
         {
+            IChampion _owner = owner as IChampion;
             ItemOwner = owner;
             AddBuff("StaticFieldCooldown", 7.0f, 1, owner.GetSpell(0), owner, ItemOwner);
             ApiEventManager.OnLaunchAttack.AddListener(this, owner, TiamatExecute, false);

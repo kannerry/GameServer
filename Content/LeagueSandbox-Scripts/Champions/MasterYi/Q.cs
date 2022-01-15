@@ -88,11 +88,12 @@ namespace Spells
                 Type = MissileType.Chained,
                 // Sivir W bounces until all units in bounce range have been hit.
                 MaximumHits = 4,
+                CanHitSameTarget = true
                 
             }
         };
 
-        private IAttackableUnit firstTarget;
+        static internal IAttackableUnit firstTarget;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -102,32 +103,16 @@ namespace Spells
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
-            AddBuff("MasterYiQ", 0.1f, 1, spell, owner, owner);
+            AddBuff("MasterYiQ", 0.4f, 1, spell, owner, owner);
             AddParticleTarget(owner, target, "MasterYi_Base_Q_Cas.troy", target);
-            var damage = owner.Stats.AttackDamage.Total * (0.8f + (0.3f * (owner.GetSpell(0).CastInfo.SpellLevel - 1)));
-            target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
-            CreateTimer(0.3f, () =>
-            {
-                if (!owner.HasBuff("MasterYiQ"))
-                {
-                    var to = Vector2.Normalize(firstTarget.Position - owner.Position);
-                    TeleportTo(owner, firstTarget.Position.X - to.X * 100f, firstTarget.Position.Y - to.Y * 100f);
-                    var Champs = GetChampionsInRange(owner.Position, 50000, true);
-                    foreach (IChampion player in Champs)
-                    {
-                        owner.SetStatus(StatusFlags.Targetable, true);
-                        if (player.Team.Equals(owner.Team))
-                        {
-                            owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0.1f);
-                        }
-                        if (!(player.Team.Equals(owner.Team)))
-                        {
-                            owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0.1f);
-                            owner.SetHealthbarVisibility((int)player.GetPlayerId(), owner, true);
-                        }
-                    }
-                }
-            });
+            AddParticleTarget(owner, target, "MasterYi_Base_Q_Tar.troy", target);
+
+            //SpellCast(owner, 1, SpellSlotType.ExtraSlots, true, target, owner.Position);
+
+            var damage = owner.Stats.AttackDamage.Total * 1.03f;
+            var basedmg = 20 + 35 * owner.GetSpell(0).CastInfo.SpellLevel;
+            target.TakeDamage(owner, damage + basedmg, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -137,6 +122,14 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             firstTarget = target;
+            CreateTimer(0.1f, () =>
+            {
+                var x = GetObjectNET(spell.CastInfo.MissileNetID) as ISpellMissile;
+                if(x != null)
+                {
+                    x.SetSpeed(1200f); // feels good, not be accurate to "MissileSpeed" from json
+                }
+            });
         }
 
         public void OnSpellCast(ISpell spell)
@@ -163,4 +156,61 @@ namespace Spells
         {
         }
     }
+
+    public class AlphaStrikeTeleport : ISpellScript
+    {
+        public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
+        {
+            TriggersSpellCasts = false,
+            MissileParameters = new MissileParameters
+            {
+                Type = MissileType.Target,
+                CanHitSameTarget = true
+
+            }
+        };
+
+        private IAttackableUnit firstTarget;
+
+        public void OnActivate(IObjAiBase owner, ISpell spell)
+        {
+        }
+
+        public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
+        {
+        }
+
+        public void OnDeactivate(IObjAiBase owner, ISpell spell)
+        {
+        }
+
+        public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
+        {
+        }
+
+        public void OnSpellCast(ISpell spell)
+        {
+        }
+
+        public void OnSpellPostCast(ISpell spell)
+        {
+        }
+
+        public void OnSpellChannel(ISpell spell)
+        {
+        }
+
+        public void OnSpellChannelCancel(ISpell spell)
+        {
+        }
+
+        public void OnSpellPostChannel(ISpell spell)
+        {
+        }
+
+        public void OnUpdate(float diff)
+        {
+        }
+    }
+
 }

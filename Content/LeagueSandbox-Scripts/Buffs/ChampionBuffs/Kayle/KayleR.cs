@@ -3,6 +3,9 @@ using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.GameObjects.Stats;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
@@ -17,6 +20,7 @@ namespace Buffs
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
+            AddParticle(unit, unit, "ghastlyshield_buf.troy", Vector2.Zero, lifetime: buff.Duration, bone: "hip");
             StatsModifier.Armor.BaseBonus += 30000f;
             StatsModifier.MagicResist.BaseBonus += 30000f;
             unit.AddStatModifier(StatsModifier);

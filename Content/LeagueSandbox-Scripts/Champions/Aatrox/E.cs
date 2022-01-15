@@ -38,6 +38,10 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+            var owner = spell.CastInfo.Owner;
+            owner.Stats.CurrentHealth = owner.Stats.CurrentHealth - owner.Stats.CurrentHealth * 0.05f;
+            owner.Stats.CurrentMana += owner.Stats.ManaPoints.Total * 0.05f;
+
             var endPos = GetPointFromUnit(spell.CastInfo.Owner, 1000, 0);
             var offsetPosL = GetPointFromUnit(spell.CastInfo.Owner, 100, -90);
             var offsetPosR = GetPointFromUnit(spell.CastInfo.Owner, 100, 90);

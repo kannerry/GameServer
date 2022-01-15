@@ -51,11 +51,36 @@ namespace Buffs
         {
             if (!thisBuff.Elapsed() && thisBuff != null && Unit != null)
             {
-                float ap = Unit.Stats.AttackDamage.Total * 0.6f;
-                float damage = 15 + 25 * Unit.GetSpell(1).CastInfo.SpellLevel + ap;
-                target.TakeDamage(Unit, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
-                AddBuff("Stun", 1.0f, 1, Unit.GetSpell(1), target, Unit);
-                thisBuff.DeactivateBuff();
+                if(Unit.Stats.CurrentMana >= 50)
+                {
+                    float ap = Unit.Stats.AttackDamage.Total * 1.25f;
+                    float damage = 15 + 25 * Unit.GetSpell(1).CastInfo.SpellLevel + ap;
+                    if (!(target is ILaneTurret))
+                    {
+                        target.TakeDamage(Unit, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
+                        AddBuff("Stun", 1.5f, 1, Unit.GetSpell(1), target, Unit);
+                    }
+                    Unit.Stats.CurrentMana -= 50;
+                    PlayAnimation(Unit, "ATTACK2");
+                    CreateTimer(0.25f, () => { Unit.Stats.CurrentMana += 5; target.TakeDamage(Unit, Unit.Stats.AttackDamage.Total, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false); });
+
+                    thisBuff.DeactivateBuff();
+                }
+                else
+                {
+                    float ap = Unit.Stats.AttackDamage.Total * 0.6f;
+                    float damage = 15 + 25 * Unit.GetSpell(1).CastInfo.SpellLevel + ap;
+                    if (!(target is ILaneTurret))
+                    {
+                        target.TakeDamage(Unit, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
+                        AddBuff("Stun", 0.75f, 1, Unit.GetSpell(1), target, Unit);
+                    }
+
+                    PlayAnimation(Unit, "ATTACK2");
+                    CreateTimer(0.25f, () => { Unit.Stats.CurrentMana += 5; target.TakeDamage(Unit, Unit.Stats.AttackDamage.Total, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false); });
+
+                    thisBuff.DeactivateBuff();
+                }
             }
         }
 

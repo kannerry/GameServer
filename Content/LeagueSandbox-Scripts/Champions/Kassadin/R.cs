@@ -21,9 +21,10 @@ namespace Spells
             IsDamagingSpell = true,
             NotSingleTargetSpell = true
         };
-
+        IObjAiBase _owner;
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
@@ -52,6 +53,9 @@ namespace Spells
             }
             PlayAnimation(owner, "Spell3", 0, 0, 1);
             AddBuff("RiftWalk", 20.0f, 1, spell, owner, owner);
+
+            AddBuff("EStacks", float.MaxValue, 1, spell, owner, owner, true);
+
             TeleportTo(owner, trueCoords.X, trueCoords.Y);
             AddParticle(owner, null, "Kassadin_Base_R_appear.troy", owner.Position);
 
@@ -70,8 +74,9 @@ namespace Spells
             float MANA = spell.CastInfo.Owner.Stats.ManaPoints.Total * 0.02f + (0.01f * buff.StackCount);
             float damage = 60f + 20f * spell.CastInfo.SpellLevel + MANA + (30f * spell.CastInfo.SpellLevel) * buff.StackCount;
             //TODO: Find a way to increase damage and ManaCost based on stacks
-
-            target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+            float bonusdmg = buff.StackCount * 40;
+            LogDebug(bonusdmg.ToString());
+            target.TakeDamage(spell.CastInfo.Owner, damage + bonusdmg, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -86,8 +91,31 @@ namespace Spells
         {
         }
 
+        static internal bool unlockE = false;
+
         public void OnUpdate(float diff)
         {
+
+            if (_owner.Stats.CurrentMana <= _owner.GetSpell("RiftWalk").SpellData.ManaCost[1])
+            {
+                SealSpellSlot(_owner, SpellSlotType.SpellSlots, 3, SpellbookType.SPELLBOOK_CHAMPION, true);
+            }
+            else
+            {
+                SealSpellSlot(_owner, SpellSlotType.SpellSlots, 3, SpellbookType.SPELLBOOK_CHAMPION, false);
+            }
+
+            if (_owner.HasBuff("EStacks")){
+                //LogDebug(_owner.GetBuffWithName("EStacks").StackCount.ToString());
+                if (_owner.GetBuffWithName("EStacks").StackCount == 6)
+                {
+                    if(unlockE == false)
+                    {
+                        CreateTimer((float)0.1, () => { SealSpellSlot(_owner, SpellSlotType.SpellSlots, 2, SpellbookType.SPELLBOOK_CHAMPION, false); });
+                        unlockE = true;
+                    }
+                }
+            }
         }
     }
 }

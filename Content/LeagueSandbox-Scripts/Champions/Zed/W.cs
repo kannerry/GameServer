@@ -21,7 +21,6 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-            AddBuff("ZedWPassiveBuff", 1.0f, 1, spell, owner, owner, true);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -36,10 +35,13 @@ namespace Spells
         {
         }
 
+        static internal bool WCast = false;
         public void OnSpellPostCast(ISpell spell)
         {
+            WCast = true;
             var owner = spell.CastInfo.Owner as IChampion;
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
+            ZedShadowDashMissile._spell = spell;
             SpellCast(owner, 4, SpellSlotType.ExtraSlots, spellPos, spellPos, true, Vector2.Zero);
             PlayAnimation(owner, "Spell2_Cast", timeScale: 0.6f);
         }
@@ -65,14 +67,15 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
-            // TODO
+            TriggersSpellCasts = true
         };
 
-        private IBuff HandlerBuff;
-        private IMinion Shadow;
+        IObjAiBase _owner;
+        static internal ISpell _spell;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -81,19 +84,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            HandlerBuff = AddBuff("ZedWHandler", 4.0f, 1, spell, owner, owner);
-            AddBuff("ZedW2", 4.0f, 1, spell, owner, owner);
-
-            if (Shadow != null)
-            {
-                var buff = Shadow.GetBuffWithName("ZedWShadowBuff");
-
-                if (buff != null)
-                {
-                    buff.DeactivateBuff();
-                }
-            }
-
+            LogDebug("yo");
             var missile = spell.CreateSpellMissile(new MissileParameters
             {
                 Type = MissileType.Circle,
@@ -102,12 +93,26 @@ namespace Spells
 
             ApiEventManager.OnSpellMissileEnd.AddListener(this, missile, OnMissileEnd, true);
         }
-
+        static internal IMinion WShadow;
+        static internal IMinion RShadow;
         public void OnMissileEnd(ISpellMissile missile)
         {
-            if (HandlerBuff != null)
+            if(ZedShadowDash.WCast == true)
             {
-                Shadow = (HandlerBuff.BuffScript as Buffs.ZedWHandler).ShadowSpawn();
+                WShadow = AddMinion(_owner, "ZedShadow", "WShadow", missile.Position, targetable: false, ignoreCollision: true);
+                WShadow.FaceDirection(_owner.Direction);
+                AddBuff("ShadowTimer", 4.0f, 1, _spell, WShadow, _owner);
+                _owner.SetSpell("ZedW2", 1, true);
+                ZedShadowDash.WCast = false;
+            }
+            else
+            {
+                LogDebug("yo");
+                RShadow = AddMinion(_owner, "ZedShadow", "RShadow", _owner.Position, targetable: false, ignoreCollision: true);
+                RShadow.FaceDirection(_owner.Direction);
+                AddBuff("ShadowTimer", 4.0f, 1, _spell, RShadow, _owner);
+                _owner.SetSpell("ZedR2", 3, true);
+                ZedUlt.RCast = false;
             }
         }
 
@@ -151,8 +156,21 @@ namespace Spells
         {
         }
 
+        static internal bool recast = false;
+
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            var WShadow = ZedShadowDashMissile.WShadow;
+            var ownerPos = owner.Position;
+            var WShadowPos = WShadow.Position;
+            WShadow.TeleportTo(ownerPos.X, ownerPos.Y);
+            owner.TeleportTo(WShadowPos.X, WShadowPos.Y);
+            owner.SetSpell("ZedShadowDash", 1, true);
+
+            AddParticleTarget(owner, owner, "zed_base_cloneswap.troy", owner);
+            AddParticleTarget(owner, WShadow, "zed_base_cloneswap.troy", WShadow);
+            recast = true;
+
         }
 
         public void OnSpellCast(ISpell spell)
@@ -179,4 +197,5 @@ namespace Spells
         {
         }
     }
+
 }

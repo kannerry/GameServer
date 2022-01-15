@@ -46,7 +46,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
             {
                 SetVisibleByTeam(team, true);
             }
-
+            Stats.Range.FlatBonus = 176;
             Facing = facing;
             Name = name;
             SpawnAnimation = spawnAnimation;
@@ -76,12 +76,13 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
 
             SetPosition(position.X, position.Y);
             chaseDistance = 800;  // TODO: unhardcode
-
             StopMovement();
 
             MoveOrder = OrderType.Hold;
             Replication = new ReplicationMonster(this);
             spawnPosition = position;
+
+            //this.Stats.Range.FlatBonus += 75f; // have to add some range because of idealRange changes
 
             ApiEventManager.OnTakeDamage.AddListener(this, this, TakeDamage, false);
         }

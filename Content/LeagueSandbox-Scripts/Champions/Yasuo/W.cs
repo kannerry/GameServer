@@ -31,9 +31,9 @@ namespace Spells
             var x = GetPointFromUnit(owner, 250);
             var x1 = GetPointFromUnit(owner, 260);
             var x2 = GetPointFromUnit(owner, 1);
-            var mushroom2 = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", x, ignoreCollision: true);             //
+            var mushroom2 = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", x, ignoreCollision: true, targetable: false);             //
             mushroom2.SetStatus(StatusFlags.Ghosted, true);                                                               //FOR Particle
-            var mushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", x);  //MIDDLE MUSHROOM
+            var mushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", x, ignoreCollision: true, targetable: false);  //MIDDLE MUSHROOM
 
             mushroom.SetStatus(StatusFlags.Ghosted, true);
             Vector2 LPos1 = GetPointFromUnit(owner, 3050, 30);
@@ -84,64 +84,52 @@ namespace Spells
                 LPos1L = GetPointFromUnit(owner, 300, 37);
                 RPos1L = GetPointFromUnit(owner, 300, -37);
             }
-            var Lmushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", LPos1);
-            var Rmushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", RPos1);
+            var Lmushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", LPos1, ignoreCollision: true, targetable: false);
+            var Rmushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", RPos1, ignoreCollision: true, targetable: false);
 
-            var LLmushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", LPos1L);
-            var LRmushroom = AddChampion(owner.Team, (int)owner.NetId, "TeemoMushroom", RPos1L);
+            var LLmushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", LPos1L, ignoreCollision: true, targetable: false);
+            var LRmushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", RPos1L, ignoreCollision: true, targetable: false);
+
+            Rmushroom.SetStatus(StatusFlags.NoRender, true);
+            Lmushroom.SetStatus(StatusFlags.NoRender, true);
+            LRmushroom.SetStatus(StatusFlags.NoRender, true);
+            LLmushroom.SetStatus(StatusFlags.NoRender, true);
+            mushroom.SetStatus(StatusFlags.NoRender, true);
 
             mushroom.Stats.HealthPoints.PercentBonus += 200f;
+            mushroom2.Stats.HealthPoints.PercentBonus += 200f;
             Rmushroom.Stats.HealthPoints.PercentBonus += 200f;
             Lmushroom.Stats.HealthPoints.PercentBonus += 200f;
             LRmushroom.Stats.HealthPoints.PercentBonus += 200f;
             LLmushroom.Stats.HealthPoints.PercentBonus += 200f;
+            mushroom.Stats.CurrentHealth += float.MaxValue;
+            mushroom2.Stats.CurrentHealth += float.MaxValue;
+            Rmushroom.Stats.CurrentHealth += float.MaxValue;
+            Lmushroom.Stats.CurrentHealth += float.MaxValue;
+            LRmushroom.Stats.CurrentHealth += float.MaxValue;
+            LLmushroom.Stats.CurrentHealth += float.MaxValue;
 
-            mushroom.SetStatus(StatusFlags.Ghosted, true);
-            Rmushroom.SetStatus(StatusFlags.Ghosted, true);
-            Lmushroom.SetStatus(StatusFlags.Ghosted, true);
-            LRmushroom.SetStatus(StatusFlags.Ghosted, true);
-            LLmushroom.SetStatus(StatusFlags.Ghosted, true);
-
-            mushroom2.SetStatus(StatusFlags.Targetable, false);
-            mushroom.SetStatus(StatusFlags.Targetable, false);
-            Rmushroom.SetStatus(StatusFlags.Targetable, false);
-            Lmushroom.SetStatus(StatusFlags.Targetable, false);
-            LRmushroom.SetStatus(StatusFlags.Targetable, false);
-            LLmushroom.SetStatus(StatusFlags.Targetable, false);
+            //mushroom2.SetStatus(StatusFlags.NoRender, true); (particle)
 
             var Champs = GetChampionsInRange(owner.Position, 50000, true);
 
             foreach (IChampion player in Champs)
             {
-                mushroom.SetInvisible((int)player.GetPlayerId(), mushroom, 0f, 0.0f);
-                mushroom.SetHealthbarVisibility((int)player.GetPlayerId(), mushroom, false);
-                Lmushroom.SetInvisible((int)player.GetPlayerId(), Lmushroom, 0f, 0.0f);
-                Lmushroom.SetHealthbarVisibility((int)player.GetPlayerId(), Lmushroom, false);
-                Rmushroom.SetInvisible((int)player.GetPlayerId(), Rmushroom, 0f, 0.0f);
-                Rmushroom.SetHealthbarVisibility((int)player.GetPlayerId(), Rmushroom, false);
-                LLmushroom.SetInvisible((int)player.GetPlayerId(), LLmushroom, 0f, 0.0f);
-                LLmushroom.SetHealthbarVisibility((int)player.GetPlayerId(), LLmushroom, false);
-                LRmushroom.SetInvisible((int)player.GetPlayerId(), LRmushroom, 0f, 0.0f);
-                LRmushroom.SetHealthbarVisibility((int)player.GetPlayerId(), LRmushroom, false);
-                mushroom2.SetInvisible((int)player.GetPlayerId(), mushroom2, 0f, 0.0f);
+                mushroom2.SetInvisible((int)player.GetPlayerId(), mushroom2, 0f, 0.1f);
                 mushroom2.SetHealthbarVisibility((int)player.GetPlayerId(), mushroom2, false);
             }
             CreateTimer(4.0f, () =>
         {
-            TeleportTo(mushroom, 0, 0);
-            TeleportTo(Lmushroom, 0, 0);
-            TeleportTo(Rmushroom, 0, 0);
-            TeleportTo(LLmushroom, 0, 0);
-            TeleportTo(LRmushroom, 0, 0);
-            //mushroom.TakeDamage(mushroom, 500000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
-            //Lmushroom.TakeDamage(mushroom, 50000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
-            //Rmushroom.TakeDamage(mushroom, 5000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
-            //LLmushroom.TakeDamage(mushroom, 50000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
-            //LRmushroom.TakeDamage(mushroom, 5000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
+            mushroom.TakeDamage(mushroom, 500000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
+            Lmushroom.TakeDamage(mushroom, 50000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
+            Rmushroom.TakeDamage(mushroom, 5000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
+            LLmushroom.TakeDamage(mushroom, 50000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
+            LRmushroom.TakeDamage(mushroom, 5000000000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
         });
-            CreateTimer(4.0f, () => { mushroom2.TakeDamage(mushroom, 5000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false); });
+            CreateTimer(4.0f, () => { mushroom2.TakeDamage(mushroom, 500000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false); });
             FaceDirection(x1, mushroom2);
-            var y = AddParticle(owner, mushroom2, "Yasuo_Base_W_windwall" + spellLvl + ".troy", x, lifetime: 4.0f, flags: FXFlags.BindDirection, followGroundTilt: true);
+            var y = AddParticle(owner, mushroom2, "Yasuo_Base_W_windwall" + spellLvl + ".troy", x, lifetime: 4.0f, flags: FXFlags.GivenDirection, direction: new Vector3(owner.Direction.X, owner.Direction.Y, owner.Direction.Z), followGroundTilt: true);
+            LogDebug(owner.Direction.ToString());
         }
 
         public void WallHit(IAttackableUnit unit, IAttackableUnit unit1)

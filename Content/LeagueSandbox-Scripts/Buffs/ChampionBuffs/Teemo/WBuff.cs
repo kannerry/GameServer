@@ -9,7 +9,7 @@ namespace Buffs
 {
     internal class WBuff : IBuffGameScript
     {
-        public BuffType BuffType => BuffType.HEAL;
+        public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
         public int MaxStacks => 1;
         public bool IsHidden => false;
@@ -19,7 +19,10 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "TeemoSmoke_cas.troy", unit, 2);
-            StatsModifier.MoveSpeed.PercentBonus = 0.55f;
+
+            var x = (new float[] { 0.2f, 0.28f, 0.36f, 0.44f, 0.52f }[ownerSpell.CastInfo.SpellLevel - 1]);
+
+            StatsModifier.MoveSpeed.PercentBonus += x;
             unit.AddStatModifier(StatsModifier);
         }
 

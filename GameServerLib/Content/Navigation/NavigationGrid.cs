@@ -813,7 +813,7 @@ namespace LeagueSandbox.GameServer.Content.Navigation
                 {
                     break;
                 }
-
+                
                 bool isGrass = HasFlag(new Vector2(x1, y1), NavigationGridCellFlags.HAS_GRASS);
                 // If you are outside of a bush
                 if (checkVisible && !prevPosHadBush)

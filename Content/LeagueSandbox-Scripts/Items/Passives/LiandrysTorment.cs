@@ -18,7 +18,7 @@ namespace ItemPassives
         {
             _owner = owner;
             int i = 0;
-            while (i++ < 65)
+            while (i++ < 60)
             {
                 ApiEventManager.OnSpellHit.AddListener(this, owner.GetSpell((byte)(i)), Burn, false);
             }

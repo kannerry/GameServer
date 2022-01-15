@@ -48,13 +48,13 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner;
 
-            if (owner.HasBuff("GlacialStormKarthus"))
+            if (owner.HasBuff("KarthusEBuff"))
             {
-                owner.RemoveBuffsWithName("GlacialStormKarthus");
+                owner.RemoveBuffsWithName("KarthusEBuff");
             }
             else
             {
-                thisBuff = AddBuff("GlacialStormKarthus", 25000.0f, 1, spell, owner, owner);
+                thisBuff = AddBuff("KarthusEBuff", 25000.0f, 1, spell, owner, owner);
 
                 DamageSector = spell.CreateSpellSector(new SectorParameters
                 {

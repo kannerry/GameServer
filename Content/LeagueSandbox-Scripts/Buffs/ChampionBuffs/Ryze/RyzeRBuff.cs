@@ -18,7 +18,7 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "Ryze_DarkCrystal_Death.troy", unit, buff.Duration);
-            AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "manaleach_tar.troy", unit, buff.Duration);
+            AddParticleTarget(ownerSpell.CastInfo.Owner, unit, "manaleach_tar.troy", unit, buff.Duration, bone:"hip");
             var vampMod = ownerSpell.CastInfo.SpellLevel;
             if (vampMod.Equals(1))
             {

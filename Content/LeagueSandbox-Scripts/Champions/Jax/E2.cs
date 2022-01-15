@@ -21,12 +21,13 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-
+        IObjAiBase _owner;
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
         }
@@ -34,11 +35,14 @@ namespace Spells
         public void OnSpellCast(ISpell spell)
         {
         }
-
+        static internal bool HasReprocced = false;
         public void OnSpellPostCast(ISpell spell)
         {
+            HasReprocced = true;
             RemoveParticle(JaxCounterStrike.x);
             var owner = spell.CastInfo.Owner as IChampion;
+            owner.StopAnimation("Spell3");
+            CreateTimer(0.1f, () => { owner.RemoveBuffsWithName("JaxCounterStrikeAttack"); });
             var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.5f;
             var damage = 30 + spell.CastInfo.SpellLevel * 40 + ap;
             var units = GetUnitsInRange(owner.Position, 400f, true);
@@ -68,6 +72,7 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
+            //LogDebug(_owner.HasBuff("JaxCounterStrikeAttack").ToString());
         }
     }
 

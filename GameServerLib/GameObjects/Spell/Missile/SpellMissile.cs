@@ -12,7 +12,7 @@ namespace LeagueSandbox.GameServer.GameObjects.Spell.Missile
     public class SpellMissile : GameObject, ISpellMissile
     {
         // Function Vars.
-        protected float _moveSpeed;
+        public float _moveSpeed { get; protected set; }
         private float _timeSinceCreation;
 
         /// <summary>
@@ -102,6 +102,11 @@ namespace LeagueSandbox.GameServer.GameObjects.Spell.Missile
         public float GetSpeed()
         {
             return _moveSpeed;
+        }
+
+        public void SetSpeed(float ms)
+        {
+            _moveSpeed = ms;
         }
 
         /// <summary>

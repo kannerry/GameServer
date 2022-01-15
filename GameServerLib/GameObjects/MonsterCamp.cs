@@ -50,31 +50,31 @@ namespace LeagueSandbox.GameServer.GameObjects
             {
                 //OLD SUMMONERS RIFT && OLD TWISTED TREELINE
                 case MonsterSpawnType.WORM:
-                    return "Worm";
+                    return "SRU_Baron";
                 case MonsterSpawnType.DRAGON:
-                    return "Dragon";
+                    return "SRU_Dragon";
                 case MonsterSpawnType.WRAITH:
-                    return "Wraith";
+                    return "SRU_Razorbeak";
                 case MonsterSpawnType.ANCIENT_GOLEM:
-                    return "AncientGolem";
+                    return "SRU_Blue";
                 case MonsterSpawnType.YOUNG_LIZARD_ANCIENT:
-                    return "YoungLizard";
+                    return "SRU_BlueMini";
                 case MonsterSpawnType.GIANT_WOLF:
-                    return "GiantWolf";
+                    return "SRU_Murkwolf";
                 case MonsterSpawnType.WOLF:
-                    return "Wolf";
+                    return "SRU_MurkwolfMini";
                 case MonsterSpawnType.GREAT_WRAITH:
-                    return "GreatWraith";
+                    return "SRU_Gromp";
                 case MonsterSpawnType.LESSER_WRAITH:
-                    return "LesserWraith";
+                    return "SRU_RazorbeakMini";
                 case MonsterSpawnType.ELDER_LIZARD:
-                    return "LizardElder";
+                    return "SRU_Red";
                 case MonsterSpawnType.YOUNG_LIZARD_ELDER:
-                    return "YoungLizard";
+                    return "SRU_RedMini";
                 case MonsterSpawnType.GOLEM:
-                    return "Golem";
+                    return "SRU_Krug";
                 case MonsterSpawnType.LESSER_GOLEM:
-                    return "SmallGolem";
+                    return "SRU_KrugMini";
 
                 //NEW SUMMONERS RIFT
                 case MonsterSpawnType.SRU_BARON:

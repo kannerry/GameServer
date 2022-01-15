@@ -732,16 +732,16 @@ namespace LeagueSandbox.GameServer.Maps
         {
             var teamDictionary = new Dictionary<TeamId, string>
             {
-                {TeamId.TEAM_BLUE, "Blue"},
-                {TeamId.TEAM_PURPLE, "Red"}
+                {TeamId.TEAM_BLUE, "Order"},
+                {TeamId.TEAM_PURPLE, "Chaos"}
             };
 
             var typeDictionary = new Dictionary<MinionSpawnType, string>
             {
-                {MinionSpawnType.MINION_TYPE_MELEE, "Basic"},
-                {MinionSpawnType.MINION_TYPE_CASTER, "Wizard"},
-                {MinionSpawnType.MINION_TYPE_CANNON, "MechCannon"},
-                {MinionSpawnType.MINION_TYPE_SUPER, "MechMelee"}
+                {MinionSpawnType.MINION_TYPE_MELEE, "Melee"},
+                {MinionSpawnType.MINION_TYPE_CASTER, "Ranged"},
+                {MinionSpawnType.MINION_TYPE_CANNON, "Siege"},
+                {MinionSpawnType.MINION_TYPE_SUPER, "Super"}
             };
 
             if (!teamDictionary.ContainsKey(team) || !typeDictionary.ContainsKey(type))
@@ -749,7 +749,8 @@ namespace LeagueSandbox.GameServer.Maps
                 return string.Empty;
             }
 
-            return $"{teamDictionary[team]}_Minion_{typeDictionary[type]}";
+            //return $"{teamDictionary[team]}_Minion_{typeDictionary[type]}";
+            return $"SRU_{teamDictionary[team]}Minion{typeDictionary[type]}";
         }
 
         public string GetBuffFor(IAttackableUnit u)

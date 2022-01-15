@@ -41,6 +41,9 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+
+            Passives.Camouflage.timer = 0;
+
             var owner = spell.CastInfo.Owner;
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             var mushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", spellPos);

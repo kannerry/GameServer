@@ -25,8 +25,8 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            AddParticle(owner, target, "OdinShield_buf.troy", Vector2.Zero, lifetime: 2.0f);
-            AddBuff("KayleR", 2.0f, 1, spell, target, owner);
+            var x = (new float[] { 2.0f, 2.5f, 3.0f }[spell.CastInfo.SpellLevel - 1]);
+            AddBuff("KayleR", x, 1, spell, target, owner);
         }
 
         public void OnSpellCast(ISpell spell)

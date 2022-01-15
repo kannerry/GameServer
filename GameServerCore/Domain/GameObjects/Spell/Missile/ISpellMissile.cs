@@ -32,6 +32,9 @@ namespace GameServerCore.Domain.GameObjects.Spell.Missile
         /// </summary>
         /// <returns>Units travelled per second.</returns>
         float GetSpeed();
+
+        void SetSpeed(float ms);
+
         /// <summary>
         /// Gets the time since this projectile was created.
         /// </summary>

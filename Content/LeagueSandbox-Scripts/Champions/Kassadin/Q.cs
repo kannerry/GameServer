@@ -34,6 +34,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            AddBuff("EStacks", float.MaxValue, 1, spell, owner, owner, true);
         }
 
         public void OnSpellCast(ISpell spell)

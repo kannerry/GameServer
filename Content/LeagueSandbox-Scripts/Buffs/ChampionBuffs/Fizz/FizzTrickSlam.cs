@@ -57,6 +57,8 @@ namespace Buffs
             }
             if (ticks > 1100.0f && ticks < 1150.0f)
             {
+                var x = (new float[] { 16f, 14f, 12f, 10f, 8f }[Spell.CastInfo.SpellLevel - 1]);
+                Spell.SetCooldown(x);
                 var units = GetUnitsInRange(Target.Position, 350f, true);
                 for (int i = units.Count - 1; i >= 0; i--)
                 {

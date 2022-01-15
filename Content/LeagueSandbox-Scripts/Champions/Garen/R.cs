@@ -45,7 +45,7 @@ namespace Spells
             var missinghealth = target.Stats.HealthPoints.Total - target.Stats.CurrentHealth;
             var damageperc = missinghealth * new[] { 0.28f, 0.33f, 0.40f }[spell.CastInfo.SpellLevel - 1];
             var damage = spell.CastInfo.SpellLevel * 175 + damageperc;
-            target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             if (target.IsDead)
             {
                 AddParticleTarget(owner, target, "Garen_Base_R_Champ_Kill.troy", target);

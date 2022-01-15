@@ -80,6 +80,12 @@ namespace Spells
         public void TargetExecute(IAttackableUnit unit, bool arg2)
         {
             var owner = ownermain;
+
+            if (unit.HasBuffType(BuffType.SLOW) || unit.HasBuffType(BuffType.STUN) || unit.HasBuffType(BuffType.SUPPRESSION))
+            {
+                unit.TakeDamage(owner, owner.Stats.AttackDamage.Total * 0.1f, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
+            }
+
             owner.SetStatus(StatusFlags.Targetable, true);
             var Champs = GetChampionsInRange(owner.Position, 50000, true);
             foreach (IChampion player in Champs)

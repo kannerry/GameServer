@@ -52,6 +52,7 @@ namespace Spells
                     AddParticle(_owner, unit, "PickaCard_blue_tar.troy", unit.Position, lifetime: 6.0f);
                     unit.TakeDamage(_owner, 200, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
                     AddMana(_owner, _spell, _owner);
+                    card = 0;
                     return;
 
                 case 2:
@@ -72,6 +73,7 @@ namespace Spells
                     AddParticle(_owner, unit, "PickaCard_yellow_tar.troy", unit.Position, lifetime: 6.0f);
                     unit.TakeDamage(_owner, 200, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
                     AddBuff("VeigarEventHorizon", 1.0f, 1, _spell, unit, _owner);
+                    card = 0;
                     return;
             }
         }
@@ -88,6 +90,7 @@ namespace Spells
         {
             if (toggled != true)
             {
+                CreateTimer(0.01f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(1).SetCooldown(0f); });
                 //PARTICLES
                 card = 1;
                 AddParticle(owner, owner, "TwistedFate_Base_W_BlueCard.troy", owner.Position);

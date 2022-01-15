@@ -40,34 +40,38 @@ namespace Spells
 
         public void ThirdHit(IAttackableUnit unit, bool crit)
         {
-            i++;
-
-            if (i == 2)
+            if(_owner.GetSpell(1).CastInfo.SpellLevel > 0)
             {
-                if (toggled == false)
-                {
-                    AddBuff("AatroxWONHLifeBuff", float.MaxValue, 1, _spell, _owner, _owner, true);
-                }
-                if (toggled == true)
-                {
-                    AddBuff("AatroxWONHPowerBuff", float.MaxValue, 1, _spell, _owner, _owner, true);
-                }
-            }
+                i++;
 
-            if (i == 3)
-            {
-                _owner.RemoveBuffsWithName("AatroxWONHLifeBuff");
-                _owner.RemoveBuffsWithName("AatroxWONHPowerBuff");
-                if (toggled == false)
+                if (i == 2)
                 {
-                    PerformHeal(_owner, _spell, _owner);
+                    if (toggled == false)
+                    {
+                        AddBuff("AatroxWONHLifeBuff", float.MaxValue, 1, _spell, _owner, _owner, true);
+                    }
+                    if (toggled == true)
+                    {
+                        AddBuff("AatroxWONHPowerBuff", float.MaxValue, 1, _spell, _owner, _owner, true);
+                    }
                 }
-                if (toggled == true)
+
+                if (i == 3)
                 {
-                    _owner.TakeDamage(_owner, _owner.Stats.CurrentHealth * 0.1f, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
-                    unit.TakeDamage(_owner, _owner.Stats.CurrentHealth * 0.1f, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
+                    _owner.RemoveBuffsWithName("AatroxWONHLifeBuff");
+                    _owner.RemoveBuffsWithName("AatroxWONHPowerBuff");
+                    if (toggled == false)
+                    {
+                        PerformHeal(_owner, _spell, _owner);
+                    }
+                    if (toggled == true)
+                    {
+                        _owner.Stats.CurrentMana += _owner.Stats.ManaPoints.Total * 0.1f;
+                        _owner.TakeDamage(_owner, _owner.Stats.CurrentHealth * 0.1f, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
+                        unit.TakeDamage(_owner, _owner.Stats.CurrentHealth * 0.1f, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
+                    }
+                    i = 0;
                 }
-                i = 0;
             }
         }
 

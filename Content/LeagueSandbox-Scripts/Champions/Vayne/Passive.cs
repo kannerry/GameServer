@@ -26,7 +26,7 @@ namespace Passives
             var champs = GetChampionsInRange(point, 900, true);
             foreach (var unit in champs)
             {
-                if(unit.Team != ownermain.Team)
+                if (unit.Team != ownermain.Team)
                 {
                     AddBuff("PassiveMSVayne", 0.1f, 1, originspell, ownermain, originspell.CastInfo.Owner);
                 }

@@ -7,6 +7,7 @@ using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
 using System.Linq;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
@@ -23,7 +24,10 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
         }
+
+        IObjAiBase _owner;
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
@@ -37,8 +41,40 @@ namespace Spells
         {
         }
 
+        public void RemoveStacks(int var)
+        {
+            int x = 0;
+            foreach (var swag in _owner.GetBuffsWithName("AhriSoulCrusherCounter"))
+            {
+                if (x < var)
+                {
+                    x++;
+                    swag.DeactivateBuff();
+                }
+            }
+        }
+
+        private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        {
+            var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
+            float healthGain = 15 + (spell.CastInfo.SpellLevel * 45) + ap;
+            if (target.HasBuff("HealCheck"))
+            {
+                healthGain *= 0.5f;
+            }
+            var newHealth = target.Stats.CurrentHealth + healthGain;
+            target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
+        }
+
         public void OnSpellPostCast(ISpell spell)
         {
+
+            if (spell.CastInfo.Owner.GetBuffWithName("AhriSoulCrusherCounter").StackCount == 9)
+            {
+                PerformHeal(spell.CastInfo.Owner, spell, spell.CastInfo.Owner);
+                CreateTimer(0.1f, () => { RemoveStacks(9); });
+            }
+
             var units = GetUnitsInRange(spell.CastInfo.Owner.Position, 1000, true).Where(x => x.Team == CustomConvert.GetEnemyTeam(spell.CastInfo.Owner.Team));
             var i = 0;
             foreach (var allyTarget in units)
@@ -48,6 +84,8 @@ namespace Spells
                     if (i < 3)
                     {
                         SpellCast(spell.CastInfo.Owner, 3, SpellSlotType.ExtraSlots, true, allyTarget, Vector2.Zero);
+                        AddBuff("AhriSoulCrusherCounter", float.MaxValue, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
+                        LogDebug(spell.CastInfo.Owner.GetBuffWithName("AhriSoulCrusherCounter").StackCount.ToString());
                         i++;
                     }
                 }

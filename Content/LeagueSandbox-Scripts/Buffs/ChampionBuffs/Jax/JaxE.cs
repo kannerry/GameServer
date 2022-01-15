@@ -1,7 +1,11 @@
+using LeagueSandbox.GameServer.API;
 using GameServerCore.Domain.GameObjects;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using GameServerCore.Enums;
 
 namespace Buffs
 {
@@ -23,6 +27,16 @@ namespace Buffs
         {
             if (((IObjAiBase)unit).Spells[2].SpellName == "JaxCounterStrikeAttack")
             {
+                if(Spells.JaxCounterStrikeAttack.HasReprocced == false)
+                {
+                    ((IObjAiBase)unit).GetSpell(2).Cast(unit.Position, unit.Position);
+                    ((IObjAiBase)unit).GetSpell(2).FinishCasting();
+                    //unit.SetDashingState(ForceMovementState.NOT_DASHING);
+                }
+                else
+                {
+                    Spells.JaxCounterStrikeAttack.HasReprocced = false;
+                }
                 ((IObjAiBase)unit).SetSpell("JaxCounterStrike", 2, true);
             }
         }

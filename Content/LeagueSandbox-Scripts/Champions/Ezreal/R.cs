@@ -52,6 +52,7 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             if (missile is ISpellCircleMissile skillshot)
             {
+                AddBuff("EzrealRisingSpellForce", 6.0f, 1, spell, spell.CastInfo.Owner, spell.CastInfo.Owner);
                 var reduc = Math.Min(skillshot.ObjectsHit.Count, 7);
                 var bonusAd = owner.Stats.AttackDamage.Total - owner.Stats.AttackDamage.BaseValue;
                 var ap = owner.Stats.AbilityPower.Total * 0.9f;

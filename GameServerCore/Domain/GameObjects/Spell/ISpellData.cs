@@ -77,7 +77,7 @@ namespace GameServerCore.Domain.GameObjects.Spell
         bool LockConeToPlayer { get; }
         float LuaOnMissileUpdateDistanceInterval { get; }
         float MagicDamageCoefficient { get; }
-        float[] ManaCost { get; }
+        float[] ManaCost { get; set; }
         int[] MaxAmmo { get; }
         float MissileAccel { get; }
         string MissileBoneName { get; }

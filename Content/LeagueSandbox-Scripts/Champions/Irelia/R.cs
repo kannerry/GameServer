@@ -42,11 +42,16 @@ namespace Spells
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             LogDebug("yo");
-            FaceDirection(end, owner);
+            //FaceDirection(end, owner);
             counter++;
             if (counter >= 4)
             {
                 owner.SetSpell("IreliaTranscendentBlades", 3, true);
+                CreateTimer(0.01f, () =>
+                {
+                    var x = (new float[] { 70f, 60f, 50f }[spell.CastInfo.SpellLevel - 1]);
+                    owner.GetSpell(3).SetCooldown(x);
+                });
             }
         }
         int counter;

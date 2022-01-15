@@ -8,6 +8,7 @@ using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
@@ -17,11 +18,14 @@ namespace Spells
     {
         public ISpellScriptMetadata ScriptMetadata => new SpellScriptMetadata()
         {
+            TriggersSpellCasts = true,
+            CastTime = 0.5f
         };
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             yasuo = owner;
+            _spell = spell;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
@@ -29,9 +33,29 @@ namespace Spells
         {
         }
 
+        ISpell _spell;
+
         static internal IObjAiBase yasuo;
         static internal ISpellMissile v;
         static internal IMinion mushroom;
+
+        public void EQ3(IAttackableUnit unit)
+        {
+            var owner = unit as IChampion;
+            owner.PlayAnimation("Spell3A", 0.5f, 0, 1);
+            AddParticleTarget(owner, owner, "Yasuo_Base_EQ_cas.troy", owner);
+            var sector = _spell.CreateSpellSector(new SectorParameters
+            {
+                BindObject = _spell.CastInfo.Owner,
+                Length = 215f,
+                SingleTick = true,
+                CanHitSameTargetConsecutively = true,
+                OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
+                Type = SectorType.Area
+            });
+            owner.SetSpell("YasuoQW", 0, true);
+            owner.RemoveBuffsWithName("YasuoQ02");
+        }
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
@@ -46,22 +70,7 @@ namespace Spells
 
             if (owner.HasBuff("YasuoEFIX"))
             {
-                CreateTimer(0.25F, () =>
-                {
-                    owner.PlayAnimation("Spell3A", 0.5f, 0, 1);
-                    AddParticleTarget(owner, owner, "Yasuo_Base_EQ_cas.troy", owner);
-                    var sector = spell.CreateSpellSector(new SectorParameters
-                    {
-                        BindObject = spell.CastInfo.Owner,
-                        Length = 215f,
-                        SingleTick = true,
-                        CanHitSameTargetConsecutively = true,
-                        OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
-                        Type = SectorType.Area
-                    });
-                    owner.SetSpell("YasuoQW", 0, true);
-                    owner.RemoveBuffsWithName("YasuoQ02");
-                });
+                ApiEventManager.OnFinishDash.AddListener(this, owner, EQ3, true);
             }
             else
             {
@@ -102,6 +111,14 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+
+            var atkspeed = spell.CastInfo.Owner.Stats.AttackSpeedFlat * spell.CastInfo.Owner.Stats.AttackSpeedMultiplier.Total;
+            var bonus = atkspeed - spell.CastInfo.Owner.Stats.AttackSpeedFlat;
+            var cd = 4 * (1 - bonus);
+            float cd1 = (float)Math.Max(cd, 1.33);
+
+            CreateTimer(0.01f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(0).SetCooldown(cd1, true); });
+
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
@@ -123,6 +140,29 @@ namespace Spells
             {
                 AddBuff("Pulverize", 1.0f, 1, spell, target, spell.CastInfo.Owner);
             }
+
+            int i = 0;
+            if (HasBuff(spell.CastInfo.Owner, "StaticField"))
+            {
+                var ItemOwner = owner;
+                ItemOwner.RemoveBuffsWithName("StaticField");
+                AddBuff("StaticFieldCooldown", 7.0f, 1, ItemOwner.GetSpell(0), ItemOwner, ItemOwner);
+                var x = GetUnitsInRange(target.Position, 600, true);
+                foreach (var unit in x)
+                {
+                    if (unit.Team != ItemOwner.Team)
+                    {
+                        if (i < 4)
+                        {
+                            i++;
+                            AddParticle(ItemOwner, unit, "volibear_R_chain_lighting_01.troy", target.Position);
+                            unit.TakeDamage(ItemOwner, 100, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+                        }
+                        CreateTimer(0.01f, () => { i = 0; });
+                    }
+                }
+            }
+
         }
 
         public void OnSpellChannel(ISpell spell)

@@ -22,7 +22,7 @@ namespace Spells
                 Type = MissileType.Target
             }
         };
-
+        
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
@@ -40,6 +40,19 @@ namespace Spells
             var ap = owner.Stats.AbilityPower.Total;
             float damage = (float)(20 + ap * 0.4 + spell.CastInfo.SpellLevel * 20);
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+
+            if (owner.HasBuff("DesperatePower"))
+            {
+                AddParticle(owner, target, "DesperatePower_aoe.troy", target.Position);
+                var u = GetUnitsInRange(target.Position, 300, true);
+                foreach(var unit in u)
+                {
+                    if(unit.Team != owner.Team)
+                    {
+                        unit.TakeDamage(owner, damage / 2, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                    }
+                }    
+            }
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)

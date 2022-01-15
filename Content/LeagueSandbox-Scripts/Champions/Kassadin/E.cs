@@ -20,10 +20,24 @@ namespace Spells
             NotSingleTargetSpell = true
             // TODO
         };
-
+        IObjAiBase _owner;
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            ApiEventManager.OnSpellCast.AddListener(this, spell, HideECast);
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
+            ApiEventManager.OnLevelUpSpell.AddListener(this, spell, HideE, false);
+        }
+
+        public void HideECast(ISpell spell)
+        {
+            spell.CastInfo.Owner.GetBuffWithName("EStacks").DeactivateBuff();
+            CreateTimer((float)0.15, () => { SealSpellSlot(_owner, SpellSlotType.SpellSlots, 2, SpellbookType.SPELLBOOK_CHAMPION, true); RiftWalk.unlockE = false; });
+        }
+
+        public void HideE(ISpell spell)
+        {
+            CreateTimer((float)0.1, () => { SealSpellSlot(_owner, SpellSlotType.SpellSlots, 2, SpellbookType.SPELLBOOK_CHAMPION, true); });
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)

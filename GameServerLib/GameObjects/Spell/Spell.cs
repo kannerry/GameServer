@@ -178,11 +178,6 @@ namespace LeagueSandbox.GameServer.GameObjects.Spell
 
             CastInfo.AttackSpeedModifier = stats.AttackSpeedMultiplier.Total;
 
-            if (_game.Config.ManaCostsEnabled)
-            {
-                stats.CurrentMana -= SpellData.ManaCost[CastInfo.SpellLevel] * (1 - stats.SpellCostReduction);
-            }
-
             _futureProjNetId = _networkIdManager.GetNewNetId();
 
             CastInfo.MissileNetID = _futureProjNetId;
@@ -283,6 +278,28 @@ namespace LeagueSandbox.GameServer.GameObjects.Spell
             CastInfo.Owner.UpdateMoveOrder(OrderType.TempCastSpell, true);
 
             Script.OnSpellPreCast(CastInfo.Owner, this, unit, start, end);
+
+            if (_game.Config.ManaCostsEnabled)
+            {
+                // IF the spell is targeted
+                if (targetingType == TargetingType.Target)
+                {
+                    var distance = Vector2.DistanceSquared(CastInfo.Owner.Position, unit.Position);
+                    var castRange = GetCurrentCastRange();
+                    // and the unit is in range
+                    if (distance <= castRange * castRange)
+                    {
+                        // reduce the mana
+                        stats.CurrentMana -= SpellData.ManaCost[CastInfo.SpellLevel] * (1 - stats.SpellCostReduction);
+                    }
+                }
+                else
+                {
+                    // reduce the mana normally
+                    stats.CurrentMana -= SpellData.ManaCost[CastInfo.SpellLevel] * (1 - stats.SpellCostReduction);
+                }
+
+            }
 
             if (!CastInfo.IsAutoAttack && !SpellData.IsToggleSpell
                         || (!SpellData.NoWinddownIfCancelled

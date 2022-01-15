@@ -45,7 +45,11 @@ namespace Spells
 
             Target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
 
-            AddBuff("Stun", 1f, 1, spell, Target, owner);
+            if (Target.Stats.CurrentHealth / Target.Stats.HealthPoints.Total > owner.Stats.CurrentHealth / owner.Stats.HealthPoints.Total)
+            {
+                AddBuff("Stun", 1f, 1, spell, Target, owner);
+            }
+            AddBuff("JarvanW", 1f, 1, spell, Target, owner);
             AddParticleTarget(owner, Target, "irelia_ult_tar.troy", Target, 1f);
         }
 
