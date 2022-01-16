@@ -40,7 +40,15 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-            if(Destiny.toggled != true)
+
+            //var owner = spell.CastInfo.Owner as IChampion;
+            //for (int bladeCount = 0; bladeCount <= 2; bladeCount++)
+            //{
+            //    var targetPos = GetPointFromUnit(owner, 700f, (-25f + (bladeCount * 25f)));
+            //    SpellCast(owner, 6, SpellSlotType.ExtraSlots, targetPos, targetPos, true, Vector2.Zero);
+            //}
+
+            if(spell.CastInfo.SpellSlot == 0)
             {
                 var owner = spell.CastInfo.Owner as IChampion;
                 for (int bladeCount = 0; bladeCount <= 2; bladeCount++)
@@ -49,14 +57,17 @@ namespace Spells
                     SpellCast(owner, 6, SpellSlotType.ExtraSlots, targetPos, targetPos, true, Vector2.Zero);
                 }
             }
-            if (Destiny.toggled == true)
+
+            LogDebug(spell.CastInfo.SpellSlot.ToString());
+
+            if (spell.CastInfo.SpellSlot == 3)
             {
-                CreateTimer(0.01f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(0).SetCooldown(0f); });
+                CreateTimer(0.02f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(0).SetCooldown(0f); });
                 AddParticle(spell.CastInfo.Owner, null, "SealFate_tar.troy", en, lifetime: 1.5f);
                 PlayAnimation(spell.CastInfo.Owner, "Spell4");
                 spell.CastInfo.Owner.StopMovement();
                 spell.CastInfo.Owner.SetStatus(StatusFlags.CanMove, false);
-                CreateTimer(1.5f, () => { spell.CastInfo.Owner.TeleportTo(en.X, en.Y); spell.CastInfo.Owner.SetStatus(StatusFlags.CanMove, true); });
+                CreateTimer(1.5f, () => { spell.CastInfo.Owner.TeleportTo(en.X, en.Y); spell.CastInfo.Owner.SetStatus(StatusFlags.CanMove, true); spell.CastInfo.Owner.SetSpell("Destiny", 3, true); });
                 Destiny.toggled = false;  
             }
 

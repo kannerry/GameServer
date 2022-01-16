@@ -29,27 +29,27 @@ namespace Spells
         {
             toggled = !toggled;
 
-            CreateTimer(6.0f, () => { toggled = false; });
+            CreateTimer(6.0f, () => { toggled = false; owner.SetSpell("Destiny", 3, true); });
+            owner.SetSpell("WildCards", 3, true);
+            CreateTimer(0.02f, () => { ((IObjAiBase)spell.CastInfo.Owner).GetSpell(3).SetCooldown(0f); });
 
             var x = GetChampionsInRange(owner.Position, 10000, true);
             foreach (var champ in x)
             {
                 if (champ.Team != owner.Team)
                 {
-
                     AddParticle(owner, champ, "DestinyEye.troy", champ.Position, lifetime: 6.0f, bone: "head", reqVision: false);
-
-                    IChampion xy = AddChampion(owner.Team, 1000, "Tryndamere", GetPointFromUnit(champ, -100));
-                    xy.SetStatus(StatusFlags.Targetable, false);
-
-                    var Champs = GetChampionsInRange(owner.Position, 50000, true);
-                    foreach (IChampion player in Champs)
-                    {
-                        xy.SetStatus(StatusFlags.Targetable, false);
-                        xy.SetInvisible((int)player.GetPlayerId(), xy, 0f, 0.1f);
-                        xy.SetHealthbarVisibility((int)player.GetPlayerId(), xy, false);
-                        CreateTimer(6.0f, () => { xy.TeleportTo(0, 0); });
-                    }
+                    //IChampion xy = AddChampion(owner.Team, 1000, "Tryndamere", GetPointFromUnit(champ, -100));
+                    //xy.SetStatus(StatusFlags.Targetable, false);
+                    //
+                    //var Champs = GetChampionsInRange(owner.Position, 50000, true);
+                    //foreach (IChampion player in Champs)
+                    //{
+                    //    xy.SetStatus(StatusFlags.Targetable, false);
+                    //    xy.SetInvisible((int)player.GetPlayerId(), xy, 0f, 0.1f);
+                    //    xy.SetHealthbarVisibility((int)player.GetPlayerId(), xy, false);
+                    //    CreateTimer(6.0f, () => { xy.TeleportTo(0, 0); });
+                    //}
                 }
             }
         }
