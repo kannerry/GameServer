@@ -1110,8 +1110,10 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
         /// TODO: Implement interpolation (assuming all other desync related issues are already fixed).
         public virtual bool Move(float diff)
         {
+            //LogDebug("yo");
             // current -> next positions
             var cur = new Vector2(Position.X, Position.Y);
+
             var next = CurrentWaypoint.Value;
 
             var goingTo = next - cur;
@@ -1154,25 +1156,6 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits
                 if (pathBlocked.Key)
                 {
                     nextPos = _game.Map.NavigationGrid.GetClosestTerrainExit(pathBlocked.Value, CollisionRadius + 1.0f);
-                }
-
-                // get a point distance 30 away from me
-                var Point = GetPointFromUnit(this, 30);
-                // get AttackableUnits in a radius around that point
-                var Units = GetUnitsInRange(Point, 30, true);
-                // for each unit inside of the Units list
-                foreach (var unit in Units)
-                {
-                    // check if they are within x units of you
-                    // like if the radius's are intersecting
-                    if (Extensions.IsVectorWithinRange(Position, unit.Position, 30))
-                    {
-                        if(unit != this)
-                        {
-                            //if they are, move me to a point offset 45 degrees of my original postion
-                            nextPos = GetPointFromUnit(this, 30, 45f);
-                        }
-                    }
                 }
 
             }

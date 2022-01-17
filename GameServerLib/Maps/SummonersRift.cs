@@ -158,7 +158,7 @@ namespace LeagueSandbox.GameServer.Maps
         private List<MonsterCamp> _monsterCamps = new List<MonsterCamp>();
 
         public float GoldPerSecond { get; set; } = 1.9f;
-        public float StartingGold { get; set; } = 1300;
+        public float StartingGold { get; set; } = 475;
         public bool HasFirstBloodHappened { get; set; } = false;
         public bool IsKillGoldRewardReductionActive { get; set; } = true;
         public int BluePillId { get; set; } = 2001;
@@ -540,7 +540,7 @@ namespace LeagueSandbox.GameServer.Maps
                 {
                     if (turret.Type == TurretType.NEXUS_TURRET)
                     {
-                        _game.ProtectionManager.AddProtection(turret, false, new Inhibitor[] { _inhibitors[inhibitor.Team][LaneID.TOP].First(), _inhibitors[inhibitor.Team][LaneID.MIDDLE].First(), _inhibitors[inhibitor.Team][LaneID.BOTTOM].First()});
+                        _game.ProtectionManager.AddProtection(turret, false, new Inhibitor[] { _inhibitors[inhibitor.Team][LaneID.TOP].First(), _inhibitors[inhibitor.Team][LaneID.MIDDLE].First(), _inhibitors[inhibitor.Team][LaneID.BOTTOM].First() });
                     }
                     else if (turret.Type == TurretType.INHIBITOR_TURRET)
                     {
@@ -1016,7 +1016,7 @@ namespace LeagueSandbox.GameServer.Maps
                 {
                     continue;
                 }
-                    camp.Spawn();
+                camp.Spawn();
             }
         }
 

@@ -3,7 +3,7 @@ using GameServerCore.Domain.GameObjects;
 using GameServerCore.Enums;
 using GameServerCore.Packets.Handlers;
 using GameServerCore.Packets.PacketDefinitions.Requests;
-
+using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 namespace LeagueSandbox.GameServer.Packets.PacketHandlers
 {
     public class HandleCastSpell : PacketHandlerBase<CastSpellRequest>
@@ -11,6 +11,8 @@ namespace LeagueSandbox.GameServer.Packets.PacketHandlers
         private readonly Game _game;
         private readonly NetworkIdManager _networkIdManager;
         private readonly IPlayerManager _playerManager;
+
+        bool procOnce = false;
 
         public HandleCastSpell(Game game)
         {
@@ -41,7 +43,12 @@ namespace LeagueSandbox.GameServer.Packets.PacketHandlers
                 if (item != null && item.ItemData.Consumed)
                 {
                     var inventory = owner.Inventory;
-                    inventory.RemoveItem(inventory.GetItemSlot(item), owner);
+                    if(procOnce == false) // SCUFFED FIX FOR DOUBLE CAST ? THING? IDK LOL
+                    {
+                        inventory.RemoveItem(inventory.GetItemSlot(item), owner);
+                        procOnce = true;
+                        CreateTimer(0.1f, () => { procOnce = false; });
+                    }
                 }
             }
 

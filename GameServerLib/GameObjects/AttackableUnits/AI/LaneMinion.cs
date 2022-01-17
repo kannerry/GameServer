@@ -37,6 +37,8 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
             _curMainWaypoint = 0;
             _aiPaused = false;
 
+            CollisionRadius = 10; // SCUFFED FIX FOR MINION BLOCK
+
             var spawnSpecifics = _game.Map.MapProperties.GetMinionSpawnPosition(BarracksName);
             SetPosition(spawnSpecifics.Item2.X, spawnSpecifics.Item2.Y);
 
@@ -144,7 +146,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                     // If the closest minion is in collision range, add its collision radius to the waypoint success range.
                     if (GameServerCore.Extensions.IsVectorWithinRange(minion.Position, Position, waypointSuccessRange))
                     {
-                        waypointSuccessRange += minion.CollisionRadius + 100;
+                        waypointSuccessRange += minion.CollisionRadius + 200;
                     }
                     // If the closest minion (above) is not in collision range, then we stop the loop.
                     else

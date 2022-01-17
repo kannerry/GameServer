@@ -43,32 +43,32 @@ namespace Spells
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             var facingPos = GetPointFromUnit(spell.CastInfo.Owner, 950);
 
-            IMinion m = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", spellPos);
+            IMinion m = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", spellPos, targetable: false);
             FaceDirection(facingPos, m);
 
             var LPos = GetPointFromUnit(m, spellLVL * 80, -90);
             var RPos = GetPointFromUnit(m, spellLVL * 80, 90);
 
-            IMinion L = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", LPos);
-            IMinion R = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", RPos);
+            IMinion L = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", LPos, targetable: false);
+            IMinion R = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", RPos, targetable: false);
 
             var L1Pos = GetPointFromUnit(m, spellLVL * 20, -90);
             var R1Pos = GetPointFromUnit(m, spellLVL * 20, 90);
 
-            IMinion L1 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L1Pos);
-            IMinion R1 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R1Pos);
+            IMinion L1 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L1Pos, targetable: false);
+            IMinion R1 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R1Pos, targetable: false);
 
             var L2Pos = GetPointFromUnit(m, spellLVL * 40, -90);
             var R2Pos = GetPointFromUnit(m, spellLVL * 40, 90);
 
-            IMinion L2 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L2Pos);
-            IMinion R2 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R2Pos);
+            IMinion L2 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L2Pos, targetable: false);
+            IMinion R2 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R2Pos, targetable: false);
 
             var L3Pos = GetPointFromUnit(m, spellLVL * 60, -90);
             var R3Pos = GetPointFromUnit(m, spellLVL * 60, 90);
 
-            IMinion L3 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L3Pos);
-            IMinion R3 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R3Pos);
+            IMinion L3 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", L3Pos, targetable: false);
+            IMinion R3 = AddMinion((IChampion)owner, "AniviaIceBlock", "AniviaIceBlock", R3Pos, targetable: false);
 
             m.SetCollisionRadius(1.0f);
             L.SetCollisionRadius(1.0f);
