@@ -36,7 +36,54 @@ namespace Spells
         {
         }
 
+        // THIS IS THE WORK OF THE DEVIL
+        // SORRY ABOUT THAT
+
+        static internal bool recasted = false;
         public void OnSpellPostCast(ISpell spell)
+        {
+            if (spell.CastInfo.SpellSlot == 0)
+            {
+                var owner = spell.CastInfo.Owner;
+                //FlashFrostSpell
+                var mis = GetObjectNET(FlashFrost._spellref.CastInfo.MissileNetID);
+                recasted = true;
+                AddParticlePos(owner, "cryo_FlashFrost_tar.troy", mis.Position, mis.Position);
+               var unitss = GetUnitsInRange(mis.Position, 200, true);
+                foreach(var unit in unitss)
+                {
+                    if(unit.Team != owner.Team)
+                    {
+                        var dmg = owner.Stats.AbilityPower.Total * 0.5f;
+                        unit.TakeDamage(owner, dmg + 60, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                        AddBuff("Stun", 1.0f, 1, spell, unit, owner);
+                    }
+                }
+                CreateTimer(0.1f, () => { GetObjectNET(FlashFrost._spellref.CastInfo.MissileNetID).SetToRemove(); });
+
+                LogDebug("yoRecast");
+                CreateTimer(0.5f, () => { LogDebug("yo2"); owner.SetSpell("FlashFrost", 0, true);});
+                CreateTimer(0.51f, () => { LogDebug("yo3"); owner.GetSpell(0).SetCooldown(15f); });
+            }
+            if (spell.CastInfo.SpellSlot == 1)
+            {
+                SpawnWall(spell);
+            }
+        }
+
+        public void OnSpellChannel(ISpell spell)
+        {
+        }
+
+        public void OnSpellChannelCancel(ISpell spell)
+        {
+        }
+
+        public void OnSpellPostChannel(ISpell spell)
+        {
+        }
+
+        public void SpawnWall(ISpell spell)
         {
             var spellLVL = spell.CastInfo.SpellLevel;
             var owner = spell.CastInfo.Owner;
@@ -100,18 +147,6 @@ namespace Spells
                 L3.TakeDamage(owner, 50000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
                 R3.TakeDamage(owner, 50000, DamageType.DAMAGE_TYPE_TRUE, DamageSource.DAMAGE_SOURCE_INTERNALRAW, false);
             });
-        }
-
-        public void OnSpellChannel(ISpell spell)
-        {
-        }
-
-        public void OnSpellChannelCancel(ISpell spell)
-        {
-        }
-
-        public void OnSpellPostChannel(ISpell spell)
-        {
         }
 
         public void OnUpdate(float diff)

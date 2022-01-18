@@ -21,12 +21,21 @@ namespace Spells
             // TODO
         };
 
+        static internal ISpell _spellref;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
+
+
+        // THIS IS THE WORK OF THE DEVIL
+        // SORRY ABOUT THAT
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
+            //ProcDMG
+            LogDebug("yoProcDMG");
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -35,14 +44,8 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            var targetPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
-            FaceDirection(targetPos, owner);
-
-            //var owner = spell.CastInfo.Owner;
-            //owner.GetSpell(0).SetCooldown(0);
-            var distance = GetPointFromUnit(owner, 1100f);
-            SpellCast(owner, 0, SpellSlotType.ExtraSlots, distance, distance, false, Vector2.Zero);
-            PlayAnimation(owner, "Spell1");
+            FaceDirection(end, owner);
+            LogDebug("YO");
         }
 
         public void OnSpellCast(ISpell spell)
@@ -51,6 +54,11 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
+            var owner = spell.CastInfo.Owner;
+            SpellCast(owner, 0, SpellSlotType.ExtraSlots, GetPointFromUnit(owner, 1100), GetPointFromUnit(owner, 1100), false, Vector2.Zero);
+
+            CreateTimer(0.5f, () => { owner.SetSpell("Crystallize", 0, true); });
+
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -84,19 +92,20 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            FlashFrost._spellref = spell;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
+            ApiEventManager.OnSpellMissileEnd.AddListener(this, GetObjectNET(spell.CastInfo.MissileNetID) as ISpellMissile, EndFix, false);
+        }
+
+        public void EndFix(ISpellMissile missile)
+        {
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
-            LogDebug("yo2");
             var owner = spell.CastInfo.Owner;
-            if(target is IChampion)
-            {
-                AddBuff("Stun", 1.0f, 1, spell, target, owner);
-                AddParticleTarget(owner, target, "cryo_ice_impact.troy", target, size: 0.5f);
-                missile.SetToRemove();
-            }
+            var dmg = owner.Stats.AbilityPower.Total * 0.5f;
+            target.TakeDamage(owner, dmg + 60, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -105,6 +114,30 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            CreateTimer(1.5f, () => 
+            { 
+                LogDebug("yo2"); 
+                owner.SetSpell("FlashFrost", 0, true);
+                owner.GetSpell(0).SetCooldown(15f);
+                if (Crystallize.recasted == false)
+                {
+                    AddParticlePos(owner, "cryo_FlashFrost_tar.troy", end, end);
+                    var unitss = GetUnitsInRange(end, 200, true);
+                    foreach (var unit in unitss)
+                    {
+                        if (unit.Team != owner.Team)
+                        {
+                            var dmg = owner.Stats.AbilityPower.Total * 0.5f;
+                            unit.TakeDamage(owner, dmg + 60, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                            AddBuff("Stun", 1.0f, 1, spell, unit, owner);
+                        }
+                    }
+                }
+                else
+                {
+                    Crystallize.recasted = false;
+                }
+            });
         }
 
         public void OnSpellCast(ISpell spell)

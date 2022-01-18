@@ -550,12 +550,12 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                 if (MoveOrder != OrderType.AttackTo && TargetUnit != null)
                 {
                     UpdateMoveOrder(OrderType.AttackTo, true);
-                    if(!(this is LaneMinion))
+                    if(!(this is ILaneMinion))
                     {   
                         idealRange = Stats.Range.Total + 100;
                     }
                     // when i remove the bonus range, he wants to walk when on "attack cooldown" for some reason .
-                    // 75 seems to be a nice middle ground - you still walk towards them, but you don't go out of range completely
+                    // 100 is perfect give or take 1 unit
                     // melee minions seem to dislike this change though
             }
 
@@ -592,7 +592,7 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
                 // If the target is already in range, stay where we are.
                 if (MoveOrder == OrderType.AttackMove && targetPos != Vector2.Zero)
                 {
-                    if (MovementParameters == null && Vector2.DistanceSquared(Position, targetPos) <= idealRange + 100 * idealRange + 100)
+                    if (MovementParameters == null && Vector2.DistanceSquared(Position, targetPos) <= idealRange * idealRange)
                     {
                         UpdateMoveOrder(OrderType.Stop, true);
                     }
