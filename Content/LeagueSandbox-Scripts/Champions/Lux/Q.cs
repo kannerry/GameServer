@@ -20,6 +20,17 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            ApiEventManager.OnHitUnit.AddListener(this, owner, hit, false);
+        }
+        IObjAiBase _owner;
+        public void hit(IAttackableUnit unit, bool crit)
+        {
+            if (unit.HasBuff("LuxPassive"))
+            {
+                unit.RemoveBuffsWithName("LuxPassive");
+                unit.TakeDamage(_owner, 75, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            }
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -102,12 +113,14 @@ namespace Spells
                 if (hitobj == 1)
                 {
                     AddBuff("LuxQ", 2.0f, 1, spell, target, spell.CastInfo.Owner);
+                    AddBuff("LuxPassive", 6.0f, 1, spell, target, spell.CastInfo.Owner);
                     target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, true);
                 }
 
                 if (hitobj == 2)
                 {
                     AddBuff("LuxQ", 1.0f, 1, spell, target, spell.CastInfo.Owner);
+                    AddBuff("LuxPassive", 6.0f, 1, spell, target, spell.CastInfo.Owner); //LuxDebuff.troy
                     target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, true);
                     missile.SetToRemove();
                 }

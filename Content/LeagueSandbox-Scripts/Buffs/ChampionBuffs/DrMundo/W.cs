@@ -1,5 +1,6 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
@@ -28,8 +29,8 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             Owner = ownerSpell.CastInfo.Owner;
-            ApiEventManager.OnSpellSectorHit.AddListener(this, new KeyValuePair<ISpell, IObjAiBase>(ownerSpell, Owner), TargetExecute, false);
-
+            //ApiEventManager.OnSpellSectorHit.AddListener(this, new KeyValuePair<ISpell, IObjAiBase>(ownerSpell, Owner), TargetExecute, false);
+            ApiEventManager.OnSpellHit.AddListener(this, ownerSpell, TargetExecute, false);
             StatsModifier.Tenacity.FlatBonus += 5 + ownerSpell.CastInfo.SpellLevel;
             unit.AddStatModifier(StatsModifier);
 
@@ -47,7 +48,7 @@ namespace Buffs
             p2 = AddParticleTarget(Owner, unit, "dr_mundo_burning_agony_cas_02.troy", unit, buff.Duration);
         }
 
-        public void TargetExecute(ISpell ownerSpell, IAttackableUnit target, ISpellSector sector)
+        public void TargetExecute(ISpell ownerSpell, IAttackableUnit target, ISpellMissile mis, ISpellSector sector)
         {
             float AP = Owner.Stats.AbilityPower.Total * 0.2f;
             float damage = 20f + (15 * ownerSpell.CastInfo.SpellLevel) + AP;
@@ -57,7 +58,7 @@ namespace Buffs
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            ApiEventManager.OnSpellSectorHit.RemoveListener(this);
+            ApiEventManager.OnSpellHit.RemoveListener(this);
             DRMundoWAOE.SetToRemove();
 
             RemoveParticle(p);

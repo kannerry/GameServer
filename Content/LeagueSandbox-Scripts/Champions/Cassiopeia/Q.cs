@@ -24,10 +24,15 @@ namespace Spells
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
+            _owner = owner;
+            _spell = spell;
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
         }
 
         public ISpellSector DamageSector;
+
+        IObjAiBase _owner;
+        ISpell _spell;
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
@@ -35,6 +40,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
+            //AddBuff("CassiopeiaDeadlyCadence", float.MaxValue, 1, spell, owner, owner, true);
         }
 
         public void OnSpellCast(ISpell spell)
@@ -71,6 +77,7 @@ namespace Spells
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
+
             AddBuff("CassiopeiaPoisonTicker", 4f, 1, spell, target, owner);
             if (target is IChampion)
             {
@@ -88,6 +95,30 @@ namespace Spells
 
         public void OnUpdate(float diff)
         {
+            if (_owner.HasBuff("CassiopeiaDeadlyCadence")){
+                var sc = _owner.GetBuffWithName("CassiopeiaDeadlyCadence").StackCount;
+                if(sc >= 100)
+                {
+                    if (!_owner.HasBuff("Passive100"))
+                    {
+                        AddBuff("Passive100", 5.0f, 1, _spell, _owner, _owner, false);
+                    }
+                }
+                if (sc >= 250)
+                {
+                    if (!_owner.HasBuff("Passive250"))
+                    {
+                        AddBuff("Passive250", 5.0f, 1, _spell, _owner, _owner, false);
+                    }
+                }
+                if (sc >= 500)
+                {
+                    if (!_owner.HasBuff("Passive500"))
+                    {
+                        AddBuff("Passive500", 5.0f, 1, _spell, _owner, _owner, false);
+                    }
+                }
+            }
         }
     }
 }

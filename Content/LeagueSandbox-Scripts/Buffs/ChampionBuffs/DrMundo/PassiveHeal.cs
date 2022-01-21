@@ -2,35 +2,32 @@
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
+using LeagueSandbox.GameServer.GameObjects.Stats;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    internal class YasuoEBlockFIX : IBuffGameScript
+    internal class MundoPassiveHeal : IBuffGameScript
     {
         public BuffType BuffType => BuffType.INTERNAL;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
         public int MaxStacks => 1;
-        public bool IsHidden => true;
+        public bool IsHidden => false;
 
-        public IStatsModifier StatsModifier { get; private set; }
-
-        private IParticle timer;
+        public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            var owner = ownerSpell.CastInfo.Owner;
-            timer = AddParticleTarget(owner, unit, "Yasuo_base_E_timer" + ownerSpell.CastInfo.SpellLevel + ".troy", unit);
+            unit.Stats.CurrentHealth += unit.Stats.HealthPoints.Total * 0.003f;
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            RemoveParticle(timer);
+            AddBuff("MundoPassiveCooldown", 1.0f, 1, ownerSpell, unit, unit as IObjAiBase);
         }
 
         public void OnUpdate(float diff)
         {
-            //empty!
         }
     }
 }

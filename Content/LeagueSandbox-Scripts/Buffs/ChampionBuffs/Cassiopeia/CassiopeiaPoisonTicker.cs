@@ -18,6 +18,7 @@ namespace Buffs
         public IStatsModifier StatsModifier { get; private set; } = new StatsModifier();
 
         private IObjAiBase owner;
+        private IObjAiBase _spell;
         private IAttackableUnit Unit;
         private IParticle p;
         private float damage;
@@ -43,6 +44,10 @@ namespace Buffs
             if (timeSinceLastTick >= 1000f && !Unit.IsDead && Unit != null)
             {
                 Unit.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_PERIODIC, false);
+                if(Unit is IChampion)
+                {
+                    AddBuff("CassiopeiaDeadlyCadence", float.MaxValue, 1, owner.GetSpell(0), owner, owner, true);
+                }
                 timeSinceLastTick = 0;
             }
         }

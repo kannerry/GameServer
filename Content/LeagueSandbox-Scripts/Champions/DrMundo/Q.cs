@@ -47,6 +47,7 @@ namespace Spells
             FaceDirection(targetPos, owner);
             SpellCast(owner, 0, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
             owner.StopMovement();
+            owner.SetTargetUnit(null);
             if (owner.Stats.CurrentHealth > SelfDamage)
             {
                 owner.Stats.CurrentHealth -= SelfDamage;

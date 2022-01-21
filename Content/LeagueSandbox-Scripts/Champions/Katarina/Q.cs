@@ -1,4 +1,5 @@
-﻿using GameServerCore.Domain.GameObjects;
+﻿using GameServerCore.Domain;
+using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
@@ -27,6 +28,17 @@ namespace Spells
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
             ApiEventManager.OnSpellHit.AddListener(this, spell, TargetExecute, false);
+            ApiEventManager.OnKill.AddListener(this, owner, passive, false);
+        }
+        public void passive(IDeathData data)
+        {
+            var owner = data.Killer;
+            for (byte i = 0; i < 4; i++)
+            {
+                var own = owner as IChampion;
+                own.Spells[i].LowerCooldown(15);
+            };
+            //will turn into buff later
         }
 
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)

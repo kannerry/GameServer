@@ -30,8 +30,6 @@ namespace Passives
 
         public void OnUpdate(float diff)
         {
-
-
             if (yi != null)
             {
                 var Champs = GetChampionsInRange(yi.Position, 50000, true);

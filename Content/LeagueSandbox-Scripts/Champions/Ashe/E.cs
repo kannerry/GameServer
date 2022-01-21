@@ -1,43 +1,38 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
 using GameServerCore.Domain.GameObjects.Spell.Sector;
+using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Collections.Generic;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Spells
 {
-    public class FrostShot : ISpellScript
+    public class AsheSpiritOfTheHawk : ISpellScript
     {
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
+            MissileParameters = new MissileParameters
+            {
+                Type = MissileType.Circle,
+            },
             TriggersSpellCasts = true,
-            CastingBreaksStealth = true,
-            DoesntBreakShields = true,
-            IsDamagingSpell = true,
-            NotSingleTargetSpell = true,
-            SpellToggleSlot = 4
         };
 
-        private IBuff thisBuff;
-        IObjAiBase _owner;
+
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
-            _owner = owner;
-            ApiEventManager.OnHitUnit.AddListener(this, owner, TargetExecute, false);
+            var x = new KeyValuePair<IObjAiBase, ISpell>(owner, spell);
+            ApiEventManager.OnLaunchMissile.AddListener(this, x, misEnd, false);
         }
 
-        private void TargetExecute(IAttackableUnit unit, bool crit)
+        public void misEnd(ISpell spell, ISpellMissile mis)
         {
-            if (!_owner.HasBuff(thisBuff))
-            {
-                return;
-            }
-            LogDebug("has buff");
-            AddBuff("AsheQ", 2.0f, 1, _owner.GetSpell(0), unit, _owner);
-            _owner.Stats.CurrentMana -= 8;
+            mis.SetSpeed(1500f);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -54,16 +49,6 @@ namespace Spells
 
         public void OnSpellPostCast(ISpell spell)
         {
-            var owner = spell.CastInfo.Owner;
-
-            if (owner.HasBuff("FrostShot"))
-            {
-                owner.RemoveBuffsWithName("FrostShot");
-            }
-            else
-            {
-                thisBuff = AddBuff("FrostShot", float.MaxValue, 1, spell, owner, owner, true);
-            }
         }
 
         public void OnSpellChannel(ISpell spell)

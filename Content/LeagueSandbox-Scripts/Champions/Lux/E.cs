@@ -63,6 +63,7 @@ namespace Spells
             //Graves_SmokeGrenade_Cloud_Team_Green.troy
             //Graves_SmokeGrenade_Cloud_Team_Red.troy
             target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+            AddBuff("LuxPassive", 6.0f, 1, spell, target, spell.CastInfo.Owner);
         }
 
         public void OnSpellChannel(ISpell spell)

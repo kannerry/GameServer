@@ -46,6 +46,10 @@ namespace Buffs
             if (timeSinceLastTick >= 1000f && !Unit.IsDead && Unit != null)
             {
                 Unit.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_PERIODIC, false);
+                if (Unit is IChampion)
+                {
+                    AddBuff("CassiopeiaDeadlyCadence", float.MaxValue, 1, owner.GetSpell(0), owner, owner, true);
+                }
                 timeSinceLastTick = 0;
             }
         }

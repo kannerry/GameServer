@@ -44,7 +44,7 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
             var owner = spell.CastInfo.Owner;
-            var targetPos = GetPointFromUnit(owner, 950.0f);
+            //var targetPos = GetPointFromUnit(owner, 950.0f);
             //SpellCast(owner, 4, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
             var spellpos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
 

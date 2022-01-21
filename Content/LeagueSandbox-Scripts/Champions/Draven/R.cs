@@ -45,12 +45,13 @@ namespace Spells
             {
                 var endPos = GetPointFromUnit(spell.CastInfo.Owner, 925);
                 SpellCast(spell.CastInfo.Owner, 1, SpellSlotType.ExtraSlots, endPos, endPos, false, Vector2.Zero);
+                spell.SetCooldown(0.0f, true);
             }
             if (toggle == true)
             {
                 var misPos = mis.Position;
                 mis.SetToRemove();
-                SpellCast(spell.CastInfo.Owner, 1, SpellSlotType.ExtraSlots, spell.CastInfo.Owner.Position, spell.CastInfo.Owner.Position, false, misPos);
+                SpellCast(spell.CastInfo.Owner, 1, SpellSlotType.ExtraSlots, spell.CastInfo.Owner.Position, spell.CastInfo.Owner.Position, true, misPos);
             }
         }
 

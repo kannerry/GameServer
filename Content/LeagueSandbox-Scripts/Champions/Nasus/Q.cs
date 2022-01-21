@@ -38,16 +38,10 @@ namespace Spells
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {
         }
-
-        private int stack = 0;
-
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
             //var owner = spell.CastInfo.Owner as IChampion;
             AddBuff("NasusQAttack", 6.0f, 1, spell, owner, owner);
-            RemoveBuff(owner, "NasusQStacks");
-            CreateTimer(0.01f, () => { AddBuff("NasusQStacks", int.MaxValue, (byte)stack, spell, owner, owner); });
-            stack += 1;
         }
 
         public void OnSpellCast(ISpell spell)
@@ -102,10 +96,11 @@ namespace Spells
             var owner = ownermain;
             var ADratio = owner.Stats.AttackDamage.PercentBonus * 0.3f;
             var damage = 40f + (30f * (originspell.CastInfo.SpellLevel - 1)) + ADratio;
-            var v = owner.GetBuffWithName("NasusQStacks").StackCount;
-            if (v != null)
+            //var v = owner.GetBuffWithName("NasusQStacks").StackCount;
+            if (owner.HasBuff("NasusQStacks"))
             {
-                damage += v;
+                damage += owner.GetBuffWithName("NasusQStacks").StackCount;
+                LogDebug("bonus dmg: " + owner.GetBuffWithName("NasusQStacks").StackCount.ToString());
             }
             if (Applied != 1)
             {

@@ -6,7 +6,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    internal class YasuoEBlockFIX : IBuffGameScript
+    internal class JarvanCD : IBuffGameScript
     {
         public BuffType BuffType => BuffType.INTERNAL;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
@@ -20,12 +20,12 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             var owner = ownerSpell.CastInfo.Owner;
-            timer = AddParticleTarget(owner, unit, "Yasuo_base_E_timer" + ownerSpell.CastInfo.SpellLevel + ".troy", unit);
+            //timer = AddParticleTarget(owner, unit, "Yasuo_base_E_timer1.troy", unit);
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            RemoveParticle(timer);
+            //RemoveParticle(timer);
         }
 
         public void OnUpdate(float diff)

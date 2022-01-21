@@ -33,27 +33,32 @@ namespace Spells
             var owner = spell.CastInfo.Owner as IChampion;
             var APratio = owner.Stats.AbilityPower.Total;
             var damage = 30 + spell.CastInfo.SpellLevel * 25 + APratio;
-            //todo  amplifying her Poison ,  poison damage against the target by 20%, stacking up to two times.
+
+            if(target is IChampion)
+            {
+                AddBuff("CassiopeiaDeadlyCadence", float.MaxValue, 1, owner.GetSpell(0), owner, owner, true);
+            }
 
             AddParticleTarget(owner, target, "Cassiopeia_Base_E_TwinFang_tar.troy", target, 1f);
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
             if (target.HasBuff("CassiopeiaPoisonTicker"))
             {
-                for (byte i = 0; i < 4; i++)
-                {
-                    owner.Spells[i].LowerCooldown(4);
-                }
+                owner.Spells[2].SetCooldown(0.5f, true);
                 //cassio ticker 3 buff
             }
             if (target.HasBuff("CassiopeiaPoisonTicker2"))
             {
-                for (byte i = 0; i < 4; i++)
-                {
-                    owner.Spells[i].LowerCooldown(4);
-                }
+                owner.Spells[2].SetCooldown(0.5f, true);
                 //cassio ticker 4 buff
             }
-        }
+
+            CreateTimer(0.3f, () => {
+                if (target.IsDead)
+                {
+                    owner.Stats.CurrentMana += 45;
+                }
+            });
+            }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
         {

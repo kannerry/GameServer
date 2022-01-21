@@ -114,7 +114,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            CreateTimer(1.5f, () => 
+            CreateTimer(1.25f, () => 
             { 
                 LogDebug("yo2"); 
                 owner.SetSpell("FlashFrost", 0, true);

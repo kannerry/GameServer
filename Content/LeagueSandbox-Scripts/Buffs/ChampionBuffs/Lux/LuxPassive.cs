@@ -6,31 +6,33 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    internal class YasuoEBlockFIX : IBuffGameScript
+    internal class LuxPassive : IBuffGameScript
     {
-        public BuffType BuffType => BuffType.INTERNAL;
+        public BuffType BuffType => BuffType.STUN;
         public BuffAddType BuffAddType => BuffAddType.REPLACE_EXISTING;
         public int MaxStacks => 1;
-        public bool IsHidden => true;
+        public bool IsHidden => false;
 
         public IStatsModifier StatsModifier { get; private set; }
 
-        private IParticle timer;
+        private IParticle buff1;
+        private IParticle buff2;
 
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            var owner = ownerSpell.CastInfo.Owner;
-            timer = AddParticleTarget(owner, unit, "Yasuo_base_E_timer" + ownerSpell.CastInfo.SpellLevel + ".troy", unit);
+            var caster = ownerSpell.CastInfo.Owner;
+            buff1 = AddParticleTarget(caster, unit, "LuxDebuff.troy", unit, lifetime: buff.Duration);
+            //buff2 = AddParticleTarget(caster, unit, "LuxLightBinding_tar.troy", unit);
         }
 
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
-            RemoveParticle(timer);
+            RemoveParticle(buff1);
+            //RemoveParticle(buff2);
         }
 
         public void OnUpdate(float diff)
         {
-            //empty!
         }
     }
 }

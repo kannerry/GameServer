@@ -128,6 +128,15 @@ namespace Spells
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL,
                 false);
             AddParticleTarget(owner, target, "luxmalicecannon_tar.troy", target, 1.0f);
+
+            if (target.HasBuff("LuxPassive"))
+            {
+                target.RemoveBuffsWithName("LuxPassive");
+                target.TakeDamage(owner, 75, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL,
+    false);
+                AddBuff("LuxPassive", 6.0f, 1, spell, target, spell.CastInfo.Owner);
+            }
+
         }
 
         public void OnSpellChannel(ISpell spell)
