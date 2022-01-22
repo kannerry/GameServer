@@ -223,7 +223,7 @@ namespace Spells
         {
             var owner = ownermain;
             owner.SetStatus(StatusFlags.Targetable, true);
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
 
             var bonusdmg = 30 * owner.Spells[0].CastInfo.SpellLevel;
             var adscaling = owner.Stats.AttackDamage.Total * (5 * (owner.Spells[0].CastInfo.SpellLevel - 1) * 0.01);

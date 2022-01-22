@@ -35,7 +35,7 @@ namespace Spells
                 var objOwner = owner as IObjAiBase;
                 owner.SetStatus(StatusFlags.Targetable, true);
                 owner.SetStatus(StatusFlags.Ghosted, false);
-                var Champs = GetChampionsInRange(owner.Position, 50000, true);
+                var Champs = GetAllChampionsInRange(owner.Position, 50000);
                 foreach (IChampion player in Champs)
                 {
                     objOwner.SetInvisible((int)player.GetPlayerId(), objOwner, 1f, 0.05f);
@@ -51,7 +51,7 @@ namespace Spells
             ultDash = true;
             Vector2 originPos = new Vector2(owner.Position.X + 1, owner.Position.Y + 1);
             var to = Vector2.Normalize(target.Position - owner.Position);
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
 
             ZedShadowDashMissile._spell = spell;
             SpellCast(owner, 4, SpellSlotType.ExtraSlots, originPos, originPos, true, Vector2.Zero);

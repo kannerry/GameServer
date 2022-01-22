@@ -19,7 +19,7 @@ namespace Buffs
         public void OnActivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             var owner = ownerSpell.CastInfo.Owner;
-            var Champs = GetChampionsInRange(unit.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(unit.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 if (player.Team.Equals(owner.Team))
@@ -43,7 +43,7 @@ namespace Buffs
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             var owner = ownerSpell.CastInfo.Owner;
-            var Champs = GetChampionsInRange(unit.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(unit.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0.1f);

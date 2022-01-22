@@ -35,20 +35,23 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner;
             var damage = 50f + (40f * spell.CastInfo.SpellLevel - 1) + (owner.Stats.AttackDamage.Total * 1.25f);
-            if(target.Team != owner.Team)
-            {
-                target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-                if(Knockup == true)
-                {
-                    AddBuff("Pulverize", 1.0f, 1, spell, target, owner);
-                }
-            }
             if (target.Model == "JarvanIVStandard")
             {
                 LogDebug("hit standard");
                 owner.SetTargetUnit(null);
                 ForceMovement(owner, "RUN", target.Position, 2000, 0, 0, 0);
                 Knockup = true;
+            }
+            if (target.Team != owner.Team)
+            {
+                target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                CreateTimer(0.1f, () =>
+                {
+                    if (Knockup == true)
+                    {
+                        AddBuff("Pulverize", 1.0f, 1, spell, target, owner);
+                    }
+                });
             }
         }
 

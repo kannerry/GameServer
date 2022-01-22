@@ -56,7 +56,7 @@ namespace Buffs
                         owner.Stats.CurrentMana -= manaCost[0];
                         var x = AddMinion(owner as IObjAiBase, "Singed", "trail", owner.Position, ignoreCollision: true, targetable: false, isVisible: false);
 
-                        var Champs = GetChampionsInRange(owner.Position, 50000, true);
+                        var Champs = GetAllChampionsInRange(owner.Position, 50000);
                         foreach (IChampion player in Champs)
                         {
                             x.SetStatus(StatusFlags.Targetable, false);

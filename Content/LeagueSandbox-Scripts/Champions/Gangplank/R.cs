@@ -44,7 +44,7 @@ namespace Spells
             var spellPos = new Vector2(spell.CastInfo.TargetPosition.X, spell.CastInfo.TargetPosition.Z);
             var mushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", spellPos);
 
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 mushroom.SetInvisible((int)player.GetPlayerId(), mushroom, 0f, 0f);

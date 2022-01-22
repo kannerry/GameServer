@@ -532,6 +532,27 @@ namespace LeagueSandbox.GameServer.API
             return _game.ObjectManager.GetChampionsInRange(targetPos, range, isAlive);
         }
 
+        // if someone is dead while setting someone "un invisible"
+        // the game will sometimes desync
+        // use this for "all champions" rather than all alive champions
+        public static List<IChampion> GetAllChampionsInRange(Vector2 targetPos, float range)
+        {
+            List<IChampion> x = new List<IChampion>();
+            var alive = _game.ObjectManager.GetChampionsInRange(targetPos, range, true);
+            var dead = _game.ObjectManager.GetChampionsInRange(targetPos, range, false);
+
+            foreach(var champion in alive)
+            {
+                x.Add(champion);
+            }
+            foreach (var champion in dead)
+            {
+                x.Add(champion);
+            }
+
+            return x;
+        }
+
         public static IGameObject GetObjectNET(uint netid)
         {
             return _game.ObjectManager.GetObjectById(netid);

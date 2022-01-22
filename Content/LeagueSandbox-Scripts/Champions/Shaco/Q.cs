@@ -47,7 +47,7 @@ namespace Spells
             AddBuff("Deceive", 3.5f, 1, spell, owner, owner);
             CreateTimer(3.5f, () => { owner.SetStatus(StatusFlags.Targetable, true); });
             owner.SetStatus(StatusFlags.Targetable, false);
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 CreateTimer(3.5f, () => { owner.SetHealthbarVisibility((int)player.GetPlayerId(), owner, true); });

@@ -6,6 +6,7 @@ using GameServerCore.Enums;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
+using System;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
@@ -29,7 +30,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0f);
@@ -99,11 +100,38 @@ namespace Spells
         {
         }
 
+        private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
+        {
+            var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
+            float healthGain = 15 + (spell.CastInfo.SpellLevel * 45) + ap;
+            if (target.HasBuff("HealCheck"))
+            {
+                healthGain *= 0.5f;
+            }
+            var newHealth = target.Stats.CurrentHealth + healthGain;
+            target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
+        }
+
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
             var ad = owner.Stats.AttackDamage.Total + spell.CastInfo.SpellLevel - 1 * 20;
-            target.TakeDamage(owner, ad, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            var x = GetUnitsInRange(target.Position, 275, true);
+            AddParticle(owner, null, "Khazix_Base_W_Tar.troy", target.Position);
+            foreach (var unit in x)
+            {
+                if(unit == owner)
+                {
+                    LogDebug("HEAL");
+                    AddParticle(owner, null, "Khazix_Base_W_Heal.troy", owner.Position);
+                    PerformHeal(owner, spell, owner);
+                }
+                if(unit.Team != owner.Team)
+                {
+                    unit.TakeDamage(owner, ad, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+                    AddBuff("KhazixWSlow", 2.0f, 1, spell, unit, owner);
+                }
+            }
             missile.SetToRemove();
         }
 

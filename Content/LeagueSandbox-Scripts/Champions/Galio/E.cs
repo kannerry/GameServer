@@ -45,7 +45,7 @@ namespace Spells
             v = spell.CreateSpellMissile(s.MissileParameters);
             mushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", owner.Position);
             mushroom.SetStatus(StatusFlags.Ghosted, true);
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             var spellPos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
             var x = AddParticle(owner, mushroom, "galio_windTunnel_mis.troy", owner.Position);
             var y = AddParticle(owner, mushroom, "galio_windTunnel_mis_02.troy", owner.Position);

@@ -28,7 +28,10 @@ namespace Passives
             {
                 if (unit.Team != ownermain.Team)
                 {
-                    AddBuff("PassiveMSVayne", 0.1f, 1, originspell, ownermain, originspell.CastInfo.Owner);
+                    if (unit.IsVisibleByTeam(ownermain.Team)) 
+                    { 
+                        AddBuff("PassiveMSVayne", 0.1f, 1, originspell, ownermain, originspell.CastInfo.Owner); 
+                    }
                 }
             }
 

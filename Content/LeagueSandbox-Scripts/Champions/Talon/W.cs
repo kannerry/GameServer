@@ -37,7 +37,7 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner as IChampion;
             owner.SetStatus(StatusFlags.Targetable, true);
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 owner.SetInvisible((int)player.GetPlayerId(), owner, 1f, 0.1f);

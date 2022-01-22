@@ -32,7 +32,7 @@ namespace Spells
             SpellCast(owner, 2, SpellSlotType.ExtraSlots, false, target, owner.Position);
             owner.SetTargetUnit(null);
 
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 owner.SetStatus(StatusFlags.Targetable, false);

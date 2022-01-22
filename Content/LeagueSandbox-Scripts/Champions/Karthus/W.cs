@@ -47,7 +47,7 @@ namespace Spells
 
             var mushroom = AddMinion(owner, "TeemoMushroom", "TeemoMushroom", spellPos);
 
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
 
             foreach (IChampion player in Champs)
             {

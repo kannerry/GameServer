@@ -32,7 +32,7 @@ namespace Passives
         {
             if (yi != null)
             {
-                var Champs = GetChampionsInRange(yi.Position, 50000, true);
+                var Champs = GetAllChampionsInRange(yi.Position, 50000);
                 if (isinvis == true)
                 {
                     foreach(var player in Champs)

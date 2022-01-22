@@ -36,7 +36,7 @@ namespace Spells
         {
             //owner.SetStatus(StatusFlags.NoRender, true);
             //CreateTimer(4.0f, () => { owner.SetStatus(StatusFlags.NoRender, false); });
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 CreateTimer(4.5f, () => { owner.SetStatus(StatusFlags.Targetable, true); });

@@ -41,7 +41,7 @@ namespace Buffs
 
             }
 
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(unit.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 owner.SetStatus(StatusFlags.Targetable, false);

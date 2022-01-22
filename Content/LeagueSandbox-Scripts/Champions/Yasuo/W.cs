@@ -111,7 +111,7 @@ namespace Spells
 
             //mushroom2.SetStatus(StatusFlags.NoRender, true); (particle)
 
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
 
             foreach (IChampion player in Champs)
             {

@@ -42,8 +42,8 @@ namespace Spells
         {
             var owner = spell.CastInfo.Owner as IChampion;
             var xmin = AddMinion(owner, "Velkoz", "temp", owner.Position, ignoreCollision: true, isVisible: false);
-            var champs = GetChampionsInRange(owner.Position, 100000, true);
-            foreach(var champ in champs)
+            var champs = GetAllChampionsInRange(owner.Position, 50000);
+            foreach (var champ in champs)
             {
                 xmin.SetInvisible((int)champ.GetPlayerId(), xmin, 0.0f, 0.0f);
             }

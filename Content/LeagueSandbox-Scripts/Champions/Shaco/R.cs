@@ -39,7 +39,7 @@ namespace Spells
             owner.StopMovement();
             CreateTimer(1.3f, () => { owner.SetStatus(StatusFlags.Targetable, true); });
             CreateTimer(0.3f, () => { owner.SetStatus(StatusFlags.Targetable, false); });
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 CreateTimer(1.3f, () => { owner.SetHealthbarVisibility((int)player.GetPlayerId(), owner, true); });

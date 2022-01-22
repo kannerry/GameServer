@@ -27,7 +27,7 @@ namespace Spells
         {
             //AddBuff("TalonDisappear", 2f, 1, spell, owner, owner);
             AddParticleTarget(owner, owner, "Khazix_Base_R_Cas.troy", owner);
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 CreateTimer(2f, () => { owner.SetStatus(StatusFlags.Targetable, true); });

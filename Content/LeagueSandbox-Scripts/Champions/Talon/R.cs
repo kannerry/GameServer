@@ -68,7 +68,7 @@ namespace Spells
             CreateTimer(2.5f, () => { owner.SetStatus(StatusFlags.Targetable, true); });
             owner.SetStatus(StatusFlags.Targetable, false);
 
-            var Champs = GetChampionsInRange(owner.Position, 50000, true);
+            var Champs = GetAllChampionsInRange(owner.Position, 50000);
             foreach (IChampion player in Champs)
             {
                 CreateTimer(2.5f, () => { owner.SetHealthbarVisibility((int)player.GetPlayerId(), owner, true); });
