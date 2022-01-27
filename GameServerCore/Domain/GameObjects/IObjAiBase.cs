@@ -185,5 +185,11 @@ namespace GameServerCore.Domain.GameObjects
         void SetInvisible(int netId, IObjAiBase obj, float swag, float swag2);
         void SetHealthbarVisibility(int playerId, IAttackableUnit unit, bool show);
         void NotifyPlayerStatsOppositeTeam(IChampion champ);
+
+        /// Sets the spell that this unit is currently casting.
+        /// </summary>
+        /// <param name="s">Spell that is being cast.</param>
+        void SetCastSpell(ISpell s);
+
     }
 }

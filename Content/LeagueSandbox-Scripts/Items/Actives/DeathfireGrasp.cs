@@ -3,6 +3,7 @@ using GameServerCore.Domain.GameObjects.Spell;
 using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
+using GameServerCore.Enums;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace ItemSpells
@@ -39,7 +40,7 @@ namespace ItemSpells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

@@ -11,11 +11,12 @@ namespace Spells
 {
     public class KatarinaR : ISpellScript
     {
-        private bool cancelled;
 
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
-            // TODO
+            NotSingleTargetSpell = true,
+            TriggersSpellCasts = true,
+            ChannelDuration = 2.5f,
         };
 
         private Vector2 basepos;
@@ -30,40 +31,6 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            CreateTimer(2.6f, () => { cancelled = false; });
-            CreateTimer(2.5f, () => { owner.PlayAnimation("IDLE1", 1); owner.StopAnimation("IDLE1"); });
-            basepos = owner.Position;
-            for (var i = 0.0f; i < 2.5; i += 0.25f)
-            {
-                CreateTimer(i, () => { ApplySpinDamage(owner, spell, target); });
-            }
-        }
-
-        private void ApplySpinDamage(IObjAiBase owner, ISpell spell, IAttackableUnit target)
-        {
-            if (owner.Position.X != basepos.X)
-            {
-                cancelled = true;
-            }
-            if (owner.Position.Y != basepos.Y)
-            {
-                cancelled = true;
-            }
-            var units = GetUnitsInRange(owner.Position, 500, true);
-            foreach (var unit in units)
-            {
-                if (unit.Team != owner.Team)
-                {
-                    var damage = 35.0f;
-                    var ap = owner.Stats.AbilityPower.Total * 0.25f;
-                    var ad = owner.Stats.AttackDamage.Total * 0.37f;
-                    if (unit is Minion) damage *= 0.75f;
-                    if (!cancelled)
-                    {
-                        unit.TakeDamage(owner, ap + ad + damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
-                    }
-                }
-            }
         }
 
         public void OnSpellCast(ISpell spell)
@@ -76,14 +43,25 @@ namespace Spells
 
         public void OnSpellChannel(ISpell spell)
         {
+            var Owner = spell.CastInfo.Owner;
+            AddBuff("KatarinaR", 2.5f, 1, spell, Owner, Owner);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
+            var Owner = spell.CastInfo.Owner;
+            RemoveBuff(Owner, "KatarinaR");
+            LogDebug("OnSpellChannelCancel");
         }
 
         public void OnSpellPostChannel(ISpell spell)
         {
+            LogDebug("OnSpellPostChannel");
+            var owner = spell.CastInfo.Owner;
+            owner.StopAnimation("Spell4", fade: true);
+
+            RemoveBuff(owner, "KatarinaR");
+
         }
 
         public void OnUpdate(float diff)

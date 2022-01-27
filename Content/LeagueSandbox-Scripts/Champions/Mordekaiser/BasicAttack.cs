@@ -4,7 +4,7 @@ using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.API;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
-
+using GameServerCore.Enums;
 namespace Spells
 {
     public class MordekaiserBasicAttack : ISpellScript
@@ -45,7 +45,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 
@@ -97,7 +97,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

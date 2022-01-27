@@ -45,7 +45,7 @@ namespace Spells
         public void OnSpellPostCast(ISpell spell)
         {
         }
-
+        bool hitOnce = false;
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
@@ -56,7 +56,21 @@ namespace Spells
             target.TakeDamage(owner, damage, DamageType.DAMAGE_TYPE_PHYSICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
 
             AddParticleTarget(owner, target, "MissFortune_Base_Q_Tar.troy", target, lifetime: 1f); //TODO: Fix particles that for some reason aren't spawning ||||| Test if particles now work
-                                                                                                   // do a bounce method
+            var dis = Vector2.Distance(owner.Position, target.Position);
+            FaceDirection(target.Position, owner);
+            var p = GetClosestUnitInRange(target, 500, true);
+            if(hitOnce == false)
+            {
+                if (p.Team != owner.Team)
+                {
+                    if (p != target)
+                    {
+                        SpellCast(owner, 0, SpellSlotType.SpellSlots, true, p, target.Position);
+                    }
+                }
+                hitOnce = true;
+            }
+            CreateTimer(1.0f, () => { hitOnce = false; });
             missile.SetToRemove();
         }
 
@@ -64,7 +78,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

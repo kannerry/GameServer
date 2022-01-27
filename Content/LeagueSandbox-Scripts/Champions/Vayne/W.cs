@@ -101,7 +101,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

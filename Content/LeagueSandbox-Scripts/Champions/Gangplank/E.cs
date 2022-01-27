@@ -6,7 +6,7 @@ using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Linq;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
+using GameServerCore.Enums;
 namespace Spells
 {
     public class RaiseMorale : ISpellScript
@@ -56,7 +56,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

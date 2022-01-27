@@ -79,7 +79,7 @@ namespace Spells
             AddBuff("Rupture", 3.5f, 1, spell, target, owner);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

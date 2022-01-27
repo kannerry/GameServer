@@ -49,7 +49,15 @@ namespace Spells
             var targetPos = GetPointFromUnit(owner, 800.0f);
             //SpellCast(owner, 1, SpellSlotType.ExtraSlots, targetPos, targetPos, false, Vector2.Zero);
             var spellpos = new Vector2(spell.CastInfo.TargetPositionEnd.X, spell.CastInfo.TargetPositionEnd.Z);
-
+            DamageSector = spell.CreateSpellSector(new SectorParameters
+            {
+                Length = 400f,
+                Tickrate = 3,
+                CanHitSameTargetConsecutively = true,
+                OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
+                Type = SectorType.Area,
+                Lifetime = 3.0f
+            });
             //AddParticle(owner, null, "MissFortune_Base_E_cas.troy", spellpos, lifetime: 2.0f, reqVision: false);
             AddParticle(owner, null, "MissFortune_Base_E_Unit_Tar.troy", spellpos, lifetime: 3.0f, reqVision: false);
             AddParticle(owner, null, "MissFortune_Base_E_Unit_Tar_green.troy", spellpos, lifetime: 3.0f, reqVision: false);
@@ -88,16 +96,6 @@ namespace Spells
                 LogDebug(i.ToString());
                 i += 0.5f;
             }
-
-            DamageSector = spell.CreateSpellSector(new SectorParameters
-            {
-                Length = 400f,
-                Tickrate = 1,
-                CanHitSameTargetConsecutively = true,
-                OverrideFlags = SpellDataFlags.AffectEnemies | SpellDataFlags.AffectNeutral | SpellDataFlags.AffectMinions | SpellDataFlags.AffectHeroes,
-                Type = SectorType.Area,
-                Lifetime = 3.0f
-            });
         }
 
         public void OnSpellChannel(ISpell spell)
@@ -107,14 +105,14 @@ namespace Spells
         public void TargetExecute(ISpell spell, IAttackableUnit target, ISpellMissile missile, ISpellSector sector)
         {
             var owner = spell.CastInfo.Owner;
-            //var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.125f;
-            // var damage = 5 + (5 * spell.CastInfo.SpellLevel ) + ap;
+            var ap = spell.CastInfo.Owner.Stats.AbilityPower.Total * 0.8f;
+             var damage = 90 + (55 * spell.CastInfo.SpellLevel - 1 ) + ap;
 
-            // target.TakeDamage(spell.CastInfo.Owner, damage, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
-            AddBuff("MissFortuneE", 1f, 1, spell, target, owner);
+             target.TakeDamage(spell.CastInfo.Owner, damage / 9, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELLAOE, false);
+            //AddBuff("MissFortuneE", 1f, 1, spell, target, owner);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

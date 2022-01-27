@@ -426,6 +426,15 @@ namespace LeagueSandbox.GameServer.GameObjects.AttackableUnits.AI
         }
 
         /// <summary>
+        /// Sets the spell that this unit is currently casting.
+        /// </summary>
+        /// <param name="s">Spell that is being cast.</param>
+        public void SetCastSpell(ISpell s)
+        {
+            SpellToCast = s;
+        }
+
+        /// <summary>
         /// Forces this AI unit to perform a dash which follows the specified AttackableUnit.
         /// </summary>
         /// <param name="target">Unit to follow.</param>

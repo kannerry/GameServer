@@ -73,7 +73,7 @@ namespace Spells
             AddBuff("CassiopeiaPoisonTicker2", 2f, 1, spell, target, owner);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

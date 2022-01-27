@@ -53,7 +53,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 
@@ -104,13 +104,14 @@ namespace Spells
             var owner = spell.CastInfo.Owner;
             var ad = owner.Stats.AbilityPower.Total * 0.65 + spell.CastInfo.Owner.GetSpell(2).CastInfo.SpellLevel * 40 + 40;
             target.TakeDamage(owner, (float)ad, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_SPELL, false);
+            AddParticleTarget(owner, target, "Aatrox_EMissile_Hit.troy", target);
         }
 
         public void OnSpellChannel(ISpell spell)
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

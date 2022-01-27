@@ -78,7 +78,7 @@ namespace Spells
             //   AddBuff("Stun", 1.5f, 1, spell, target, ownerr);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

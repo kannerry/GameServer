@@ -1,22 +1,33 @@
 ﻿using GameServerCore.Domain.GameObjects;
 using GameServerCore.Domain.GameObjects.Spell;
-using GameServerCore.Scripting.CSharp;
-using LeagueSandbox.GameServer.Scripting.CSharp;
-using System;
-using System.Numerics;
+using GameServerCore.Domain.GameObjects.Spell.Missile;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
+using LeagueSandbox.GameServer.Scripting.CSharp;
+using System.Numerics;
+using GameServerCore.Scripting.CSharp;
+using System;
+using GameServerCore.Enums;
 
 namespace Spells
 {
     public class Meditate : ISpellScript
     {
-        private bool cancelled;
-
         public ISpellScriptMetadata ScriptMetadata { get; private set; } = new SpellScriptMetadata()
         {
+            NotSingleTargetSpell = true,
+            TriggersSpellCasts = true,
+            ChannelDuration = 4f,
+            AutoCooldownByLevel = new float[]
+            {
+                50f,
+                50f,
+                50f,
+                50f,
+                50f
+            }
         };
 
-        private Vector2 basepos;
+        IObjAiBase Owner;
 
         public void OnActivate(IObjAiBase owner, ISpell spell)
         {
@@ -28,54 +39,12 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            basepos = owner.Position;
-            for (var i = 0.0f; i < 4.0; i += 0.25f)
-            {
-                CreateTimer(i, () => { CheckPosition(owner, spell, target); });
-            }
-            CreateTimer(0.1f, () => { playanim = true; });
-            CreateTimer(4.1f, () => { cancelled = false; StopAnimation(owner, "Spell2"); });
-        }
-
-        private void PerformHeal(IObjAiBase owner, ISpell spell, IAttackableUnit target)
-        {
-            var ap = owner.Stats.AbilityPower.Total * spell.SpellData.MagicDamageCoefficient;
-            float healthGain = 5 + (spell.CastInfo.SpellLevel * 10) + ap;
-            if (target.HasBuff("HealCheck"))
-            {
-                healthGain *= 0.5f;
-            }
-            var newHealth = target.Stats.CurrentHealth + healthGain;
-            target.Stats.CurrentHealth = Math.Min(newHealth, target.Stats.HealthPoints.Total);
-        }
-        bool playanim = true;
-        private void CheckPosition(IObjAiBase owner, ISpell spell, IAttackableUnit target)
-        {
-            if (owner.Position.X != basepos.X)
-            {
-                cancelled = true;
-            }
-            if (owner.Position.Y != basepos.Y)
-            {
-                cancelled = true;
-            }
-            if (!cancelled)
-            {
-                PerformHeal(owner, spell, owner);
-                if(playanim == true)
-                {
-                    PlayAnimation(owner, "Spell2");
-                    playanim = false;
-                }
-            }
-            if (cancelled)
-            {
-                StopAnimation(owner, "Spell2");
-            }
+            Owner = owner;
         }
 
         public void OnSpellCast(ISpell spell)
         {
+            AddParticleTarget(Owner, Owner, "masteryi_base_w_cas", Owner, flags: 0);
         }
 
         public void OnSpellPostCast(ISpell spell)
@@ -84,14 +53,26 @@ namespace Spells
 
         public void OnSpellChannel(ISpell spell)
         {
+            AddBuff("Meditate", 4.0f, 1, spell, Owner, Owner);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource reason)
         {
+            RemoveBuff(Owner, "Meditate");
         }
 
         public void OnSpellPostChannel(ISpell spell)
         {
+            //float[] finalHeal = new float[]
+            //{
+            //    25f,
+            //    50f,
+            //    83.3f,
+            //    125f,
+            //    183.3f
+            //};
+            //Owner.Stats.CurrentHealth = Math.Min(Owner.Stats.CurrentHealth, finalHeal[spell.CastInfo.SpellLevel]);
+            RemoveBuff(Owner, "Meditate");
         }
 
         public void OnUpdate(float diff)

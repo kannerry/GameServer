@@ -61,7 +61,7 @@ namespace ItemPassives
 
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
 
         }

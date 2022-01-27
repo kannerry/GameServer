@@ -98,7 +98,7 @@ public void OnSpellChannel(ISpell spell)
 {
 }
 
-public void OnSpellChannelCancel(ISpell spell)
+public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
 {
 }
 

@@ -77,7 +77,7 @@ namespace Spells
             AddBuff("GalioResoluteSmite", 2.5f, 1, spell, target, owner);
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

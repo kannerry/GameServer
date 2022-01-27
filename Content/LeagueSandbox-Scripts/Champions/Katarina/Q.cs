@@ -37,6 +37,7 @@ namespace Spells
             {
                 var own = owner as IChampion;
                 own.Spells[i].LowerCooldown(15);
+                AddParticle(own, own, "katarina_spell_refresh_indicator.troy", own.Position);
             };
             //will turn into buff later
         }
@@ -73,7 +74,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 
@@ -159,7 +160,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

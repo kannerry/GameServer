@@ -5,7 +5,7 @@ using LeagueSandbox.GameServer.Scripting.CSharp;
 using System;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
+using GameServerCore.Enums;
 namespace Spells
 {
     public class JudicatorDivineBlessing : ISpellScript
@@ -61,7 +61,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

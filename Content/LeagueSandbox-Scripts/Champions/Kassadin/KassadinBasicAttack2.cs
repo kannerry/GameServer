@@ -4,7 +4,7 @@ using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System;
 using System.Numerics;
-
+using GameServerCore.Enums;
 namespace Spells
 {
     public class KassadinBasicAttack2 : ISpellScript
@@ -52,7 +52,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 

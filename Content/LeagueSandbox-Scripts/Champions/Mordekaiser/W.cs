@@ -5,7 +5,7 @@ using GameServerCore.Scripting.CSharp;
 using LeagueSandbox.GameServer.Scripting.CSharp;
 using System.Numerics;
 using static LeagueSandbox.GameServer.API.ApiFunctionManager;
-
+using GameServerCore.Enums;
 namespace Spells
 {
     public class MordekaiserCreepingDeathCast : ISpellScript
@@ -47,7 +47,7 @@ namespace Spells
         {
         }
 
-        public void OnSpellChannelCancel(ISpell spell)
+        public void OnSpellChannelCancel(ISpell spell, ChannelingStopSource source)
         {
         }
 
