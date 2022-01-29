@@ -8,7 +8,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    internal class ShenWShield : IBuffGameScript
+    internal class ShenFeint : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;

@@ -8,7 +8,7 @@ using static LeagueSandbox.GameServer.API.ApiFunctionManager;
 
 namespace Buffs
 {
-    internal class PassiveCooldown : IBuffGameScript
+    internal class shenpassivehardcooldown : IBuffGameScript
     {
         public BuffType BuffType => BuffType.COMBAT_ENCHANCER;
         public BuffAddType BuffAddType => BuffAddType.RENEW_EXISTING;
@@ -26,7 +26,7 @@ namespace Buffs
         public void OnDeactivate(IAttackableUnit unit, IBuff buff, ISpell ownerSpell)
         {
             //unit.RemoveBuffsWithName("ShenKiAttack");
-            AddBuff("ShenWayOfTheNinjaMarker", float.MaxValue, 1, ownerSpell, unit, unit as IObjAiBase, true);
+            AddBuff("shenwayoftheninjaaura", float.MaxValue, 1, ownerSpell, unit, unit as IObjAiBase, true);
         }
 
         public void OnUpdate(float diff)

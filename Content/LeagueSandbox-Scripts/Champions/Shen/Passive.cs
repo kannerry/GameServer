@@ -18,7 +18,7 @@ namespace Passives
             _owner = owner;
             _spell = spell;
             ApiEventManager.OnHitUnit.AddListener(this, owner, OnHitUnit, false);
-            AddBuff("PassiveCooldown", 9.0f, 1, _spell, _owner, _owner);
+            AddBuff("shenpassivehardcooldown", 9.0f, 1, _spell, _owner, _owner);
         }
 
         public void OnDeactivate(IObjAiBase owner, ISpell spell)
@@ -27,23 +27,23 @@ namespace Passives
 
         public void OnHitUnit(IAttackableUnit unit, bool crit)
         {
-            if (_owner.HasBuff("PassiveCooldown"))
+            if (_owner.HasBuff("shenpassivehardcooldown"))
             {
                 LogDebug("hit with cooldown");
-                var buff = _owner.GetBuffWithName("PassiveCooldown");
+                var buff = _owner.GetBuffWithName("shenpassivehardcooldown");
                 buff.TimeElapsed += 1;
                 if (_owner.HasBuff("ShenWShield"))
                 {
                     buff.TimeElapsed += 1;
                 }
             }
-            if (_owner.HasBuff("ShenWayOfTheNinjaMarker"))
+            if (_owner.HasBuff("shenwayoftheninjaaura"))
             {
                 var basedamage = 4 + 4 * _owner.Stats.Level;
                 var hpscaling = _owner.Stats.HealthPoints.TotalBonus * 0.1f;
                 unit.TakeDamage(_owner, basedamage + hpscaling, DamageType.DAMAGE_TYPE_MAGICAL, DamageSource.DAMAGE_SOURCE_ATTACK, false);
-                _owner.RemoveBuffsWithName("ShenWayOfTheNinjaMarker");
-                AddBuff("PassiveCooldown", 9.0f, 1, _spell, _owner, _owner);
+                _owner.RemoveBuffsWithName("shenwayoftheninjaaura");
+                AddBuff("shenpassivehardcooldown", 9.0f, 1, _spell, _owner, _owner);
             }
         }
 

@@ -25,7 +25,7 @@ namespace Spells
 
         public void OnSpellPreCast(IObjAiBase owner, ISpell spell, IAttackableUnit target, Vector2 start, Vector2 end)
         {
-            AddBuff("ShenRShield", 5.0f, 1, spell, target, owner);
+            AddBuff("shenstandunitedshield", 5.0f, 1, spell, target, owner);
             AddBuff("ShenRChanneling", 3.0f, 1, spell, owner, target as IObjAiBase);
         }
 
